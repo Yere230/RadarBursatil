@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar Bursátil · Bolsa de Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c0e;
+    --bg2: #0d1214;
+    --bg3: #111820;
+    --panel: #0f1a1f;
+    --border: #1e2e35;
+    --border2: #243a44;
+    --green: #00e5a0;
+    --green2: #00b87a;
+    --green-dim: rgba(0,229,160,0.08);
+    --green-glow: rgba(0,229,160,0.2);
+    --red: #ff4d6a;
+    --red-dim: rgba(255,77,106,0.08);
+    --yellow: #f5c842;
+    --yellow-dim: rgba(245,200,66,0.1);
+    --blue: #38b6ff;
+    --text: #e8f0f3;
+    --text2: #7a9aa8;
+    --text3: #3d5a65;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    background: rgba(8,12,14,0.95);
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--green);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--sans);
+    box-shadow: 0 0 12px var(--green-glow);
+  }
+
+  .logo-text {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+  }
+
+  .logo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid rgba(0,229,160,0.2);
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ─── SEARCH SECTION ─── */
+  .search-section {
+    margin-bottom: 48px;
+  }
+
+  .search-label {
+    font-family: var(--sans);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .search-label span {
+    color: var(--green);
+  }
+
+  .search-sub {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .search-bar {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    max-width: 680px;
+  }
+
+  .ticker-input-wrap {
+    position: relative;
+    flex: 1;
+  }
+
+  .ticker-prefix {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3);
+    font-size: 13px;
+    font-family: var(--mono);
+    pointer-events: none;
+  }
+
+  .ticker-input {
+    width: 100%;
+    height: 52px;
+    background: var(--panel);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    color: var(--green);
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0 16px 0 72px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .ticker-input::placeholder { color: var(--text3); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 14px; }
+  .ticker-input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px var(--green-dim), 0 0 20px var(--green-glow);
+  }
+
+  .btn-analyze {
+    height: 52px;
+    padding: 0 28px;
+    background: var(--green);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .btn-analyze:hover { background: #00f5ad; box-shadow: 0 0 24px var(--green-glow); }
+  .btn-analyze:active { transform: scale(0.97); }
+  .btn-analyze:disabled { background: var(--text3); cursor: not-allowed; }
+
+  /* Quick picks */
+  .quick-picks {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .qp-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .qp-btn {
+    height: 28px;
+    padding: 0 12px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+  .qp-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+
+  /* ─── LOADING STATE ─── */
+  #loading {
+    display: none;
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .loading-ticker {
+    font-family: var(--sans);
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .loading-steps {
+    list-style: none;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .loading-step {
+    font-size: 12px;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .loading-step.active { color: var(--green); }
+  .loading-step.done { color: var(--text2); }
+
+  .step-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--text3);
+    flex-shrink: 0;
+  }
+  .loading-step.active .step-dot { background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 0.8s infinite; }
+  .loading-step.done .step-dot { background: var(--green2); }
+
+  /* ─── ERROR STATE ─── */
+  #error-state {
+    display: none;
+    margin: 40px 0;
+    padding: 24px 28px;
+    background: var(--red-dim);
+    border: 1px solid rgba(255,77,106,0.2);
+    border-radius: 8px;
+    color: var(--red);
+  }
+
+  .error-title { font-family: var(--sans); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .error-msg { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+  /* ─── RESULTS ─── */
+  #results { display: none; }
+
+  /* ─── COMPANY HEADER ─── */
+  .company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .company-name-block {}
+
+  .company-ticker-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    border: 1px solid rgba(0,229,160,0.3);
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    background: var(--green-dim);
+  }
+
+  .company-name {
+    font-family: var(--sans);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .company-sector {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .price-block {
+    text-align: right;
+  }
+
+  .price-value {
+    font-family: var(--sans);
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .price-currency {
+    font-size: 16px;
+    color: var(--text3);
+    font-family: var(--mono);
+    margin-right: 6px;
+  }
+
+  .price-change {
+    font-size: 14px;
+    font-family: var(--mono);
+    margin-top: 4px;
+  }
+  .price-change.up { color: var(--green); }
+  .price-change.down { color: var(--red); }
+
+  .price-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ─── GRID PANELS ─── */
+  .section-title {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  /* ─── KPI STRIP ─── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .kpi-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .kpi-card.kpi-green::before { background: var(--green); }
+  .kpi-card.kpi-yellow::before { background: var(--yellow); }
+  .kpi-card.kpi-red::before { background: var(--red); }
+  .kpi-card.kpi-blue::before { background: var(--blue); }
+  .kpi-card.kpi-neutral::before { background: var(--text3); }
+
+  .kpi-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .kpi-sub {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 4px;
+  }
+
+  /* ─── TWO-COL LAYOUT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+    .price-block { text-align: left; }
+  }
+
+  /* ─── DATA TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .data-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table tr:last-child { border-bottom: none; }
+
+  .data-table td {
+    padding: 10px 0;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .data-table td:first-child {
+    color: var(--text2);
+    width: 55%;
+  }
+
+  .data-table td:last-child {
+    color: var(--text);
+    text-align: right;
+    font-weight: 700;
+  }
+
+  .val-green { color: var(--green) !important; }
+  .val-red { color: var(--red) !important; }
+  .val-yellow { color: var(--yellow) !important; }
+
+  /* ─── SEMÁFORO DE VALORACIÓN ─── */
+  .semaforo-wrap {
+    margin-bottom: 32px;
+  }
+
+  .semaforo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .semaforo-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .semaforo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .semaforo-name {
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .semaforo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-yellow { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
+  .dot-red { background: var(--red); box-shadow: 0 0 8px var(--red); }
+  .dot-gray { background: var(--text3); }
+
+  .semaforo-value {
+    font-family: var(--sans);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .semaforo-verdict {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .verdict-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(0,229,160,0.2); }
+  .verdict-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,200,66,0.2); }
+  .verdict-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,77,106,0.2); }
+  .verdict-gray { background: transparent; color: var(--text3); border: 1px solid var(--border); }
+
+  /* ─── GAUGE BAR ─── */
+  .gauge-bar-wrap {
+    background: var(--border);
+    border-radius: 3px;
+    height: 4px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+
+  .gauge-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ─── ANÁLISIS AI ─── */
+  .ai-section {
+    margin-top: 32px;
+  }
+
+  .ai-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .ai-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,229,160,0.04);
+  }
+
+  .ai-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: var(--green-dim);
+    border: 1px solid rgba(0,229,160,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--green);
+    font-family: var(--sans);
+    font-weight: 800;
+  }
+
+  .ai-title-text {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .ai-title-sub { font-size: 10px; color: var(--text3); letter-spacing: 0.08em; }
+
+  .ai-body {
+    padding: 24px;
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--text2);
+    font-family: var(--mono);
+    white-space: pre-wrap;
+    min-height: 120px;
+  }
+
+  .ai-body.streaming { color: var(--text); }
+
+  .ai-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--green);
+    animation: blink 0.8s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ─── DISCLAIMER ─── */
+  .disclaimer {
+    margin-top: 40px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+
+  .disclaimer strong { color: var(--text2); }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ─── EMPTY STATE ─── */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text3);
+  }
+
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  .empty-title {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text2);
+  }
+
+  .empty-sub {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel { animation: fadeIn 0.4s ease forwards; }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.1s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.2s; }
+  .kpi-card:nth-child(5) { animation-delay: 0.25s; }
+  .kpi-card:nth-child(6) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">RB</div>
+    <div>
+      <div class="logo-text">Radar Bursátil</div>
+      <div class="logo-sub">Bolsa de Santiago · Análisis Fundamental</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="badge">Gemini AI · Datos en tiempo real</span>
+    <button onclick="showApiKeyModal()" style="background:transparent;border:1px solid var(--border2);color:var(--text2);padding:6px 14px;border-radius:6px;font-family:var(--mono);font-size:11px;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">
+      🔑 API Key
+    </button>
+  </div>
+</header>
+
+<!-- MODAL API KEY -->
+<div id="apikey-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--panel);border:1px solid var(--border2);border-radius:12px;padding:32px;max-width:480px;width:100%;">
+    <div style="font-family:var(--sans);font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px;">Configurar API Key de Gemini</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:24px;">
+      Necesitas una API Key gratuita de Google Gemini para que la página funcione.<br>
+      👉 Obtén la tuya en <strong style="color:var(--green)">aistudio.google.com</strong> → "Get API Key" → "Create API Key".<br>
+      La key se guarda solo en tu navegador y nunca se envía a ningún servidor externo.
+    </div>
+    <input
+      id="apikey-input"
+      type="password"
+      placeholder="AIzaSy..."
+      style="width:100%;height:48px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:13px;padding:0 16px;outline:none;margin-bottom:8px;box-sizing:border-box;"
+      onkeydown="if(event.key==='Enter')confirmApiKey()"
+    >
+    <div id="apikey-error" style="display:none;font-size:11px;color:var(--red);margin-bottom:12px;">La key debe empezar con "AIza" y tener al menos 20 caracteres.</div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
+      <button onclick="hideApiKeyModal()" style="padding:10px 20px;background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--text2);font-family:var(--mono);font-size:12px;cursor:pointer;">Cancelar</button>
+      <button onclick="confirmApiKey()" style="padding:10px 24px;background:var(--green);border:none;border-radius:6px;color:#000;font-family:var(--sans);font-weight:700;font-size:13px;cursor:pointer;">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- SEARCH -->
+  <div class="search-section">
+    <div class="search-label">Analiza cualquier<br>acción <span>chilena</span></div>
+    <div class="search-sub">Ingresa el nemotécnico de la Bolsa de Santiago</div>
+
+    <div class="search-bar">
+      <div class="ticker-input-wrap">
+        <span class="ticker-prefix">TICKER</span>
+        <input
+          type="text"
+          id="ticker-input"
+          class="ticker-input"
+          placeholder="ej: CHILE, BCI, COLBUN, SQM-B"
+          maxlength="12"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <button class="btn-analyze" id="btn-analyze" onclick="startAnalysis()">
+        Analizar →
+      </button>
+    </div>
+
+    <div class="quick-picks">
+      <span class="qp-label">Acceso rápido:</span>
+      <button class="qp-btn" onclick="setTicker('CHILE')">CHILE</button>
+      <button class="qp-btn" onclick="setTicker('BCI')">BCI</button>
+      <button class="qp-btn" onclick="setTicker('BSANTANDER')">BSANTANDER</button>
+      <button class="qp-btn" onclick="setTicker('COLBUN')">COLBUN</button>
+      <button class="qp-btn" onclick="setTicker('SQM-B')">SQM-B</button>
+      <button class="qp-btn" onclick="setTicker('CENCOSUD')">CENCOSUD</button>
+      <button class="qp-btn" onclick="setTicker('FALABELLA')">FALABELLA</button>
+      <button class="qp-btn" onclick="setTicker('LTM')">LTM</button>
+    </div>
+
+    <div style="margin-top:14px;">
+      <span id="key-status" onclick="showApiKeyModal()" style="font-size:11px;cursor:pointer;letter-spacing:0.08em;">⚠️ Sin API Key — Haz clic para configurar</span>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading">
+    <div class="loading-ticker" id="loading-ticker">—</div>
+    <ul class="loading-steps">
+      <li class="loading-step" id="step1">
+        <div class="step-dot"></div>
+        Buscando datos en internet (Yahoo Finance, CMF)...
+      </li>
+      <li class="loading-step" id="step2">
+        <div class="step-dot"></div>
+        Procesando estados financieros...
+      </li>
+      <li class="loading-step" id="step3">
+        <div class="step-dot"></div>
+        Calculando indicadores de valoración...
+      </li>
+      <li class="loading-step" id="step4">
+        <div class="step-dot"></div>
+        Generando análisis fundamental con IA...
+      </li>
+    </ul>
+  </div>
+
+  <!-- ERROR -->
+  <div id="error-state">
+    <div class="error-title">No se pudo obtener información</div>
+    <div class="error-msg" id="error-msg">Intenta con otro nemotécnico o revisa que sea una acción válida de la Bolsa de Santiago.</div>
+  </div>
+
+  <!-- EMPTY -->
+  <div id="empty-state">
+    <div class="empty-icon">📊</div>
+    <div class="empty-title">Ingresa un nemotécnico para comenzar</div>
+    <div class="empty-sub">
+      Escribe el código de la acción arriba (ej: CHILE, BCI, FALABELLA)<br>
+      y obtendrás un análisis fundamental completo asistido por IA.
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+
+    <!-- Company Header -->
+    <div class="company-header fade-in">
+      <div class="company-name-block">
+        <div class="company-ticker-badge" id="r-ticker-badge">—</div>
+        <div class="company-name" id="r-name">—</div>
+        <div class="company-sector" id="r-sector">—</div>
+      </div>
+      <div class="price-block">
+        <div class="price-value">
+          <span class="price-currency">CLP</span><span id="r-price">—</span>
+        </div>
+        <div class="price-change" id="r-change">—</div>
+        <div class="price-label" id="r-price-label">Precio de cierre más reciente</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="section-title">Métricas clave</div>
+    <div class="kpi-grid" id="kpi-grid">
+      <!-- Generado por JS -->
+    </div>
+
+    <!-- Valoración + Financieros -->
+    <div class="section-title">Valoración y salud financiera</div>
+    <div class="two-col" style="margin-bottom:32px">
+      <!-- Semáforo -->
+      <div>
+        <div style="margin-bottom:12px;font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;">Semáforo de valoración</div>
+        <div class="semaforo-grid" id="semaforo-grid" style="grid-template-columns:1fr 1fr"></div>
+      </div>
+
+      <!-- Tabla financiera -->
+      <div class="panel">
+        <div style="font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">Estado de resultados</div>
+        <table class="data-table" id="table-resultados"></table>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom:32px">
+      <div class="panel">
+        <div style="font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">Balance general</div>
+        <table class="data-table" id="table-balance"></table>
+      </div>
+      <div class="panel">
+        <div style="font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">Ratios de rentabilidad</div>
+        <table class="data-table" id="table-ratios"></table>
+      </div>
+    </div>
+
+    <!-- Análisis IA -->
+    <div class="ai-section">
+      <div class="section-title">Análisis con inteligencia artificial</div>
+      <div class="ai-panel">
+        <div class="ai-header">
+          <div class="ai-icon">AI</div>
+          <div>
+            <div class="ai-title-text">Análisis Fundamental Asistido</div>
+            <div class="ai-title-sub">Generado por Claude · Solo orientativo, no es asesoría financiera</div>
+          </div>
+        </div>
+        <div class="ai-body" id="ai-body">
+          <span style="color:var(--text3)">El análisis aparecerá aquí...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <strong>⚠️ Aviso importante:</strong> Esta herramienta es exclusivamente para apoyo en la toma de decisiones personales. 
+      Los datos provienen de Yahoo Finance y pueden tener retraso. El análisis de IA es orientativo y no constituye asesoría financiera. 
+      Siempre verifica la información con fuentes oficiales (CMF, Bolsa de Santiago) antes de invertir. 
+      <strong>Invertir en acciones conlleva riesgos y puedes perder parte o todo tu capital.</strong>
+    </div>
+
+  </div><!-- /results -->
+</main>
+
+<script>
+// ─── API KEY MANAGEMENT ──────────────────────────────────────────────────────
+
+const API_KEY_STORAGE = 'radar_bursatil_gemini_key';
+
+function getApiKey() {
+  return localStorage.getItem(API_KEY_STORAGE) || '';
+}
+
+function saveApiKey(key) {
+  localStorage.setItem(API_KEY_STORAGE, key.trim());
+}
+
+function showApiKeyModal() {
+  document.getElementById('apikey-modal').style.display = 'flex';
+  document.getElementById('apikey-input').value = getApiKey();
+  document.getElementById('apikey-input').focus();
+}
+
+function hideApiKeyModal() {
+  document.getElementById('apikey-modal').style.display = 'none';
+}
+
+function confirmApiKey() {
+  const val = document.getElementById('apikey-input').value.trim();
+  if (!val.startsWith('AIza') || val.length < 20) {
+    document.getElementById('apikey-error').style.display = 'block';
+    return;
+  }
+  document.getElementById('apikey-error').style.display = 'none';
+  saveApiKey(val);
+  hideApiKeyModal();
+  updateKeyStatus();
+}
+
+function updateKeyStatus() {
+  const key = getApiKey();
+  const statusEl = document.getElementById('key-status');
+  if (key) {
+    statusEl.textContent = '🔑 API Key configurada';
+    statusEl.style.color = 'var(--green)';
+  } else {
+    statusEl.textContent = '⚠️ Sin API Key — Haz clic para configurar';
+    statusEl.style.color = 'var(--yellow)';
+  }
+}
+
+// ─── UTILIDADES ─────────────────────────────────────────────────────────────
+
+function fmt(n, decimals = 0) {
+  if (n === null || n === undefined || isNaN(n)) return 'N/D';
+  return new Intl.NumberFormat('es-CL', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }).format(n);
+}
+
+function fmtM(n) {
+  if (!n || isNaN(n)) return 'N/D';
+  if (Math.abs(n) >= 1e12) return (n / 1e12).toFixed(2) + ' T';
+  if (Math.abs(n) >= 1e9)  return (n / 1e9).toFixed(2) + ' B';
+  if (Math.abs(n) >= 1e6)  return (n / 1e6).toFixed(1) + ' M';
+  return fmt(n);
+}
+
+function fmtPct(n) {
+  if (n === null || n === undefined || isNaN(n)) return 'N/D';
+  return (n * 100).toFixed(1) + '%';
+}
+
+function setStep(n) {
+  ['step1','step2','step3','step4'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'loading-step ' + (i < n ? 'done' : i === n ? 'active' : '');
+  });
+}
+
+function setTicker(t) {
+  document.getElementById('ticker-input').value = t;
+}
+
+// ─── GEMINI API ───────────────────────────────────────────────────────────────
+
+async function callGemini(prompt, jsonMode = false) {
+  const key = getApiKey();
+  if (!key) throw new Error('No hay API Key configurada. Haz clic en "API Key" para configurarla.');
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`;
+
+  const body = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.1,
+      maxOutputTokens: 2048,
+      ...(jsonMode ? { responseMimeType: 'application/json' } : {})
+    }
+  };
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    const msg = err?.error?.message || `Error ${res.status}`;
+    if (res.status === 400) throw new Error('API Key inválida. Ve a "API Key" y verifica que sea correcta.');
+    if (res.status === 429) throw new Error('Límite de uso alcanzado. Espera un momento e intenta de nuevo.');
+    throw new Error(msg);
+  }
+
+  const data = await res.json();
+  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('Gemini no devolvió respuesta. Intenta de nuevo.');
+  return text;
+}
+
+// ─── OBTENER DATOS VÍA GEMINI ─────────────────────────────────────────────────
+
+async function fetchDatosFinancieros(ticker) {
+  const prompt = `Eres un experto en finanzas. Busca y proporciona los datos financieros más recientes disponibles de la acción ${ticker}.SN de la Bolsa de Santiago de Chile.
+
+Fuentes a consultar: Yahoo Finance (${ticker}.SN), Bolsa de Santiago, CMF Chile, Investing.com, Macrotrends.
+
+Responde ÚNICAMENTE con un JSON válido con esta estructura (sin texto adicional, sin markdown):
+
+{
+  "price": {
+    "longName": "Nombre completo empresa",
+    "shortName": "Nombre corto",
+    "regularMarketPrice": {"raw": PRECIO_CLP_NUMERO},
+    "regularMarketChange": {"raw": CAMBIO_HOY_NUMERO},
+    "regularMarketChangePercent": {"raw": CAMBIO_PCT_DECIMAL},
+    "marketCap": {"raw": CAP_MERCADO_CLP_NUMERO}
+  },
+  "summaryDetail": {
+    "trailingPE": {"raw": PE_NUMERO_O_NULL},
+    "dividendYield": {"raw": YIELD_DECIMAL_O_NULL},
+    "beta": {"raw": BETA_NUMERO_O_NULL}
+  },
+  "defaultKeyStatistics": {
+    "priceToBook": {"raw": PB_NUMERO_O_NULL},
+    "enterpriseToEbitda": {"raw": EV_EBITDA_O_NULL},
+    "trailingPE": {"raw": PE_NUMERO_O_NULL},
+    "beta": {"raw": BETA_NUMERO_O_NULL}
+  },
+  "financialData": {
+    "sector": "SECTOR",
+    "industry": "INDUSTRIA",
+    "returnOnEquity": {"raw": ROE_DECIMAL_O_NULL},
+    "returnOnAssets": {"raw": ROA_DECIMAL_O_NULL},
+    "profitMargins": {"raw": MARGEN_NETO_DECIMAL_O_NULL},
+    "grossMargins": {"raw": MARGEN_BRUTO_DECIMAL_O_NULL},
+    "ebitda": {"raw": EBITDA_CLP_O_NULL},
+    "freeCashflow": {"raw": FCF_CLP_O_NULL},
+    "totalDebt": {"raw": DEUDA_TOTAL_CLP_O_NULL},
+    "currentRatio": {"raw": RAZON_CORRIENTE_O_NULL},
+    "quickRatio": {"raw": RAZON_ACIDA_O_NULL},
+    "revenueGrowth": {"raw": CREC_INGRESOS_DECIMAL_O_NULL},
+    "earningsGrowth": {"raw": CREC_UTILIDADES_DECIMAL_O_NULL}
+  },
+  "incomeStatementHistory": {
+    "incomeStatementHistory": [{
+      "totalRevenue": {"raw": INGRESOS_CLP_O_NULL},
+      "grossProfit": {"raw": UTILIDAD_BRUTA_CLP_O_NULL},
+      "ebit": {"raw": EBIT_CLP_O_NULL},
+      "netIncome": {"raw": UTILIDAD_NETA_CLP_O_NULL}
+    }]
+  },
+  "balanceSheetHistory": {
+    "balanceSheetHistory": [{
+      "totalAssets": {"raw": ACTIVOS_CLP_O_NULL},
+      "totalLiab": {"raw": PASIVOS_CLP_O_NULL},
+      "totalStockholderEquity": {"raw": PATRIMONIO_CLP_O_NULL},
+      "cash": {"raw": EFECTIVO_CLP_O_NULL},
+      "shortLongTermDebt": {"raw": DEUDA_CORTO_CLP_O_NULL},
+      "longTermDebt": {"raw": DEUDA_LARGO_CLP_O_NULL}
+    }]
+  }
+}
+
+REGLAS:
+- Valores monetarios en CLP (pesos chilenos). Si están en USD, multiplica por el tipo de cambio actual.
+- Porcentajes como decimales (15% = 0.15).
+- Si un dato no existe, usa null.
+- JSON 100% válido, sin texto antes ni después.`;
+
+  const text = await callGemini(prompt, true);
+
+  // Limpiar y parsear JSON
+  const clean = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+  const match = clean.match(/\{[\s\S]*\}/);
+  if (!match) throw new Error(`No se encontraron datos para "${ticker}". Verifica que sea un nemotécnico válido de la Bolsa de Santiago.`);
+
+  return JSON.parse(match[0]);
+}
+
+// ─── SEMÁFORO ────────────────────────────────────────────────────────────────
+
+function getValoracion(metric, value) {
+  const ranges = {
+    pe:         { name: 'P/E', bajo: 12, alto: 22,  invertido: false },
+    pb:         { name: 'P/B', bajo: 1,  alto: 3,   invertido: false },
+    evEbitda:   { name: 'EV/EBITDA', bajo: 6, alto: 14, invertido: false },
+    dividendYield: { name: 'Div. Yield', bajo: 0.02, alto: 0.06, invertido: true },
+    deudaPatrimonio: { name: 'Deuda/Patrimonio', bajo: 0.5, alto: 1.5, invertido: false },
+    margenNeto: { name: 'Margen Neto', bajo: 0.05, alto: 0.15, invertido: true },
+  };
+
+  const r = ranges[metric];
+  if (!r || value === null || isNaN(value)) return { color: 'gray', verdict: 'Sin datos', label: r?.name || metric };
+
+  let color;
+  if (!r.invertido) {
+    color = value < r.bajo ? 'green' : value < r.alto ? 'yellow' : 'red';
+  } else {
+    color = value > r.alto ? 'green' : value > r.bajo ? 'yellow' : 'red';
+  }
+
+  const labels = {
+    green: { pe: 'Barata', pb: 'Barata', evEbitda: 'Barata', dividendYield: 'Alto yield', deudaPatrimonio: 'Baja deuda', margenNeto: 'Margen alto' },
+    yellow: { pe: 'Valor justo', pb: 'Valor justo', evEbitda: 'Valor justo', dividendYield: 'Yield moderado', deudaPatrimonio: 'Deuda moderada', margenNeto: 'Margen moderado' },
+    red: { pe: 'Cara', pb: 'Cara', evEbitda: 'Cara', dividendYield: 'Yield bajo', deudaPatrimonio: 'Alta deuda', margenNeto: 'Margen bajo' },
+  };
+
+  return { color, verdict: labels[color][metric], label: r.name };
+}
+
+// ─── RENDER RESULTS ──────────────────────────────────────────────────────────
+
+function renderResults(d, ticker) {
+  const price    = d.price;
+  const summary  = d.summaryDetail;
+  const keyStats = d.defaultKeyStatistics;
+  const finData  = d.financialData;
+  const income   = d.incomeStatementHistory?.incomeStatementHistory?.[0];
+  const balance  = d.balanceSheetHistory?.balanceSheetHistory?.[0];
+
+  // ── Company Header
+  document.getElementById('r-ticker-badge').textContent = ticker.toUpperCase() + '.SN';
+  document.getElementById('r-name').textContent = price?.longName || price?.shortName || ticker.toUpperCase();
+  document.getElementById('r-sector').textContent = [
+    finData?.sector || keyStats?.sector || '',
+    finData?.industry || keyStats?.industry || ''
+  ].filter(Boolean).join(' · ') || 'Bolsa de Santiago';
+
+  const currentPrice = price?.regularMarketPrice?.raw;
+  document.getElementById('r-price').textContent = currentPrice ? fmt(currentPrice, 0) : 'N/D';
+
+  const change    = price?.regularMarketChange?.raw;
+  const changePct = price?.regularMarketChangePercent?.raw;
+  const changeEl  = document.getElementById('r-change');
+  if (change !== undefined && changePct !== undefined) {
+    const sign = change >= 0 ? '+' : '';
+    changeEl.textContent = `${sign}${fmt(change, 1)} (${sign}${(changePct * 100).toFixed(2)}%) hoy`;
+    changeEl.className = 'price-change ' + (change >= 0 ? 'up' : 'down');
+  } else {
+    changeEl.textContent = 'Variación no disponible';
+    changeEl.className = 'price-change';
+  }
+
+  // ── KPIs
+  const pe        = summary?.trailingPE?.raw ?? keyStats?.trailingPE?.raw;
+  const pb        = keyStats?.priceToBook?.raw;
+  const evEbitda  = keyStats?.enterpriseToEbitda?.raw;
+  const dyield    = summary?.dividendYield?.raw ?? keyStats?.dividendYield?.raw;
+  const beta      = summary?.beta?.raw ?? keyStats?.beta?.raw;
+  const mktCap    = price?.marketCap?.raw;
+  const roe       = finData?.returnOnEquity?.raw;
+  const roa       = finData?.returnOnAssets?.raw;
+  const margenN   = finData?.profitMargins?.raw;
+  const ebitda    = finData?.ebitda?.raw;
+  const freeCash  = finData?.freeCashflow?.raw;
+  const deuda     = finData?.totalDebt?.raw;
+  const patrimonio = balance?.totalStockholderEquity?.raw;
+  const deudaPatr = (deuda && patrimonio) ? deuda / patrimonio : null;
+
+  const kpis = [
+    { label: 'Cap. de Mercado', value: fmtM(mktCap), sub: 'CLP', color: 'neutral' },
+    { label: 'P/E Ratio', value: pe ? fmt(pe, 1) : 'N/D', sub: 'Precio / Utilidad', color: pe < 12 ? 'green' : pe < 22 ? 'yellow' : 'red' },
+    { label: 'P/B Ratio', value: pb ? fmt(pb, 2) : 'N/D', sub: 'Precio / Valor libro', color: pb < 1 ? 'green' : pb < 3 ? 'yellow' : 'red' },
+    { label: 'Div. Yield', value: dyield ? (dyield * 100).toFixed(2) + '%' : 'N/D', sub: 'Rendimiento dividendo', color: dyield > 0.06 ? 'green' : dyield > 0.02 ? 'yellow' : 'neutral' },
+    { label: 'EBITDA', value: fmtM(ebitda), sub: 'CLP', color: 'blue' },
+    { label: 'Flujo de Caja Libre', value: fmtM(freeCash), sub: 'CLP', color: freeCash > 0 ? 'green' : 'red' },
+    { label: 'ROE', value: roe ? (roe * 100).toFixed(1) + '%' : 'N/D', sub: 'Retorno s/ Patrimonio', color: roe > 0.15 ? 'green' : roe > 0.08 ? 'yellow' : 'red' },
+    { label: 'Beta', value: beta ? fmt(beta, 2) : 'N/D', sub: 'Volatilidad vs mercado', color: beta < 1 ? 'green' : beta < 1.5 ? 'yellow' : 'red' },
+  ];
+
+  const kpiGrid = document.getElementById('kpi-grid');
+  kpiGrid.innerHTML = kpis.map(k => `
+    <div class="kpi-card kpi-${k.color}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>
+  `).join('');
+
+  // ── Semáforo
+  const semItems = [
+    { metric: 'pe',              value: pe,        display: pe ? fmt(pe, 1) : 'N/D' },
+    { metric: 'pb',              value: pb,        display: pb ? fmt(pb, 2) : 'N/D' },
+    { metric: 'evEbitda',        value: evEbitda,  display: evEbitda ? fmt(evEbitda, 1) : 'N/D' },
+    { metric: 'dividendYield',   value: dyield,    display: dyield ? (dyield*100).toFixed(2)+'%' : 'N/D' },
+    { metric: 'deudaPatrimonio', value: deudaPatr, display: deudaPatr ? fmt(deudaPatr, 2)+'x' : 'N/D' },
+    { metric: 'margenNeto',      value: margenN,   display: margenN ? (margenN*100).toFixed(1)+'%' : 'N/D' },
+  ];
+
+  document.getElementById('semaforo-grid').innerHTML = semItems.map(s => {
+    const v = getValoracion(s.metric, s.value);
+    return `
+      <div class="semaforo-item">
+        <div class="semaforo-top">
+          <span class="semaforo-name">${v.label}</span>
+          <span class="semaforo-dot dot-${v.color}"></span>
+        </div>
+        <div class="semaforo-value">${s.display}</div>
+        <span class="semaforo-verdict verdict-${v.color}">${v.verdict}</span>
+      </div>
+    `;
+  }).join('');
+
+  // ── Estado de Resultados
+  const revenue    = income?.totalRevenue?.raw;
+  const grossP     = income?.grossProfit?.raw;
+  const ebit       = income?.ebit?.raw;
+  const netIncome  = income?.netIncome?.raw;
+
+  document.getElementById('table-resultados').innerHTML = [
+    ['Ingresos Totales',  fmtM(revenue),   ''],
+    ['Utilidad Bruta',    fmtM(grossP),    grossP > 0 ? 'val-green' : ''],
+    ['EBIT',              fmtM(ebit),      ebit > 0 ? 'val-green' : 'val-red'],
+    ['Utilidad Neta',     fmtM(netIncome), netIncome > 0 ? 'val-green' : 'val-red'],
+    ['Margen Neto',       fmtPct(margenN), margenN > 0.1 ? 'val-green' : margenN > 0.03 ? 'val-yellow' : 'val-red'],
+    ['EBITDA',            fmtM(ebitda),    ebitda > 0 ? 'val-green' : 'val-red'],
+  ].map(([l, v, cls]) => `
+    <tr><td>${l}</td><td class="${cls}">${v}</td></tr>
+  `).join('');
+
+  // ── Balance
+  const totalAssets = balance?.totalAssets?.raw;
+  const totalLiab   = balance?.totalLiab?.raw;
+  const cash        = balance?.cash?.raw;
+  const shortDebt   = balance?.shortLongTermDebt?.raw;
+  const longDebt    = balance?.longTermDebt?.raw;
+
+  document.getElementById('table-balance').innerHTML = [
+    ['Activos Totales',    fmtM(totalAssets), ''],
+    ['Pasivos Totales',    fmtM(totalLiab),   ''],
+    ['Patrimonio',         fmtM(patrimonio),  patrimonio > 0 ? 'val-green' : 'val-red'],
+    ['Deuda Total',        fmtM(deuda),       ''],
+    ['Deuda Corto Plazo',  fmtM(shortDebt),   ''],
+    ['Deuda Largo Plazo',  fmtM(longDebt),    ''],
+    ['Efectivo y Equiv.',  fmtM(cash),        'val-green'],
+  ].map(([l, v, cls]) => `
+    <tr><td>${l}</td><td class="${cls}">${v}</td></tr>
+  `).join('');
+
+  // ── Ratios
+  const currentRatio = finData?.currentRatio?.raw;
+  const quickRatio   = finData?.quickRatio?.raw;
+  const debtToEq     = finData?.debtToEquity?.raw;
+  const revGrowth    = finData?.revenueGrowth?.raw;
+  const earnGrowth   = finData?.earningsGrowth?.raw;
+
+  document.getElementById('table-ratios').innerHTML = [
+    ['ROE (Retorno Patrimonio)', roe ? (roe*100).toFixed(1)+'%' : 'N/D', roe > 0.15 ? 'val-green' : roe > 0.08 ? 'val-yellow' : 'val-red'],
+    ['ROA (Retorno Activos)',    roa ? (roa*100).toFixed(1)+'%' : 'N/D', roa > 0.05 ? 'val-green' : 'val-yellow'],
+    ['Margen Bruto',            fmtPct(finData?.grossMargins?.raw), ''],
+    ['Razón Corriente',         currentRatio ? fmt(currentRatio, 2)+'x' : 'N/D', currentRatio > 1.5 ? 'val-green' : currentRatio > 1 ? 'val-yellow' : 'val-red'],
+    ['Razón Ácida',             quickRatio ? fmt(quickRatio, 2)+'x' : 'N/D', quickRatio > 1 ? 'val-green' : 'val-yellow'],
+    ['Crec. Ingresos (YoY)',    fmtPct(revGrowth), revGrowth > 0.05 ? 'val-green' : revGrowth > 0 ? 'val-yellow' : 'val-red'],
+    ['Crec. Utilidades (YoY)',  fmtPct(earnGrowth), earnGrowth > 0.05 ? 'val-green' : earnGrowth > 0 ? 'val-yellow' : 'val-red'],
+  ].map(([l, v, cls]) => `
+    <tr><td>${l}</td><td class="${cls}">${v}</td></tr>
+  `).join('');
+
+  return {
+    nombre: price?.longName || ticker,
+    precio: currentPrice,
+    pe, pb, evEbitda, dyield, beta, mktCap,
+    roe, roa, margenN, ebitda, freeCash,
+    revenue, netIncome, deuda, patrimonio,
+    currentRatio, revGrowth, earnGrowth,
+    deudaPatr, sector: finData?.sector || 'N/D',
+    industry: finData?.industry || 'N/D'
+  };
+}
+
+// ─── ANÁLISIS IA CON GEMINI ───────────────────────────────────────────────────
+
+async function runAIAnalysis(datos, ticker) {
+  const aiBody = document.getElementById('ai-body');
+  aiBody.innerHTML = '<span class="ai-cursor"></span>';
+  aiBody.className = 'ai-body streaming';
+
+  const prompt = `Eres un analista financiero experto en la Bolsa de Santiago de Chile.
+Analiza los siguientes datos fundamentales de la empresa ${datos.nombre} (${ticker}.SN) y entrega un análisis estructurado, claro y útil para un inversionista individual chileno.
+
+DATOS FINANCIEROS:
+- Precio actual: CLP ${datos.precio ? Math.round(datos.precio) : 'N/D'}
+- Capitalización de mercado: ${datos.mktCap ? (datos.mktCap / 1e9).toFixed(1) + ' B CLP' : 'N/D'}
+- P/E Ratio: ${datos.pe?.toFixed(1) ?? 'N/D'}
+- P/B Ratio: ${datos.pb?.toFixed(2) ?? 'N/D'}
+- EV/EBITDA: ${datos.evEbitda?.toFixed(1) ?? 'N/D'}
+- Dividend Yield: ${datos.dyield ? (datos.dyield * 100).toFixed(2) + '%' : 'N/D'}
+- Beta: ${datos.beta?.toFixed(2) ?? 'N/D'}
+- ROE: ${datos.roe ? (datos.roe * 100).toFixed(1) + '%' : 'N/D'}
+- ROA: ${datos.roa ? (datos.roa * 100).toFixed(1) + '%' : 'N/D'}
+- Margen Neto: ${datos.margenN ? (datos.margenN * 100).toFixed(1) + '%' : 'N/D'}
+- EBITDA: ${datos.ebitda ? (datos.ebitda / 1e9).toFixed(2) + ' B CLP' : 'N/D'}
+- Flujo de Caja Libre: ${datos.freeCash ? (datos.freeCash / 1e9).toFixed(2) + ' B CLP' : 'N/D'}
+- Deuda Total: ${datos.deuda ? (datos.deuda / 1e9).toFixed(1) + ' B CLP' : 'N/D'}
+- Deuda/Patrimonio: ${datos.deudaPatr?.toFixed(2) ?? 'N/D'}
+- Ingresos Totales: ${datos.revenue ? (datos.revenue / 1e9).toFixed(1) + ' B CLP' : 'N/D'}
+- Crecimiento Ingresos YoY: ${datos.revGrowth ? (datos.revGrowth * 100).toFixed(1) + '%' : 'N/D'}
+- Crecimiento Utilidades YoY: ${datos.earnGrowth ? (datos.earnGrowth * 100).toFixed(1) + '%' : 'N/D'}
+- Sector: ${datos.sector}
+- Industria: ${datos.industry}
+
+Estructura tu análisis con estos títulos exactos:
+
+📌 RESUMEN EJECUTIVO
+(2-3 oraciones resumiendo el estado de la empresa y si la acción parece barata, a precio justo o cara)
+
+💰 VALORACIÓN
+(Interpreta P/E, P/B y EV/EBITDA comparándolos con rangos típicos del mercado chileno. ¿Cara o barata?)
+
+📊 SALUD FINANCIERA
+(Analiza márgenes, ROE, ROA, flujo de caja y nivel de deuda. ¿Es financieramente sólida?)
+
+📈 CRECIMIENTO Y MOMENTUM
+(Comenta el crecimiento de ingresos y utilidades. ¿Señales positivas o negativas?)
+
+🔔 PUNTOS DE ATENCIÓN
+(3-4 factores clave a monitorear, tanto positivos como de riesgo)
+
+⚠️ ADVERTENCIA
+Este análisis es orientativo y no constituye asesoría financiera. Siempre verifica con fuentes oficiales antes de invertir.
+
+Usa lenguaje claro para un inversionista no profesional. Sé concreto y objetivo.`;
+
+  try {
+    const texto = await callGemini(prompt, false);
+    aiBody.innerHTML = formatAIText(texto);
+    aiBody.className = 'ai-body';
+  } catch (err) {
+    aiBody.innerHTML = `<span style="color:var(--red)">No se pudo generar el análisis: ${err.message}</span>`;
+    aiBody.className = 'ai-body';
+  }
+}
+
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function formatAIText(text) {
+  return escapeHtml(text)
+    .replace(/^(📌|💰|📊|📈|🔔|⚠️) (.+)$/gm, '<strong style="color:var(--text);font-family:var(--sans);font-size:14px;">$1 $2</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+// ─── MAIN FLOW ───────────────────────────────────────────────────────────────
+
+async function startAnalysis() {
+  const tickerRaw = document.getElementById('ticker-input').value.trim().toUpperCase();
+  if (!tickerRaw) return;
+
+  // Verificar API key antes de comenzar
+  if (!getApiKey()) {
+    showApiKeyModal();
+    return;
+  }
+
+  // Reset UI
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('error-state').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('btn-analyze').disabled = true;
+  document.getElementById('loading-ticker').textContent = tickerRaw;
+
+  setStep(0);
+
+  try {
+    // Step 1: Gemini busca datos financieros
+    setStep(0);
+    const data = await fetchDatosFinancieros(tickerRaw);
+
+    // Step 2: Procesando estructura
+    setStep(1);
+    await sleep(200);
+
+    // Step 3: Renderizar indicadores
+    setStep(2);
+    await sleep(200);
+    const resumenDatos = renderResults(data, tickerRaw);
+
+    // Step 4: Análisis IA
+    setStep(3);
+    await sleep(200);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+
+    await runAIAnalysis(resumenDatos, tickerRaw);
+
+  } catch (err) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error-state').style.display = 'block';
+    document.getElementById('error-msg').textContent = err.message;
+    console.error(err);
+  }
+
+  document.getElementById('btn-analyze').disabled = false;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// Enter key
+document.getElementById('ticker-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startAnalysis();
+});
+
+// Inicializar estado de API key al cargar
+window.addEventListener('DOMContentLoaded', () => {
+  updateKeyStatus();
+  if (!getApiKey()) {
+    setTimeout(showApiKeyModal, 600);
+  }
+});
+</script>
+</body>
+</html>
