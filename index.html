@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar Bursátil · Bolsa de Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #07080a;
+  --bg2:      #0c0e12;
+  --surface:  #111318;
+  --surface2: #181c23;
+  --border:   #1e2430;
+  --border2:  #2a3040;
+  --accent:   #c8f135;
+  --accent2:  #a8d020;
+  --accent-dim: rgba(200,241,53,0.08);
+  --accent-glow: rgba(200,241,53,0.18);
+  --red:      #ff5a5a;
+  --red-dim:  rgba(255,90,90,0.08);
+  --yellow:   #ffc84a;
+  --yellow-dim: rgba(255,200,74,0.08);
+  --blue:     #5ab4ff;
+  --text:     #eef0f5;
+  --text2:    #7b8799;
+  --text3:    #3a4452;
+  --mono:     'DM Mono', monospace;
+  --body:     'DM Sans', sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--body); min-height: 100vh; overflow-x: hidden; }
+
+/* HEADER */
+header {
+  position: sticky; top:0; z-index:100;
+  height: 58px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(7,8,10,0.94); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-mark {
+  width: 30px; height: 30px; background: var(--accent); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 700; font-size: 12px; color: #000; flex-shrink: 0;
+}
+.logo-name { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+.logo-tag  { font-family: var(--mono); font-size: 9px; color: var(--text3); letter-spacing: 0.12em; text-transform: uppercase; }
+.header-pill {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(200,241,53,0.2);
+  padding: 4px 12px; border-radius: 20px;
+}
+
+/* LAYOUT */
+.container { max-width: 1080px; margin: 0 auto; padding: 44px 22px 100px; }
+
+/* HERO */
+.hero { margin-bottom: 44px; }
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.hero-eyebrow::before { content:''; display:inline-block; width:20px; height:1px; background:var(--accent); }
+.hero-title {
+  font-size: clamp(28px, 4.5vw, 48px); font-weight: 700; line-height: 1.06;
+  letter-spacing: -0.02em; color: var(--text); margin-bottom: 14px;
+}
+.hero-title span { color: var(--accent); }
+.hero-sub { font-size: 14px; color: var(--text2); line-height: 1.65; max-width: 500px; }
+
+/* TABS */
+.tabs {
+  display: flex; gap: 2px; margin-bottom: 28px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 4px; width: fit-content;
+}
+.tab-btn {
+  padding: 8px 18px; border: none; border-radius: 7px; background: transparent;
+  color: var(--text2); font-family: var(--body); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.18s; white-space: nowrap;
+}
+.tab-btn.active { background: var(--accent); color: #000; font-weight: 600; }
+.tab-btn:not(.active):hover { color: var(--text); background: var(--surface2); }
+
+/* SECTION LABEL */
+.section-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* PANEL */
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+.panel-title { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 16px; letter-spacing: 0.02em; }
+
+/* FORM */
+.form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+.form-hint  { font-size: 10px; color: var(--text3); }
+.form-input {
+  height: 40px; background: var(--bg2); border: 1px solid var(--border2); border-radius: 7px;
+  color: var(--text); font-family: var(--mono); font-size: 13px; padding: 0 12px; outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s; width: 100%;
+}
+.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+.form-input::placeholder { color: var(--text3); }
+/* INPUT CON SELECTOR DE UNIDAD */
+.input-unit-wrap {
+  display: flex; align-items: stretch;
+  background: var(--bg2); border: 1px solid var(--border2); border-radius: 7px;
+  overflow: hidden; transition: border-color 0.18s, box-shadow 0.18s;
+}
+.input-unit-wrap:focus-within {
+  border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim);
+}
+.input-unit-wrap .form-input {
+  border: none; border-radius: 0; background: transparent;
+  box-shadow: none !important; flex: 1; min-width: 0;
+}
+.input-unit-wrap .form-input:focus { box-shadow: none !important; }
+.unit-select {
+  height: 40px; background: var(--surface2); border: none; border-left: 1px solid var(--border2);
+  color: var(--accent); font-family: var(--mono); font-size: 11px; font-weight: 500;
+  padding: 0 10px; cursor: pointer; outline: none; letter-spacing: 0.06em;
+  flex-shrink: 0; transition: background 0.15s;
+}
+.unit-select:hover { background: var(--border2); }
+.unit-select option { background: var(--surface2); color: var(--text); }
+
+.form-input-ticker {
+  font-size: 16px; font-weight: 500; height: 48px;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent);
+}
+
+/* BUTTONS */
+.btn-primary {
+  height: 46px; padding: 0 30px; background: var(--accent); color: #000;
+  border: none; border-radius: 8px; font-weight: 600; font-size: 13px;
+  letter-spacing: 0.04em; cursor: pointer; transition: all 0.18s; white-space: nowrap;
+}
+.btn-primary:hover { background: var(--accent2); box-shadow: 0 4px 20px var(--accent-glow); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  height: 46px; padding: 0 22px; background: transparent; color: var(--text2);
+  border: 1px solid var(--border2); border-radius: 8px; font-size: 13px; cursor: pointer; transition: all 0.18s;
+}
+.btn-secondary:hover { border-color: var(--text2); color: var(--text); }
+
+/* QUICK FILL */
+.quick-fill { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.qf-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+.qf-btn {
+  height: 28px; padding: 0 11px; background: transparent;
+  border: 1px solid var(--border2); border-radius: 5px; color: var(--text2);
+  font-family: var(--mono); font-size: 11px; cursor: pointer; transition: all 0.15s;
+}
+.qf-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+/* RESULTS */
+#results { display: none; }
+
+/* COMPANY BAR */
+.company-bar {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 32px; padding: 26px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  position: relative; overflow: hidden;
+}
+.company-bar::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.cb-ticker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 7px; }
+.cb-name   { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.1; margin-bottom: 4px; }
+.cb-sector { font-size: 12px; color: var(--text3); letter-spacing: 0.05em; }
+.cb-right  { text-align: right; }
+.cb-price  { font-size: 36px; font-weight: 700; color: var(--text); line-height: 1; letter-spacing: -0.02em; }
+.cb-currency { font-family: var(--mono); font-size: 13px; color: var(--text3); margin-right: 4px; }
+.cb-change { font-family: var(--mono); font-size: 12px; margin-top: 5px; }
+.cb-change.up { color: var(--accent); }
+.cb-change.down { color: var(--red); }
+.cb-change.neutral { color: var(--text3); }
+
+/* KPI */
+.kpi-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px,1fr)); gap: 10px; margin-bottom: 26px; }
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 15px 13px; position: relative; overflow: hidden; transition: border-color 0.2s;
+}
+.kpi-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; }
+.kpi-accent::after  { background: var(--accent); }
+.kpi-red::after     { background: var(--red); }
+.kpi-yellow::after  { background: var(--yellow); }
+.kpi-blue::after    { background: var(--blue); }
+.kpi-neutral::after { background: var(--border2); }
+.kpi-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; }
+.kpi-value { font-size: 19px; font-weight: 700; color: var(--text); line-height: 1; letter-spacing: -0.01em; }
+.kpi-sub   { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+/* TWO-COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
+@media (max-width: 640px) {
+  .two-col { grid-template-columns: 1fr; }
+  .cb-right { text-align: left; }
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* SEMÁFORO */
+.semaforo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.sem-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 13px; }
+.sem-top  { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.sem-name { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+.sem-dot  { width: 8px; height: 8px; border-radius: 50%; }
+.dot-green  { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.dot-yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+.dot-red    { background: var(--red);    box-shadow: 0 0 6px var(--red); }
+.dot-gray   { background: var(--text3); }
+.sem-value  { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+.sem-verdict {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 4px; display: inline-block; padding: 2px 7px; border-radius: 3px;
+}
+.sv-green  { background: var(--accent-dim); color: var(--accent);  border: 1px solid rgba(200,241,53,0.2); }
+.sv-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(255,200,74,0.2); }
+.sv-red    { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(255,90,90,0.2); }
+.sv-gray   { background: transparent;       color: var(--text3);  border: 1px solid var(--border); }
+
+/* DATA TABLE */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table tr { border-bottom: 1px solid var(--border); }
+.data-table tr:last-child { border-bottom: none; }
+.data-table td { padding: 9px 0; font-size: 12px; line-height: 1.4; }
+.data-table td:first-child { color: var(--text2); width: 58%; }
+.data-table td:last-child  { color: var(--text); text-align: right; font-weight: 500; font-family: var(--mono); font-size: 12px; }
+.v-green  { color: var(--accent) !important; }
+.v-red    { color: var(--red) !important; }
+.v-yellow { color: var(--yellow) !important; }
+
+/* GAUGE */
+.gauge-wrap { padding: 18px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-top: 13px; }
+.gauge-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+.gauge-row   { display: flex; align-items: center; gap: 11px; margin-bottom: 9px; }
+.gauge-name  { font-size: 11px; color: var(--text2); width: 120px; flex-shrink: 0; }
+.gauge-bar-bg   { flex:1; height:5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.gauge-bar-fill { height:100%; border-radius:3px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.gauge-val  { font-family: var(--mono); font-size: 11px; color: var(--text2); width: 50px; text-align: right; flex-shrink: 0; }
+
+/* ANÁLISIS */
+.analysis-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.ap-header { padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 11px; background: rgba(200,241,53,0.04); }
+.ap-icon { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; font-size: 11px; color: #000; flex-shrink: 0; }
+.ap-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.ap-sub   { font-size: 10px; color: var(--text3); margin-top: 1px; }
+.ap-body  { padding: 22px; }
+.ap-section-title { font-size: 13px; font-weight: 700; color: var(--text); margin: 18px 0 6px; display: flex; align-items: center; gap: 7px; }
+.ap-section-title:first-child { margin-top: 0; }
+.ap-text  { color: var(--text2); font-size: 13px; line-height: 1.78; white-space: pre-wrap; }
+
+/* DISCLAIMER */
+.disclaimer { margin-top: 32px; padding: 13px 17px; border: 1px solid var(--border); border-radius: 8px; font-size: 11px; color: var(--text3); line-height: 1.65; }
+.disclaimer strong { color: var(--text2); }
+
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text3); }
+.empty-icon  { font-size: 38px; margin-bottom: 12px; opacity: 0.4; }
+.empty-title { font-size: 17px; font-weight: 600; color: var(--text2); margin-bottom: 7px; }
+.empty-sub   { font-size: 12px; line-height: 1.65; max-width: 340px; margin: 0 auto; }
+
+/* AYUDA TABLE */
+.help-row { padding: 18px 0; border-bottom: 1px solid var(--border); }
+.help-row:last-child { border-bottom: none; }
+.help-source { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+.help-text   { font-size: 13px; color: var(--text2); line-height: 1.72; }
+.help-text strong { color: var(--text); }
+code { background: var(--bg2); padding: 2px 6px; border-radius: 4px; font-family: var(--mono); font-size: 11px; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+.fade-up { animation: fadeUp 0.4s ease forwards; }
+.d1 { animation-delay: 0.05s; opacity:0; }
+.d2 { animation-delay: 0.10s; opacity:0; }
+.d3 { animation-delay: 0.15s; opacity:0; }
+.d4 { animation-delay: 0.20s; opacity:0; }
+.d5 { animation-delay: 0.25s; opacity:0; }
+
+
+/* PERSPECTIVAS DE CRECIMIENTO */
+.growth-panel {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; margin-top: 14px;
+}
+.growth-header {
+  padding: 16px 22px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.growth-header-left { display: flex; align-items: center; gap: 12px; }
+.growth-icon {
+  width: 30px; height: 30px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.growth-icon.alto     { background: rgba(200,241,53,0.15); }
+.growth-icon.moderado { background: rgba(255,200,74,0.15); }
+.growth-icon.limitado { background: rgba(255,90,90,0.12); }
+.growth-icon.incierto { background: rgba(90,180,255,0.12); }
+
+.growth-verdict-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 20px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+}
+.gvb-alto     { background: rgba(200,241,53,0.12); color: var(--accent);  border: 1px solid rgba(200,241,53,0.25); }
+.gvb-moderado { background: rgba(255,200,74,0.10); color: var(--yellow); border: 1px solid rgba(255,200,74,0.25); }
+.gvb-limitado { background: rgba(255,90,90,0.10);  color: var(--red);    border: 1px solid rgba(255,90,90,0.22); }
+.gvb-incierto { background: rgba(90,180,255,0.10); color: var(--blue);   border: 1px solid rgba(90,180,255,0.22); }
+
+.growth-body { padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+
+.growth-dims {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
+}
+.growth-dim {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 13px 14px;
+}
+.gdim-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.gdim-name { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+.gdim-score {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em;
+  padding: 2px 7px; border-radius: 3px; text-transform: uppercase;
+}
+.gs-alto     { background: rgba(200,241,53,0.1); color: var(--accent);  border: 1px solid rgba(200,241,53,0.2); }
+.gs-moderado { background: rgba(255,200,74,0.1); color: var(--yellow); border: 1px solid rgba(255,200,74,0.2); }
+.gs-limitado { background: rgba(255,90,90,0.1);  color: var(--red);    border: 1px solid rgba(255,90,90,0.2); }
+.gs-neutro   { background: transparent;           color: var(--text3);  border: 1px solid var(--border); }
+
+.gdim-bar-bg   { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
+.gdim-bar-fill { height: 100%; border-radius: 2px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+.gdim-text { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+.growth-summary {
+  font-size: 13px; color: var(--text2); line-height: 1.78;
+  padding: 16px 18px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+}
+.growth-summary strong { color: var(--text); }
+
+
+/* ── SIMULADOR DE COMPRA ── */
+.sim-context-bar {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 20px; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.sim-ctx-item { display: flex; flex-direction: column; gap: 2px; }
+.sim-ctx-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+.sim-ctx-value { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); }
+.sim-ctx-sep { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
+.sim-no-data {
+  padding: 18px 20px; background: var(--yellow-dim); border: 1px solid rgba(255,200,74,0.2);
+  border-radius: 8px; font-size: 12px; color: var(--yellow); margin-bottom: 18px; display: none;
+}
+
+.sim-results-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px;
+  margin-bottom: 18px;
+}
+.sim-kpi {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 14px; position: relative; overflow: hidden;
+}
+.sim-kpi::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+}
+.sim-kpi.sk-accent::before { background: var(--accent); }
+.sim-kpi.sk-blue::before   { background: var(--blue); }
+.sim-kpi.sk-yellow::before { background: var(--yellow); }
+.sim-kpi.sk-red::before    { background: var(--red); }
+.sim-kpi-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; }
+.sim-kpi-value { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1; letter-spacing: -0.01em; }
+.sim-kpi-sub   { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+.sim-proj-table { width: 100%; border-collapse: collapse; }
+.sim-proj-table thead tr { border-bottom: 2px solid var(--border2); }
+.sim-proj-table th {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text3); padding: 0 0 10px; text-align: right; font-weight: 400;
+}
+.sim-proj-table th:first-child { text-align: left; }
+.sim-proj-table td { padding: 9px 0; font-size: 12px; border-bottom: 1px solid var(--border); font-family: var(--mono); text-align: right; color: var(--text2); }
+.sim-proj-table td:first-child { text-align: left; color: var(--text); }
+.sim-proj-table tr:last-child td { border-bottom: none; }
+.sim-proj-table tr.payback-row td { color: var(--accent); font-weight: 600; }
+.sim-proj-table tr.payback-row td:first-child::after { content: ' ← recuperación'; font-size: 10px; color: var(--accent); opacity: 0.7; }
+
+.verdict-box {
+  padding: 18px 20px; border-radius: 10px; margin-top: 4px;
+  font-size: 13px; line-height: 1.75; color: var(--text2);
+}
+.verdict-box strong { color: var(--text); }
+.verdict-box.vb-buy    { background: rgba(200,241,53,0.06); border: 1px solid rgba(200,241,53,0.18); }
+.verdict-box.vb-watch  { background: rgba(255,200,74,0.06); border: 1px solid rgba(255,200,74,0.18); }
+.verdict-box.vb-wait   { background: rgba(255,90,90,0.06);  border: 1px solid rgba(255,90,90,0.18); }
+.verdict-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.vt-buy   { color: var(--accent); }
+.vt-watch { color: var(--yellow); }
+.vt-wait  { color: var(--red); }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">RB</div>
+    <div>
+      <div class="logo-name">Radar Bursátil</div>
+      <div class="logo-tag">Bolsa de Santiago · Análisis Fundamental</div>
+    </div>
+  </div>
+  <div class="header-pill">Ingreso Manual · Sin APIs</div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero fade-up">
+    <div class="hero-eyebrow">Herramienta de análisis personal</div>
+    <h1 class="hero-title">Analiza cualquier<br>acción <span>chilena</span></h1>
+    <p class="hero-sub">Ingresa los datos desde Yahoo Finance o la CMF y obtén un análisis fundamental completo con semáforo de valoración, ratios e interpretación automática. Sin APIs ni conexiones externas.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs fade-up d1">
+    <button class="tab-btn active" onclick="switchTab('ingresar')">📋 Ingresar datos</button>
+    <button class="tab-btn" onclick="switchTab('resultados')">📊 Resultados</button>
+    <button class="tab-btn" onclick="switchTab('simulador')">🎯 Simulador de compra</button>
+    <button class="tab-btn" onclick="switchTab('ayuda')">❓ Dónde buscar datos</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TAB INGRESAR                                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div id="tab-ingresar" class="fade-up d2">
+
+    <!-- Identificación -->
+    <div class="section-label">Identificación de la empresa</div>
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column:span 2;">
+          <label class="form-label">Nemotécnico (Ticker) *</label>
+          <input type="text" id="f-ticker" class="form-input form-input-ticker" placeholder="ej: CHILE" maxlength="12" autocomplete="off" spellcheck="false">
+          <div class="form-hint">Código de la acción en la Bolsa de Santiago (obligatorio)</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombre de la empresa</label>
+          <input type="text" id="f-nombre" class="form-input" placeholder="ej: Banco de Chile">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sector / Industria</label>
+          <input type="text" id="f-sector" class="form-input" placeholder="ej: Financiero · Banca">
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <div class="form-label" style="margin-bottom:8px;">Acceso rápido</div>
+        <div class="quick-fill">
+          <button class="qf-btn" onclick="setTicker('CHILE','Banco de Chile','Financiero · Banca')">CHILE</button>
+          <button class="qf-btn" onclick="setTicker('BCI','Banco BCI','Financiero · Banca')">BCI</button>
+          <button class="qf-btn" onclick="setTicker('BSANTANDER','Banco Santander Chile','Financiero · Banca')">BSANTANDER</button>
+          <button class="qf-btn" onclick="setTicker('COLBUN','Colbún S.A.','Energía · Generación Eléctrica')">COLBUN</button>
+          <button class="qf-btn" onclick="setTicker('SQM-B','SQM S.A.','Materiales · Minería')">SQM-B</button>
+          <button class="qf-btn" onclick="setTicker('CENCOSUD','Cencosud S.A.','Consumo · Retail')">CENCOSUD</button>
+          <button class="qf-btn" onclick="setTicker('FALABELLA','Falabella S.A.','Consumo · Retail')">FALABELLA</button>
+          <button class="qf-btn" onclick="setTicker('LTM','LATAM Airlines','Transporte · Aerolíneas')">LTM</button>
+          <button class="qf-btn" onclick="setTicker('ENELCHILE','Enel Chile S.A.','Energía · Electricidad')">ENELCHILE</button>
+          <button class="qf-btn" onclick="setTicker('CCU','CCU S.A.','Consumo · Bebidas')">CCU</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Precio -->
+    <div class="section-label">Precio de mercado</div>
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Precio actual (CLP)</label>
+          <input type="number" id="f-precio" class="form-input" placeholder="ej: 105.50">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Variación del día (%)</label>
+          <input type="number" id="f-variacion" class="form-input" placeholder="ej: 1.25 o -0.80" step="0.01">
+          <div class="form-hint">Positivo = alza, negativo = baja</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cap. mercado (CLP)</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-mktcap" class="form-input" placeholder="ej: 4.5" step="0.01">
+            <select class="unit-select" id="f-mktcap-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Beta</label>
+          <input type="number" id="f-beta" class="form-input" placeholder="ej: 0.85" step="0.01">
+          <div class="form-hint">Volatilidad vs mercado</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Valoración -->
+    <div class="section-label">Ratios de valoración</div>
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">P/E Ratio</label>
+          <input type="number" id="f-pe" class="form-input" placeholder="ej: 14.5" step="0.1">
+          <div class="form-hint">Precio / Utilidad por acción</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">P/B Ratio</label>
+          <input type="number" id="f-pb" class="form-input" placeholder="ej: 1.8" step="0.01">
+          <div class="form-hint">Precio / Valor libro</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">EV/EBITDA</label>
+          <input type="number" id="f-ev" class="form-input" placeholder="ej: 8.2" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dividend Yield (%)</label>
+          <input type="number" id="f-yield" class="form-input" placeholder="ej: 4.5" step="0.1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado de Resultados -->
+    <div class="section-label">Estado de Resultados (últimos 12 meses, CLP)</div>
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Ingresos Totales</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-ingresos" class="form-input" placeholder="ej: 2.5" step="0.01">
+            <select class="unit-select" id="f-ingresos-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Utilidad Bruta</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-util-bruta" class="form-input" placeholder="ej: 800" step="0.01">
+            <select class="unit-select" id="f-util-bruta-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">EBITDA</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-ebitda" class="form-input" placeholder="ej: 600" step="0.01">
+            <select class="unit-select" id="f-ebitda-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">EBIT</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-ebit" class="form-input" placeholder="ej: 450" step="0.01">
+            <select class="unit-select" id="f-ebit-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Utilidad Neta</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-util-neta" class="form-input" placeholder="ej: 320" step="0.01">
+            <select class="unit-select" id="f-util-neta-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Flujo de Caja Libre</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-fcf" class="form-input" placeholder="ej: 280" step="0.01">
+            <select class="unit-select" id="f-fcf-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Crec. Ingresos YoY (%)</label>
+          <input type="number" id="f-crec-ing" class="form-input" placeholder="ej: 8.5 o -3.2" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Crec. Utilidades YoY (%)</label>
+          <input type="number" id="f-crec-util" class="form-input" placeholder="ej: 12.0" step="0.1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Balance -->
+    <div class="section-label">Balance General (CLP)</div>
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Activos Totales</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-activos" class="form-input" placeholder="ej: 8.5" step="0.01">
+            <select class="unit-select" id="f-activos-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pasivos Totales</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-pasivos" class="form-input" placeholder="ej: 6.0" step="0.01">
+            <select class="unit-select" id="f-pasivos-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Patrimonio</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-patrimonio" class="form-input" placeholder="ej: 2.5" step="0.01">
+            <select class="unit-select" id="f-patrimonio-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Deuda Total</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-deuda" class="form-input" placeholder="ej: 3.2" step="0.01">
+            <select class="unit-select" id="f-deuda-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Efectivo y Equivalentes</label>
+          <div class="input-unit-wrap">
+            <input type="number" id="f-efectivo" class="form-input" placeholder="ej: 450" step="0.01">
+            <select class="unit-select" id="f-efectivo-unit">
+              <option value="M">M</option>
+              <option value="MM">MM</option>
+              <option value="B" selected>B</option>
+              <option value="T">T</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Razón Corriente</label>
+          <input type="number" id="f-razon-corr" class="form-input" placeholder="ej: 1.35" step="0.01">
+        </div>
+      </div>
+    </div>
+
+    <!-- Rentabilidad -->
+    <div class="section-label">Indicadores de rentabilidad (%)</div>
+    <div class="panel" style="margin-bottom:28px;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">ROE (%)</label>
+          <input type="number" id="f-roe" class="form-input" placeholder="ej: 18.5" step="0.1">
+          <div class="form-hint">Retorno sobre Patrimonio</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ROA (%)</label>
+          <input type="number" id="f-roa" class="form-input" placeholder="ej: 4.2" step="0.1">
+          <div class="form-hint">Retorno sobre Activos</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Margen Bruto (%)</label>
+          <input type="number" id="f-margen-bruto" class="form-input" placeholder="ej: 32.0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Margen Neto (%)</label>
+          <input type="number" id="f-margen-neto" class="form-input" placeholder="ej: 12.8" step="0.1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="calcularYMostrar()">Generar análisis →</button>
+      <button class="btn-secondary" onclick="limpiarFormulario()">Limpiar todo</button>
+    </div>
+    <div id="form-error" style="display:none;margin-top:14px;padding:12px 16px;background:var(--red-dim);border:1px solid rgba(255,90,90,0.2);border-radius:8px;font-size:12px;color:var(--red);"></div>
+
+  </div><!-- /tab-ingresar -->
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TAB RESULTADOS                                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div id="tab-resultados" style="display:none;">
+
+    <div id="results-empty" class="empty-state">
+      <div class="empty-icon">📊</div>
+      <div class="empty-title">Sin datos aún</div>
+      <div class="empty-sub">Ve a "Ingresar datos", completa los campos y haz clic en "Generar análisis".</div>
+    </div>
+
+    <div id="results">
+
+      <div class="company-bar fade-up">
+        <div>
+          <div class="cb-ticker" id="r-ticker">—</div>
+          <div class="cb-name"   id="r-nombre">—</div>
+          <div class="cb-sector" id="r-sector">—</div>
+        </div>
+        <div class="cb-right">
+          <div class="cb-price"><span class="cb-currency">CLP</span><span id="r-precio">—</span></div>
+          <div class="cb-change neutral" id="r-variacion">—</div>
+        </div>
+      </div>
+
+      <div class="section-label fade-up d1">Métricas clave</div>
+      <div class="kpi-row fade-up d1" id="kpi-row"></div>
+
+      <div class="section-label fade-up d2">Valoración y estado de resultados</div>
+      <div class="two-col fade-up d2">
+        <div class="panel">
+          <div class="panel-title">Semáforo de valoración</div>
+          <div class="semaforo-grid" id="semaforo-grid"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Estado de resultados</div>
+          <table class="data-table" id="t-resultados"></table>
+        </div>
+      </div>
+
+      <div class="two-col fade-up d3">
+        <div class="panel">
+          <div class="panel-title">Balance general</div>
+          <table class="data-table" id="t-balance"></table>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Ratios de rentabilidad</div>
+          <table class="data-table" id="t-ratios"></table>
+        </div>
+      </div>
+
+      <div class="fade-up d4">
+        <div class="gauge-wrap">
+          <div class="gauge-label">Indicadores visuales de rentabilidad</div>
+          <div id="gauge-container"></div>
+        </div>
+      </div>
+
+
+      <div class="section-label fade-up d5" style="margin-top:26px;">Perspectivas de crecimiento</div>
+      <div class="growth-panel fade-up d5" id="growth-panel">
+        <div class="growth-header">
+          <div class="growth-header-left">
+            <div class="growth-icon" id="growth-icon">📈</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);">Crecimiento esperado</div>
+              <div style="font-size:10px;color:var(--text3);margin-top:1px;">Basado en indicadores históricos ingresados</div>
+            </div>
+          </div>
+          <div class="growth-verdict-badge" id="growth-badge">—</div>
+        </div>
+        <div class="growth-body">
+          <div class="growth-dims" id="growth-dims"></div>
+          <div class="growth-summary" id="growth-summary"></div>
+        </div>
+      </div>
+
+      <div class="section-label fade-up d5" style="margin-top:26px;">Análisis interpretativo</div>
+      <div class="analysis-panel fade-up d5">
+        <div class="ap-header">
+          <div class="ap-icon">AI</div>
+          <div>
+            <div class="ap-title">Análisis Fundamental Automático</div>
+            <div class="ap-sub">Generado localmente · Solo orientativo, no es asesoría financiera</div>
+          </div>
+        </div>
+        <div class="ap-body" id="ap-body"></div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-secondary" onclick="switchTab('ingresar')" style="font-size:12px;height:38px;">← Editar datos</button>
+        <button class="btn-secondary" onclick="limpiarYVolver()" style="font-size:12px;height:38px;">Nueva acción</button>
+      </div>
+
+      <div class="disclaimer">
+        <strong>⚠️ Aviso importante:</strong> Esta herramienta es solo para apoyo personal. Los datos son los que ingresaste manualmente.
+        Verifica siempre con fuentes oficiales (CMF, Bolsa de Santiago) antes de invertir.
+        <strong>Invertir en acciones conlleva riesgos y puedes perder parte o todo tu capital.</strong>
+      </div>
+
+    </div><!-- /results -->
+  </div><!-- /tab-resultados -->
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TAB SIMULADOR                                         -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div id="tab-simulador" style="display:none;">
+
+    <!-- Aviso si no hay datos del análisis -->
+    <div class="sim-no-data" id="sim-no-data">
+      ⚠️ Aún no has generado un análisis. Ve a <strong>Ingresar datos</strong>, completa los campos y haz clic en "Generar análisis" — el simulador tomará el precio y dividend yield desde ahí.
+    </div>
+
+    <!-- Barra de contexto (datos del análisis actual) -->
+    <div class="sim-context-bar" id="sim-context-bar" style="display:none;">
+      <div class="sim-ctx-item">
+        <span class="sim-ctx-label">Acción analizada</span>
+        <span class="sim-ctx-value" id="sim-ctx-ticker">—</span>
+      </div>
+      <div class="sim-ctx-sep"></div>
+      <div class="sim-ctx-item">
+        <span class="sim-ctx-label">Precio actual</span>
+        <span class="sim-ctx-value" id="sim-ctx-precio">—</span>
+      </div>
+      <div class="sim-ctx-sep"></div>
+      <div class="sim-ctx-item">
+        <span class="sim-ctx-label">Dividend Yield</span>
+        <span class="sim-ctx-value" id="sim-ctx-yield">—</span>
+      </div>
+      <div class="sim-ctx-sep"></div>
+      <div class="sim-ctx-item" style="font-size:11px;color:var(--text3);max-width:180px;line-height:1.4;">
+        Datos tomados desde el análisis generado. Puedes sobreescribirlos abajo.
+      </div>
+    </div>
+
+    <!-- Parámetros de la simulación -->
+    <div class="section-label">Parámetros de tu compra</div>
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Precio de compra (CLP) *</label>
+          <input type="number" id="sim-precio-compra" class="form-input" placeholder="ej: 105.50" step="0.01">
+          <div class="form-hint">Precio al que planeas comprar</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Capital a invertir (CLP) *</label>
+          <input type="number" id="sim-capital" class="form-input" placeholder="ej: 500000" step="1000">
+          <div class="form-hint">Monto total que destinarás</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dividend Yield anual (%)</label>
+          <input type="number" id="sim-yield" class="form-input" placeholder="ej: 5.2" step="0.1">
+          <div class="form-hint">Prellenado desde el análisis si existe</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dividendo por acción (CLP)</label>
+          <input type="number" id="sim-dpa" class="form-input" placeholder="ej: 5.20" step="0.01">
+          <div class="form-hint">Alternativa al yield (opcional)</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Crecimiento anual del dividendo (%)</label>
+          <input type="number" id="sim-crec-div" class="form-input" placeholder="ej: 5.0" step="0.1" value="5">
+          <div class="form-hint">Estimación conservadora: 3–7%</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Valor total portafolio (CLP)</label>
+          <input type="number" id="sim-portafolio" class="form-input" placeholder="ej: 5000000" step="10000">
+          <div class="form-hint">Para calcular % de concentración</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Comisión del broker (%)</label>
+          <input type="number" id="sim-comision" class="form-input" placeholder="ej: 0.5" step="0.01" value="0.5">
+          <div class="form-hint">Comisión de compra (típico 0.3–1%)</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Horizonte de proyección (años)</label>
+          <input type="number" id="sim-horizonte" class="form-input" placeholder="ej: 10" step="1" value="10" min="1" max="30">
+          <div class="form-hint">Hasta 30 años</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:28px;">
+      <button class="btn-primary" onclick="calcularSimulacion()">Simular compra →</button>
+      <button class="btn-secondary" onclick="limpiarSimulador()">Limpiar</button>
+    </div>
+    <div id="sim-error" style="display:none;margin-bottom:18px;padding:12px 16px;background:var(--red-dim);border:1px solid rgba(255,90,90,0.2);border-radius:8px;font-size:12px;color:var(--red);"></div>
+
+    <!-- Resultados de la simulación -->
+    <div id="sim-results" style="display:none;">
+
+      <div class="section-label">Resumen de la operación</div>
+      <div class="sim-results-grid" id="sim-kpi-grid"></div>
+
+      <div class="section-label" style="margin-top:6px;">Proyección de ingresos por dividendos</div>
+      <div class="panel" style="margin-bottom:14px;">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:14px;font-family:var(--mono);letter-spacing:0.06em;">
+          Asumiendo crecimiento constante del dividendo y reinversión nula
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="sim-proj-table" id="sim-proj-table"></table>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:6px;">Veredicto de la operación</div>
+      <div id="sim-verdict"></div>
+
+      <div class="disclaimer" style="margin-top:18px;">
+        <strong>⚠️ Aviso:</strong> Esta simulación es orientativa y se basa en supuestos de crecimiento constante del dividendo, lo cual no está garantizado. Los dividendos pueden variar según los resultados de la empresa. No constituye asesoría financiera.
+      </div>
+    </div>
+
+  </div><!-- /tab-simulador -->
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TAB AYUDA                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div id="tab-ayuda" style="display:none;">
+    <div class="panel">
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:20px;">¿Dónde encuentro cada dato?</div>
+
+      <div class="help-row">
+        <div class="help-source">📍 Yahoo Finance — más completo para ratios</div>
+        <div class="help-text">
+          1. Ve a <strong>finance.yahoo.com</strong><br>
+          2. Busca el ticker con sufijo <strong>.SN</strong> — ej: <code>CHILE.SN</code>, <code>BCI.SN</code><br>
+          3. <strong>Precio y variación</strong> → parte superior de la página<br>
+          4. <strong>P/E, P/B, Beta, Div. Yield</strong> → pestaña "Statistics"<br>
+          5. <strong>Estado de Resultados, Balance, Flujo de Caja</strong> → pestaña "Financials"<br>
+          6. <strong>ROE, ROA, márgenes</strong> → "Statistics" → sección "Profitability"
+        </div>
+      </div>
+
+      <div class="help-row">
+        <div class="help-source">📍 CMF Chile — fuente oficial regulatoria</div>
+        <div class="help-text">
+          1. Ve a <strong>cmfchile.cl</strong><br>
+          2. Busca la empresa en el buscador<br>
+          3. Accede a "Estados Financieros" — datos en CLP, úsalos directo<br>
+          4. Ideal para Balance y Estado de Resultados anuales
+        </div>
+      </div>
+
+      <div class="help-row">
+        <div class="help-source">📍 Bolsa de Santiago — precio en tiempo real</div>
+        <div class="help-text">
+          1. Ve a <strong>bolsadesantiago.com</strong><br>
+          2. Busca la acción en "Renta Variable"<br>
+          3. Encontrarás precio actual, variación y capitalización de mercado
+        </div>
+      </div>
+
+      <div class="help-row">
+        <div class="help-source">📌 Referencia de rangos por indicador</div>
+        <table class="data-table" style="margin-top:8px;">
+          <tr><td><strong style="color:var(--text)">P/E Ratio</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Bajo 12 · 🟡 12–22 · 🔴 Sobre 22</td></tr>
+          <tr><td><strong style="color:var(--text)">P/B Ratio</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Bajo 1 · 🟡 1–3 · 🔴 Sobre 3</td></tr>
+          <tr><td><strong style="color:var(--text)">EV/EBITDA</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Bajo 6 · 🟡 6–14 · 🔴 Sobre 14</td></tr>
+          <tr><td><strong style="color:var(--text)">Div. Yield</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Sobre 6% · 🟡 2–6% · 🔴 Bajo 2%</td></tr>
+          <tr><td><strong style="color:var(--text)">ROE</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Sobre 15% · 🟡 8–15% · 🔴 Bajo 8%</td></tr>
+          <tr><td><strong style="color:var(--text)">Deuda/Patrimonio</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Bajo 0.5 · 🟡 0.5–1.5 · 🔴 Sobre 1.5</td></tr>
+          <tr><td><strong style="color:var(--text)">Razón Corriente</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Sobre 1.5 · 🟡 1–1.5 · 🔴 Bajo 1</td></tr>
+          <tr><td><strong style="color:var(--text)">Margen Neto</strong></td><td style="color:var(--text2);text-align:left!important;">🟢 Sobre 15% · 🟡 5–15% · 🔴 Bajo 5%</td></tr>
+        </table>
+      </div>
+
+    </div>
+  </div><!-- /tab-ayuda -->
+
+</div><!-- /container -->
+
+<script>
+// ── TABS ───────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  ['ingresar','resultados','simulador','ayuda'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', ['ingresar','resultados','simulador','ayuda'][i] === tab);
+  });
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+// Campos monetarios con selector de unidad — devuelve siempre en CLP millones
+// Factores: el valor ingresado × factor = CLP reales
+const UNIT_FACTORS = {
+  'M':  1e6,           // millones
+  'MM': 1e9,           // miles de millones
+  'B':  1e12,          // billones
+  'T':  1e15           // trillones
+};
+const MONETARY_IDS = ['f-mktcap','f-ingresos','f-util-bruta','f-ebitda','f-ebit',
+                      'f-util-neta','f-fcf','f-activos','f-pasivos','f-patrimonio',
+                      'f-deuda','f-efectivo'];
+
+function v(id) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const n = parseFloat(el.value);
+  if (isNaN(n)) return null;
+  // Si es campo monetario, aplica el factor de la unidad seleccionada
+  const unitEl = document.getElementById(id + '-unit');
+  if (unitEl) {
+    const factor = UNIT_FACTORS[unitEl.value] || 1;
+    return n * factor; // resultado en CLP reales (pesos)
+  }
+  return n;
+}
+function s(id) { return document.getElementById(id).value.trim(); }
+
+function fmt(n, dec = 0) {
+  if (n === null || n === undefined || isNaN(n)) return 'N/D';
+  return new Intl.NumberFormat('es-CL', { maximumFractionDigits: dec, minimumFractionDigits: dec }).format(n);
+}
+
+function fmtM(n) {
+  // n está en CLP reales (pesos)
+  if (n === null || n === undefined || isNaN(n)) return 'N/D';
+  const abs = Math.abs(n);
+  if (abs >= 1e15) return (n / 1e15).toFixed(3) + ' T';
+  if (abs >= 1e12) return (n / 1e12).toFixed(2) + ' B';
+  if (abs >= 1e9)  return (n / 1e9).toFixed(1)  + ' MM';
+  if (abs >= 1e6)  return (n / 1e6).toFixed(1)  + ' M';
+  return new Intl.NumberFormat('es-CL').format(Math.round(n));
+}
+
+function fmtPct(n) {
+  if (n === null || isNaN(n)) return 'N/D';
+  return n.toFixed(1) + '%';
+}
+
+function colorClass(val, bajo, alto, invertido = false) {
+  if (val === null || isNaN(val)) return '';
+  if (!invertido) return val < bajo ? 'v-green' : val < alto ? 'v-yellow' : 'v-red';
+  return val > alto ? 'v-green' : val > bajo ? 'v-yellow' : 'v-red';
+}
+
+// ── QUICK FILL ────────────────────────────────────────────────────────────────
+function setTicker(ticker, nombre, sector) {
+  document.getElementById('f-ticker').value = ticker;
+  document.getElementById('f-nombre').value = nombre;
+  document.getElementById('f-sector').value = sector;
+}
+
+function limpiarFormulario() {
+  document.querySelectorAll('.form-input').forEach(el => el.value = '');
+  // Resetear selectores de unidad a "B" (valor por defecto)
+  document.querySelectorAll('.unit-select').forEach(el => el.value = 'B');
+  document.getElementById('form-error').style.display = 'none';
+}
+
+function limpiarYVolver() {
+  limpiarFormulario();
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('results-empty').style.display = 'block';
+  switchTab('ingresar');
+}
+
+// ── SEMÁFORO ──────────────────────────────────────────────────────────────────
+function calcSemaforo(metric, value) {
+  const cfg = {
+    pe:    { name:'P/E Ratio',     bajo:12,  alto:22,  inv:false, fmt: n => n != null ? fmt(n,1) : 'N/D' },
+    pb:    { name:'P/B Ratio',     bajo:1,   alto:3,   inv:false, fmt: n => n != null ? fmt(n,2) : 'N/D' },
+    ev:    { name:'EV/EBITDA',     bajo:6,   alto:14,  inv:false, fmt: n => n != null ? fmt(n,1) : 'N/D' },
+    yield: { name:'Div. Yield',    bajo:2,   alto:6,   inv:true,  fmt: n => n != null ? fmtPct(n) : 'N/D' },
+    dp:    { name:'Deuda/Patrim.', bajo:0.5, alto:1.5, inv:false, fmt: n => n != null ? fmt(n,2)+'x' : 'N/D' },
+    mn:    { name:'Margen Neto',   bajo:5,   alto:15,  inv:true,  fmt: n => n != null ? fmtPct(n) : 'N/D' },
+  };
+  const c = cfg[metric];
+  if (!c || value === null) return { color:'gray', verdict:'Sin datos', label: c?.name || metric, display:'N/D' };
+
+  const color = !c.inv
+    ? (value < c.bajo ? 'green' : value < c.alto ? 'yellow' : 'red')
+    : (value > c.alto ? 'green' : value > c.bajo ? 'yellow' : 'red');
+
+  const verdicts = {
+    green:  { pe:'Barata', pb:'Barata', ev:'Barata', yield:'Yield alto', dp:'Deuda baja', mn:'Margen alto' },
+    yellow: { pe:'Valor justo', pb:'Valor justo', ev:'Valor justo', yield:'Yield medio', dp:'Deuda moderada', mn:'Margen medio' },
+    red:    { pe:'Cara', pb:'Cara', ev:'Cara', yield:'Yield bajo', dp:'Deuda alta', mn:'Margen bajo' },
+  };
+
+  return { color, verdict: verdicts[color][metric], label: c.name, display: c.fmt(value) };
+}
+
+
+// ── PERSPECTIVAS DE CRECIMIENTO ───────────────────────────────────────────────
+function generarCrecimiento(d) {
+  const dims = [];
+
+  // 1. Momentum de ingresos
+  let momScore = 'neutro', momVal = 0, momTxt = 'Sin datos de crecimiento de ingresos.';
+  if (d.crecIng != null) {
+    if (d.crecIng >= 10)       { momScore='alto';     momVal=90; momTxt=`Ingresos creciendo +${d.crecIng.toFixed(1)}% YoY — expansión sólida que sugiere demanda sostenida.`; }
+    else if (d.crecIng >= 4)   { momScore='moderado'; momVal=60; momTxt=`Ingresos creciendo +${d.crecIng.toFixed(1)}% YoY — ritmo positivo aunque moderado.`; }
+    else if (d.crecIng >= 0)   { momScore='moderado'; momVal=35; momTxt=`Ingresos creciendo +${d.crecIng.toFixed(1)}% YoY — crecimiento marginal, monitorear continuidad.`; }
+    else                        { momScore='limitado'; momVal=15; momTxt=`Ingresos cayendo ${d.crecIng.toFixed(1)}% YoY — señal de alerta sobre la demanda futura.`; }
+  }
+  dims.push({ name:'Momentum de ingresos', score: momScore, val: momVal, txt: momTxt });
+
+  // 2. Expansión de utilidades
+  let utScore = 'neutro', utVal = 0, utTxt = 'Sin datos de crecimiento de utilidades.';
+  if (d.crecUtil != null) {
+    if (d.crecUtil >= 12)      { utScore='alto';     utVal=88; utTxt=`Utilidades creciendo +${d.crecUtil.toFixed(1)}% YoY — la empresa está escalando su rentabilidad.`; }
+    else if (d.crecUtil >= 4)  { utScore='moderado'; utVal=58; utTxt=`Utilidades creciendo +${d.crecUtil.toFixed(1)}% YoY — expansión positiva de la rentabilidad.`; }
+    else if (d.crecUtil >= 0)  { utScore='moderado'; utVal=30; utTxt=`Utilidades estables (+${d.crecUtil.toFixed(1)}%) — sin expansión significativa reciente.`; }
+    else                        { utScore='limitado'; utVal=12; utTxt=`Utilidades cayendo ${d.crecUtil.toFixed(1)}% YoY — compresión de rentabilidad que limita el crecimiento.`; }
+  }
+  dims.push({ name:'Expansión de utilidades', score: utScore, val: utVal, txt: utTxt });
+
+  // 3. Capacidad de reinversión (FCF positivo + deuda manejable)
+  let reinvScore = 'neutro', reinvVal = 0, reinvTxt = 'Ingresa FCL y deuda para evaluar capacidad de reinversión.';
+  if (d.fcf != null || d.dp != null) {
+    const fcfOk  = d.fcf != null  ? d.fcf > 0   : null;
+    const deudaOk= d.dp  != null  ? d.dp <= 1.5  : null;
+    if (fcfOk === true  && deudaOk === true)  { reinvScore='alto';     reinvVal=85; reinvTxt='FCL positivo y deuda controlada: la empresa tiene holgura para reinvertir en crecimiento sin depender de nueva deuda.'; }
+    else if (fcfOk === true  && deudaOk === false) { reinvScore='moderado'; reinvVal=50; reinvTxt='FCL positivo pero deuda elevada: puede reinvertir, aunque parte del flujo irá a servicio de deuda.'; }
+    else if (fcfOk === false && deudaOk === true)  { reinvScore='moderado'; reinvVal=40; reinvTxt='FCL negativo pero deuda baja: puede financiarse, aunque el consumo de caja debe ser temporal.'; }
+    else if (fcfOk === false && deudaOk === false) { reinvScore='limitado'; reinvVal=15; reinvTxt='FCL negativo y deuda alta: capacidad de reinversión muy limitada sin acceso a nueva deuda o emisión de acciones.'; }
+    else if (fcfOk === true)  { reinvScore='moderado'; reinvVal=65; reinvTxt='FCL positivo: buena base para reinvertir, aunque se desconoce el nivel de deuda.'; }
+    else                       { reinvScore='limitado'; reinvVal=20; reinvTxt='FCL negativo: consumo de caja que puede comprometer el financiamiento del crecimiento.'; }
+  }
+  dims.push({ name:'Capacidad de reinversión', score: reinvScore, val: reinvVal, txt: reinvTxt });
+
+  // 4. Eficiencia operacional (ROE + margen)
+  let efiScore = 'neutro', efiVal = 0, efiTxt = 'Ingresa ROE y margen neto para evaluar eficiencia operacional.';
+  if (d.roe != null || d.margenNeto != null) {
+    const roeScore  = d.roe != null ? (d.roe >= 15 ? 2 : d.roe >= 8 ? 1 : 0) : 1;
+    const margScore = d.margenNeto != null ? (d.margenNeto >= 15 ? 2 : d.margenNeto >= 5 ? 1 : 0) : 1;
+    const total = roeScore + margScore;
+    if (total >= 3)      { efiScore='alto';     efiVal=85; efiTxt=`ROE de ${d.roe!=null?d.roe.toFixed(1)+'%':'N/D'} y margen neto de ${d.margenNeto!=null?d.margenNeto.toFixed(1)+'%':'N/D'}: alta eficiencia operacional que sustenta el crecimiento rentable.`; }
+    else if (total >= 2) { efiScore='moderado'; efiVal=55; efiTxt=`Eficiencia operacional adecuada. Hay espacio para mejorar márgenes y así potenciar el crecimiento futuro.`; }
+    else                  { efiScore='limitado'; efiVal=20; efiTxt=`Baja eficiencia operacional actual. El crecimiento sin mejora de márgenes podría no traducirse en mayor valor para el accionista.`; }
+  }
+  dims.push({ name:'Eficiencia operacional', score: efiScore, val: efiVal, txt: efiTxt });
+
+  // 5. Solidez financiera para crecer (razón corriente + deuda)
+  let solScore = 'neutro', solVal = 0, solTxt = 'Ingresa razón corriente y deuda/patrimonio para evaluar solidez.';
+  if (d.razonCorr != null || d.dp != null) {
+    const liqOk  = d.razonCorr != null ? (d.razonCorr >= 1.5 ? 2 : d.razonCorr >= 1 ? 1 : 0) : 1;
+    const apalOk = d.dp != null ? (d.dp <= 0.5 ? 2 : d.dp <= 1.5 ? 1 : 0) : 1;
+    const tot = liqOk + apalOk;
+    if (tot >= 3)      { solScore='alto';     solVal=87; solTxt='Balance sólido con buena liquidez y deuda controlada: la empresa tiene músculo financiero para expandirse.'; }
+    else if (tot >= 2) { solScore='moderado'; solVal=52; solTxt='Solidez financiera razonable. Puede crecer, aunque con menor margen de maniobra ante imprevistos.'; }
+    else                { solScore='limitado'; solVal=18; solTxt='Liquidez ajustada o deuda elevada: el crecimiento futuro podría verse frenado por restricciones financieras.'; }
+  }
+  dims.push({ name:'Solidez financiera', score: solScore, val: solVal, txt: solTxt });
+
+  // ── Veredicto global
+  const scoreMap = { alto: 3, moderado: 2, limitado: 1, neutro: 0 };
+  const scores = dims.filter(d => d.score !== 'neutro').map(d => scoreMap[d.score]);
+  let veredicto = 'incierto', emoji = '❓';
+  if (scores.length === 0) {
+    veredicto = 'incierto';
+    emoji = '❓';
+  } else {
+    const avg = scores.reduce((a,b) => a+b, 0) / scores.length;
+    if (avg >= 2.4)      { veredicto='alto';     emoji='🚀'; }
+    else if (avg >= 1.6) { veredicto='moderado'; emoji='📈'; }
+    else if (avg >= 0.8) { veredicto='limitado'; emoji='⚠️'; }
+    else                  { veredicto='limitado'; emoji='🔴'; }
+  }
+
+  // ── Resumen narrativo
+  const datosDisp = dims.filter(d => d.score !== 'neutro').length;
+  let resumen = '';
+  if (datosDisp === 0) {
+    resumen = 'Ingresa crecimiento de ingresos, utilidades, FCL, ROE, margen neto y ratios de deuda para obtener una proyección de crecimiento fundamentada.';
+  } else {
+    const positivos = dims.filter(d => d.score === 'alto').length;
+    const negativos = dims.filter(d => d.score === 'limitado').length;
+    const nombre = d.nombre || d.ticker;
+    if (veredicto === 'alto') {
+      resumen = `<strong>${nombre}</strong> presenta un perfil de crecimiento sólido según los indicadores ingresados. ${positivos} de ${datosDisp} dimensiones analizadas apuntan a condiciones favorables para expansión futura. La combinación de momentum de ingresos, rentabilidad y solidez financiera sugiere que la empresa tiene capacidad real para crecer y generar valor para sus accionistas en el mediano plazo.`;
+    } else if (veredicto === 'moderado') {
+      resumen = `<strong>${nombre}</strong> muestra perspectivas de crecimiento moderadas. Hay señales positivas en algunas dimensiones, pero también áreas que podrían limitar la velocidad de expansión. ${negativos > 0 ? `Se detectaron ${negativos} factor(es) de riesgo que conviene monitorear.` : 'La empresa tiene base para crecer, aunque sin catalizadores claros de aceleración en el corto plazo.'}`;
+    } else if (veredicto === 'limitado') {
+      resumen = `<strong>${nombre}</strong> enfrenta condiciones que limitan su potencial de crecimiento en el corto a mediano plazo según los datos analizados. ${negativos} de ${datosDisp} dimensiones presentan señales de alerta. Esto no significa que la empresa no pueda crecer, pero sería necesario un cambio en sus métricas operacionales o financieras para sustentar una expansión significativa.`;
+    } else {
+      resumen = `No hay suficientes datos para proyectar el crecimiento de <strong>${nombre}</strong> con certeza. Completa más campos (crecimiento de ingresos, utilidades, FCL, ROE, márgenes) para obtener una proyección más fundamentada.`;
+    }
+  }
+
+  return { dims, veredicto, emoji, resumen };
+}
+
+function renderCrecimiento(d) {
+  const { dims, veredicto, emoji, resumen } = generarCrecimiento(d);
+
+  // Ícono y badge
+  const iconEl  = document.getElementById('growth-icon');
+  const badgeEl = document.getElementById('growth-badge');
+  const labels  = { alto:'Crecimiento Alto', moderado:'Crecimiento Moderado', limitado:'Crecimiento Limitado', incierto:'Datos Insuficientes' };
+  iconEl.textContent  = emoji;
+  iconEl.className    = `growth-icon ${veredicto}`;
+  badgeEl.textContent = labels[veredicto];
+  badgeEl.className   = `growth-verdict-badge gvb-${veredicto}`;
+
+  const colorMap = { alto:'var(--accent)', moderado:'var(--yellow)', limitado:'var(--red)', neutro:'var(--text3)' };
+
+  // Dimensiones
+  document.getElementById('growth-dims').innerHTML = dims.map(dim => `
+    <div class="growth-dim">
+      <div class="gdim-top">
+        <span class="gdim-name">${dim.name}</span>
+        <span class="gdim-score gs-${dim.score}">${dim.score === 'neutro' ? 'S/D' : dim.score}</span>
+      </div>
+      <div class="gdim-bar-bg">
+        <div class="gdim-bar-fill" style="width:${dim.val}%;background:${colorMap[dim.score]};"></div>
+      </div>
+      <div class="gdim-text">${dim.txt}</div>
+    </div>`).join('');
+
+  // Resumen
+  document.getElementById('growth-summary').innerHTML = resumen;
+}
+
+// ── ANÁLISIS INTERPRETATIVO ───────────────────────────────────────────────────
+function generarAnalisis(d) {
+  const secciones = [];
+
+  // RESUMEN EJECUTIVO
+  const sems = ['pe','pb','ev','yield'].map(m => calcSemaforo(m, d[m])).filter(s => s.color !== 'gray');
+  const verdes = sems.filter(s => s.color === 'green').length;
+  const rojos  = sems.filter(s => s.color === 'red').length;
+  let resumen = '';
+  if (sems.length === 0) {
+    resumen = `${d.nombre} — No se ingresaron suficientes datos de valoración para emitir un veredicto. Completa al menos P/E, P/B o Dividend Yield.`;
+  } else if (verdes >= sems.length * 0.6) {
+    resumen = `${d.nombre} (${d.ticker}.SN) presenta indicadores que sugieren que la acción podría estar cotizando bajo su valor justo. ${verdes} de ${sems.length} métricas de valoración apuntan a una oportunidad atractiva.`;
+  } else if (rojos >= sems.length * 0.6) {
+    resumen = `${d.nombre} (${d.ticker}.SN) muestra señales de valoración exigente. ${rojos} de ${sems.length} métricas indican que el precio actual podría no ofrecer suficiente margen de seguridad.`;
+  } else {
+    resumen = `${d.nombre} (${d.ticker}.SN) presenta una valoración mixta: algunos indicadores apuntan a precio justo mientras otros están en zonas de alerta. Se recomienda analizar el contexto sectorial y los resultados recientes.`;
+  }
+  secciones.push({ emoji:'📌', titulo:'RESUMEN EJECUTIVO', texto: resumen });
+
+  // VALORACIÓN
+  let val = '';
+  if (d.pe != null)    val += `P/E de ${fmt(d.pe,1)}x: ${d.pe < 12 ? 'bajo para el mercado chileno (promedio IPSA ~14x), puede indicar valor.' : d.pe < 22 ? 'dentro del rango normal para el mercado local.' : 'sobre el promedio histórico, implica altas expectativas de crecimiento.'}\n`;
+  if (d.pb != null)    val += `P/B de ${fmt(d.pb,2)}x: ${d.pb < 1 ? 'cotiza bajo su valor libro, históricamente señal de valor.' : d.pb < 3 ? 'precio razonable respecto al valor contable.' : 'precio significativamente sobre su valor libro.'}\n`;
+  if (d.ev != null)    val += `EV/EBITDA de ${fmt(d.ev,1)}x: ${d.ev < 6 ? 'múltiplo operacional atractivo.' : d.ev < 14 ? 'en línea con la industria.' : 'múltiplo elevado que exige alto crecimiento futuro.'}\n`;
+  if (d.yield != null) val += `Dividend Yield de ${fmtPct(d.yield)}: ${d.yield >= 6 ? 'rendimiento muy atractivo para renta pasiva.' : d.yield >= 2 ? 'yield moderado, complementa el retorno de capital.' : 'yield bajo, retorno centrado en apreciación de precio.'}\n`;
+  if (!val) val = 'Ingresa P/E, P/B, EV/EBITDA y Dividend Yield para obtener el análisis de valoración.';
+  secciones.push({ emoji:'💰', titulo:'VALORACIÓN', texto: val.trim() });
+
+  // SALUD FINANCIERA
+  let salud = '';
+  if (d.roe != null)       salud += `ROE de ${fmtPct(d.roe)}: ${d.roe >= 15 ? 'excelente retorno para los accionistas.' : d.roe >= 8 ? 'adecuado para el mercado local.' : 'bajo, la empresa tiene dificultades para rentabilizar su patrimonio.'}\n`;
+  if (d.roa != null)       salud += `ROA de ${fmtPct(d.roa)}: ${d.roa >= 5 ? 'buena eficiencia en el uso de activos.' : d.roa >= 2 ? 'eficiencia en activos dentro del rango aceptable.' : 'baja eficiencia, común en empresas intensivas en capital.'}\n`;
+  if (d.margenNeto != null) salud += `Margen neto de ${fmtPct(d.margenNeto)}: ${d.margenNeto >= 15 ? 'excelente capacidad de convertir ventas en utilidad.' : d.margenNeto >= 5 ? 'margen moderado, típico del sector.' : 'margen ajustado, alta sensibilidad a variaciones de costos.'}\n`;
+  if (d.dp != null)        salud += `Deuda/Patrimonio de ${fmt(d.dp,2)}x: ${d.dp <= 0.5 ? 'estructura conservadora con baja dependencia de deuda.' : d.dp <= 1.5 ? 'apalancamiento manejable.' : 'deuda elevada, importante monitorear vencimientos y cobertura de intereses.'}\n`;
+  if (d.fcf != null)       salud += `FCL de ${fmtM(d.fcf)}: ${d.fcf > 0 ? 'genera caja positiva, puede financiar dividendos e inversiones.' : 'flujo negativo — revisar si obedece a inversiones de crecimiento o debilidad operacional.'}\n`;
+  if (!salud) salud = 'Ingresa ROE, ROA, margen neto y ratios de deuda para el análisis de salud financiera.';
+  secciones.push({ emoji:'📊', titulo:'SALUD FINANCIERA', texto: salud.trim() });
+
+  // CRECIMIENTO
+  let crec = '';
+  if (d.crecIng != null)  crec += `Ingresos YoY: ${fmtPct(d.crecIng)} — ${d.crecIng >= 10 ? 'crecimiento sólido.' : d.crecIng >= 0 ? 'crecimiento moderado pero positivo.' : 'contracción de ingresos, revisar contexto sectorial.'}\n`;
+  if (d.crecUtil != null) crec += `Utilidades YoY: ${fmtPct(d.crecUtil)} — ${d.crecUtil >= 10 ? 'expansión de utilidades destacada.' : d.crecUtil >= 0 ? 'crecimiento positivo aunque moderado.' : 'caída en utilidades, monitorear si es temporal o estructural.'}\n`;
+  if (!crec) crec = 'Ingresa el crecimiento de ingresos y utilidades YoY para el análisis de momentum.';
+  secciones.push({ emoji:'📈', titulo:'CRECIMIENTO Y MOMENTUM', texto: crec.trim() });
+
+  // PUNTOS DE ATENCIÓN
+  const puntos = [];
+  if (d.pe != null && d.pe > 25)          puntos.push('⚠️ P/E elevado: las altas expectativas deben confirmarse con resultados concretos.');
+  if (d.dp != null && d.dp > 1.5)         puntos.push('⚠️ Deuda alta: revisar vencimientos y cobertura de intereses.');
+  if (d.razonCorr != null && d.razonCorr < 1) puntos.push('⚠️ Liquidez ajustada: razón corriente bajo 1 puede indicar dificultades de corto plazo.');
+  if (d.fcf != null && d.fcf < 0)         puntos.push('⚠️ FCL negativo: verificar si es por inversión estratégica o debilidad operacional.');
+  if (d.crecIng != null && d.crecIng < 0) puntos.push('⚠️ Ingresos en contracción: analizar causas (precio, volumen, tipo de cambio).');
+  if (d.roe != null && d.roe >= 18)       puntos.push('✅ ROE alto: sólidos retornos históricos sobre el patrimonio.');
+  if (d.yield != null && d.yield >= 5)    puntos.push('✅ Dividend Yield atractivo: buena fuente de renta pasiva.');
+  if (d.margenNeto != null && d.margenNeto >= 15) puntos.push('✅ Margen neto elevado: alta eficiencia para rentabilizar ventas.');
+  if (d.crecIng != null && d.crecIng >= 10) puntos.push('✅ Crecimiento de ingresos robusto: expansión de ventas sólida.');
+  if (puntos.length === 0) puntos.push('Completa más campos para generar puntos de atención específicos para esta empresa.');
+  secciones.push({ emoji:'🔔', titulo:'PUNTOS DE ATENCIÓN', texto: puntos.join('\n') });
+
+  secciones.push({ emoji:'⚠️', titulo:'ADVERTENCIA', texto: 'Este análisis es automático y orientativo, basado únicamente en los datos ingresados. No constituye asesoría financiera profesional. Contrasta siempre con fuentes oficiales y tu propio criterio antes de tomar decisiones de inversión.' });
+
+  return secciones;
+}
+
+// ── CALCULAR Y MOSTRAR ────────────────────────────────────────────────────────
+function calcularYMostrar() {
+  const errEl = document.getElementById('form-error');
+  errEl.style.display = 'none';
+
+  const ticker = s('f-ticker').toUpperCase();
+  if (!ticker) {
+    errEl.textContent = 'El nemotécnico es obligatorio. Ingresa el código de la acción (ej: CHILE, BCI).';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const d = {
+    ticker,
+    nombre:     s('f-nombre') || ticker,
+    sector:     s('f-sector') || 'Bolsa de Santiago',
+    precio:     v('f-precio'),
+    variacion:  v('f-variacion'),
+    mktcap:     v('f-mktcap'),
+    beta:       v('f-beta'),
+    pe:         v('f-pe'),
+    pb:         v('f-pb'),
+    ev:         v('f-ev'),
+    yield:      v('f-yield'),
+    ingresos:   v('f-ingresos'),
+    utilBruta:  v('f-util-bruta'),
+    ebitda:     v('f-ebitda'),
+    ebit:       v('f-ebit'),
+    utilNeta:   v('f-util-neta'),
+    fcf:        v('f-fcf'),
+    crecIng:    v('f-crec-ing'),
+    crecUtil:   v('f-crec-util'),
+    activos:    v('f-activos'),
+    pasivos:    v('f-pasivos'),
+    patrimonio: v('f-patrimonio'),
+    deuda:      v('f-deuda'),
+    efectivo:   v('f-efectivo'),
+    razonCorr:  v('f-razon-corr'),
+    roe:        v('f-roe'),
+    roa:        v('f-roa'),
+    margenBruto:v('f-margen-bruto'),
+    margenNeto: v('f-margen-neto'),
+  };
+
+  // Calcular deuda/patrimonio automáticamente si hay datos
+  d.dp = (d.deuda != null && d.patrimonio != null && d.patrimonio !== 0) ? d.deuda / d.patrimonio : null;
+
+  // Calcular márgenes si se pueden derivar
+  const mBrutoCalc = (d.utilBruta != null && d.ingresos) ? (d.utilBruta / d.ingresos * 100) : d.margenBruto;
+  const mNetoCalc  = (d.utilNeta  != null && d.ingresos) ? (d.utilNeta  / d.ingresos * 100) : d.margenNeto;
+  if (d.margenNeto == null) d.margenNeto = mNetoCalc;
+
+  // ── Company bar
+  document.getElementById('r-ticker').textContent  = ticker + '.SN';
+  document.getElementById('r-nombre').textContent  = d.nombre;
+  document.getElementById('r-sector').textContent  = d.sector;
+  document.getElementById('r-precio').textContent  = d.precio != null ? fmt(d.precio, 2) : 'N/D';
+
+  const varEl = document.getElementById('r-variacion');
+  if (d.variacion != null) {
+    const sign = d.variacion >= 0 ? '+' : '';
+    varEl.textContent = `${sign}${fmtPct(d.variacion)} hoy`;
+    varEl.className = 'cb-change ' + (d.variacion > 0 ? 'up' : d.variacion < 0 ? 'down' : 'neutral');
+  } else {
+    varEl.textContent = 'Variación no ingresada';
+    varEl.className = 'cb-change neutral';
+  }
+
+  // ── KPIs
+  const kpis = [
+    { label:'Cap. Mercado',  value: d.mktcap  != null ? fmtM(d.mktcap)   : 'N/D', sub:'CLP', color:'neutral' },
+    { label:'P/E Ratio',     value: d.pe       != null ? fmt(d.pe,1)       : 'N/D', sub:'Precio/Utilidad',   color: d.pe != null ? (d.pe<12?'accent':d.pe<22?'yellow':'red') : 'neutral' },
+    { label:'P/B Ratio',     value: d.pb       != null ? fmt(d.pb,2)       : 'N/D', sub:'Precio/Libro',      color: d.pb != null ? (d.pb<1?'accent':d.pb<3?'yellow':'red') : 'neutral' },
+    { label:'Div. Yield',    value: d.yield    != null ? fmtPct(d.yield)   : 'N/D', sub:'Rendimiento divid.', color: d.yield != null ? (d.yield>6?'accent':d.yield>2?'yellow':'neutral') : 'neutral' },
+    { label:'EBITDA',        value: d.ebitda   != null ? fmtM(d.ebitda)    : 'N/D', sub:'CLP', color:'blue' },
+    { label:'Flujo Caja L.', value: d.fcf      != null ? fmtM(d.fcf)       : 'N/D', sub:'CLP', color: d.fcf != null ? (d.fcf>0?'accent':'red') : 'neutral' },
+    { label:'ROE',           value: d.roe      != null ? fmtPct(d.roe)     : 'N/D', sub:'Ret. Patrimonio',   color: d.roe != null ? (d.roe>15?'accent':d.roe>8?'yellow':'red') : 'neutral' },
+    { label:'Beta',          value: d.beta     != null ? fmt(d.beta,2)     : 'N/D', sub:'vs Mercado',        color: d.beta != null ? (d.beta<1?'accent':d.beta<1.5?'yellow':'red') : 'neutral' },
+  ];
+
+  document.getElementById('kpi-row').innerHTML = kpis.map(k => `
+    <div class="kpi-card kpi-${k.color}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  // ── Semáforo
+  document.getElementById('semaforo-grid').innerHTML = [
+    { metric:'pe',    value: d.pe },
+    { metric:'pb',    value: d.pb },
+    { metric:'ev',    value: d.ev },
+    { metric:'yield', value: d.yield },
+    { metric:'dp',    value: d.dp },
+    { metric:'mn',    value: d.margenNeto },
+  ].map(({ metric, value }) => {
+    const sem = calcSemaforo(metric, value);
+    return `
+      <div class="sem-item">
+        <div class="sem-top">
+          <span class="sem-name">${sem.label}</span>
+          <span class="sem-dot dot-${sem.color}"></span>
+        </div>
+        <div class="sem-value">${sem.display}</div>
+        <span class="sem-verdict sv-${sem.color}">${sem.verdict}</span>
+      </div>`;
+  }).join('');
+
+  // ── Tabla Resultados
+  const tR = (label, val, cls) => `<tr><td>${label}</td><td class="${cls||''}">${val}</td></tr>`;
+  document.getElementById('t-resultados').innerHTML = [
+    tR('Ingresos Totales', d.ingresos  != null ? fmtM(d.ingresos)  : 'N/D', ''),
+    tR('Utilidad Bruta',   d.utilBruta != null ? fmtM(d.utilBruta) : 'N/D', d.utilBruta > 0 ? 'v-green' : ''),
+    tR('EBITDA',           d.ebitda    != null ? fmtM(d.ebitda)    : 'N/D', d.ebitda > 0 ? 'v-green' : ''),
+    tR('EBIT',             d.ebit      != null ? fmtM(d.ebit)      : 'N/D', d.ebit > 0 ? 'v-green' : 'v-red'),
+    tR('Utilidad Neta',    d.utilNeta  != null ? fmtM(d.utilNeta)  : 'N/D', d.utilNeta > 0 ? 'v-green' : 'v-red'),
+    tR('Margen Bruto',     mBrutoCalc  != null ? fmtPct(mBrutoCalc): 'N/D', colorClass(mBrutoCalc, 20, 40, true)),
+    tR('Margen Neto',      mNetoCalc   != null ? fmtPct(mNetoCalc) : 'N/D', colorClass(mNetoCalc, 5, 15, true)),
+    tR('Crec. Ingresos',   d.crecIng   != null ? fmtPct(d.crecIng) : 'N/D', colorClass(d.crecIng, 0, 10, true)),
+  ].join('');
+
+  // ── Tabla Balance
+  document.getElementById('t-balance').innerHTML = [
+    tR('Activos Totales',  d.activos    != null ? fmtM(d.activos)    : 'N/D', ''),
+    tR('Pasivos Totales',  d.pasivos    != null ? fmtM(d.pasivos)    : 'N/D', ''),
+    tR('Patrimonio',       d.patrimonio != null ? fmtM(d.patrimonio) : 'N/D', d.patrimonio > 0 ? 'v-green' : 'v-red'),
+    tR('Deuda Total',      d.deuda      != null ? fmtM(d.deuda)      : 'N/D', ''),
+    tR('Efectivo',         d.efectivo   != null ? fmtM(d.efectivo)   : 'N/D', 'v-green'),
+    tR('Deuda/Patrimonio', d.dp         != null ? fmt(d.dp,2)+'x'    : 'N/D', colorClass(d.dp, 0.5, 1.5)),
+    tR('Razón Corriente',  d.razonCorr  != null ? fmt(d.razonCorr,2)+'x' : 'N/D', colorClass(d.razonCorr, 1, 1.5, true)),
+    tR('Flujo Caja Libre', d.fcf        != null ? fmtM(d.fcf)        : 'N/D', d.fcf > 0 ? 'v-green' : d.fcf < 0 ? 'v-red' : ''),
+  ].join('');
+
+  // ── Tabla Ratios
+  document.getElementById('t-ratios').innerHTML = [
+    tR('ROE',             d.roe        != null ? fmtPct(d.roe)        : 'N/D', colorClass(d.roe, 8, 15, true)),
+    tR('ROA',             d.roa        != null ? fmtPct(d.roa)        : 'N/D', colorClass(d.roa, 2, 5, true)),
+    tR('Margen Bruto',    mBrutoCalc   != null ? fmtPct(mBrutoCalc)   : 'N/D', ''),
+    tR('Margen Neto',     mNetoCalc    != null ? fmtPct(mNetoCalc)    : 'N/D', ''),
+    tR('Div. Yield',      d.yield      != null ? fmtPct(d.yield)      : 'N/D', colorClass(d.yield, 2, 6, true)),
+    tR('Beta',            d.beta       != null ? fmt(d.beta,2)        : 'N/D', ''),
+    tR('Crec. Utilidades',d.crecUtil   != null ? fmtPct(d.crecUtil)   : 'N/D', colorClass(d.crecUtil, 0, 10, true)),
+  ].join('');
+
+  // ── Gauges
+  const gauges = [
+    { name:'ROE',          val: d.roe,          max:30, color:'var(--accent)' },
+    { name:'ROA',          val: d.roa,          max:15, color:'var(--blue)' },
+    { name:'Margen Neto',  val: mNetoCalc,      max:40, color:'var(--yellow)' },
+    { name:'Div. Yield',   val: d.yield,        max:15, color:'var(--accent)' },
+  ].filter(g => g.val != null && !isNaN(g.val));
+
+  document.getElementById('gauge-container').innerHTML = gauges.length
+    ? gauges.map(g => `
+        <div class="gauge-row">
+          <span class="gauge-name">${g.name}</span>
+          <div class="gauge-bar-bg">
+            <div class="gauge-bar-fill" style="width:${Math.min(100, Math.max(0, g.val/g.max*100))}%;background:${g.color};"></div>
+          </div>
+          <span class="gauge-val">${fmtPct(g.val)}</span>
+        </div>`).join('')
+    : '<div style="font-size:12px;color:var(--text3);">Ingresa ROE, ROA, margen neto o dividend yield para ver los indicadores visuales.</div>';
+
+  // ── Perspectivas de crecimiento
+  renderCrecimiento(d);
+
+  // ── Análisis interpretativo
+  const secciones = generarAnalisis(d);
+  document.getElementById('ap-body').innerHTML = secciones.map(sec => `
+    <div class="ap-section-title">${sec.emoji} ${sec.titulo}</div>
+    <div class="ap-text">${sec.texto}</div>
+  `).join('');
+
+  // ── Mostrar
+  document.getElementById('results-empty').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  switchTab('resultados');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Pasar datos al simulador
+  actualizarContextoSimulador(d);
+}
+
+
+// ── SIMULADOR DE COMPRA ───────────────────────────────────────────────────────
+
+// Estado compartido: se llena cuando se genera el análisis
+let simDatosAnalisis = null;
+
+function actualizarContextoSimulador(datos) {
+  simDatosAnalisis = datos;
+  const bar    = document.getElementById('sim-context-bar');
+  const noData = document.getElementById('sim-no-data');
+
+  if (datos && (datos.precio || datos.yield)) {
+    bar.style.display    = 'flex';
+    noData.style.display = 'none';
+    document.getElementById('sim-ctx-ticker').textContent = datos.ticker ? datos.ticker + '.SN' : '—';
+    document.getElementById('sim-ctx-precio').textContent = datos.precio ? 'CLP ' + fmt(datos.precio, 2) : 'N/D';
+    document.getElementById('sim-ctx-yield').textContent  = datos.yield  ? datos.yield.toFixed(2) + '%' : 'N/D';
+    // Prellenar campos si están vacíos
+    const pcEl = document.getElementById('sim-precio-compra');
+    const yEl  = document.getElementById('sim-yield');
+    if (!pcEl.value && datos.precio) pcEl.value = datos.precio;
+    if (!yEl.value  && datos.yield)  yEl.value  = datos.yield;
+  } else {
+    bar.style.display    = 'none';
+    noData.style.display = 'block';
+  }
+}
+
+function limpiarSimulador() {
+  ['sim-precio-compra','sim-capital','sim-yield','sim-dpa','sim-portafolio'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('sim-crec-div').value  = '5';
+  document.getElementById('sim-comision').value  = '0.5';
+  document.getElementById('sim-horizonte').value = '10';
+  document.getElementById('sim-error').style.display   = 'none';
+  document.getElementById('sim-results').style.display = 'none';
+}
+
+function calcularSimulacion() {
+  const errEl = document.getElementById('sim-error');
+  errEl.style.display = 'none';
+
+  const precioCompra = parseFloat(document.getElementById('sim-precio-compra').value);
+  const capital      = parseFloat(document.getElementById('sim-capital').value);
+  const yieldAnual   = parseFloat(document.getElementById('sim-yield').value);
+  const dpa          = parseFloat(document.getElementById('sim-dpa').value);
+  const crecDiv      = parseFloat(document.getElementById('sim-crec-div').value) || 5;
+  const portafolio   = parseFloat(document.getElementById('sim-portafolio').value) || null;
+  const comisionPct  = parseFloat(document.getElementById('sim-comision').value) || 0.5;
+  const horizonte    = Math.min(30, Math.max(1, parseInt(document.getElementById('sim-horizonte').value) || 10));
+
+  // Validaciones
+  if (isNaN(precioCompra) || precioCompra <= 0) {
+    errEl.textContent = 'Ingresa un precio de compra válido.';
+    errEl.style.display = 'block'; return;
+  }
+  if (isNaN(capital) || capital <= 0) {
+    errEl.textContent = 'Ingresa el capital que planeas invertir.';
+    errEl.style.display = 'block'; return;
+  }
+  if (isNaN(yieldAnual) && isNaN(dpa)) {
+    errEl.textContent = 'Ingresa el Dividend Yield (%) o el dividendo por acción (CLP) para continuar.';
+    errEl.style.display = 'block'; return;
+  }
+
+  // ── Cálculos base
+  const comisionCLP    = capital * (comisionPct / 100);
+  const capitalNeto    = capital - comisionCLP;
+  const acciones       = Math.floor(capitalNeto / precioCompra);
+  const capitalReal    = acciones * precioCompra + comisionCLP;
+
+  // Dividendo por acción anual
+  let divAnualPorAccion;
+  if (!isNaN(dpa) && dpa > 0) {
+    divAnualPorAccion = dpa;
+  } else {
+    divAnualPorAccion = precioCompra * (yieldAnual / 100);
+  }
+
+  const yieldOnCost    = (divAnualPorAccion / precioCompra) * 100;
+  const ingresoAnual0  = acciones * divAnualPorAccion;
+  const ingresoMensual0= ingresoAnual0 / 12;
+  const concentracion  = portafolio ? (capital / portafolio * 100) : null;
+
+  // Payback: año en que dividendos acumulados >= capital invertido
+  let divAcum = 0, paybackAnio = null;
+  let divActual = divAnualPorAccion;
+  const proyeccion = [];
+
+  for (let anio = 1; anio <= horizonte; anio++) {
+    divActual = divActual * (1 + crecDiv / 100);
+    const ingresoAnio = acciones * divActual;
+    divAcum += ingresoAnio;
+    const yocAnio = (divActual / precioCompra) * 100;
+    proyeccion.push({
+      anio,
+      divPorAccion: divActual,
+      ingresoAnual: ingresoAnio,
+      ingresoMensual: ingresoAnio / 12,
+      divAcum,
+      yocAnio,
+      esPayback: false
+    });
+    if (paybackAnio === null && divAcum >= capitalReal) {
+      paybackAnio = anio;
+      proyeccion[anio - 1].esPayback = true;
+    }
+  }
+
+  // ── Render KPIs
+  const nombre = simDatosAnalisis?.nombre || (simDatosAnalisis?.ticker || 'Acción');
+  const kpis = [
+    { label:'Acciones a comprar',  value: fmt(acciones, 0),            sub: nombre,                      color:'sk-accent' },
+    { label:'Capital total',       value: 'CLP ' + fmt(capital, 0),    sub: `Comisión: CLP ${fmt(comisionCLP,0)}`, color:'sk-blue' },
+    { label:'Yield on Cost',       value: yieldOnCost.toFixed(2) + '%',sub: 'Sobre precio de compra',    color: yieldOnCost >= 6 ? 'sk-accent' : yieldOnCost >= 3 ? 'sk-yellow' : 'sk-red' },
+    { label:'Ingreso año 1',       value: 'CLP ' + fmt(ingresoAnual0 * (1 + crecDiv/100), 0), sub:'Dividendos anuales est.', color:'sk-accent' },
+    { label:'Ingreso mensual est.', value: 'CLP ' + fmt(ingresoMensual0 * (1 + crecDiv/100), 0), sub:'Promedio mensual año 1', color:'sk-blue' },
+    { label:'Recuperación capital', value: paybackAnio ? `Año ${paybackAnio}` : `> ${horizonte} años`, sub:'Solo con dividendos acum.', color: paybackAnio && paybackAnio <= 10 ? 'sk-accent' : paybackAnio && paybackAnio <= 15 ? 'sk-yellow' : 'sk-red' },
+  ];
+  if (concentracion !== null) {
+    kpis.push({ label:'Concentración portafolio', value: concentracion.toFixed(1) + '%', sub:'Del total de tu portafolio', color: concentracion <= 10 ? 'sk-accent' : concentracion <= 20 ? 'sk-yellow' : 'sk-red' });
+  }
+
+  document.getElementById('sim-kpi-grid').innerHTML = kpis.map(k => `
+    <div class="sim-kpi ${k.color}">
+      <div class="sim-kpi-label">${k.label}</div>
+      <div class="sim-kpi-value">${k.value}</div>
+      <div class="sim-kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  // ── Tabla proyección
+  const thead = `<thead><tr>
+    <th>Año</th>
+    <th>Div/acción CLP</th>
+    <th>Ingreso anual CLP</th>
+    <th>Ingreso mensual CLP</th>
+    <th>YoC %</th>
+    <th>Divid. acum. CLP</th>
+  </tr></thead>`;
+
+  const tbody = '<tbody>' + proyeccion.map(p => `
+    <tr class="${p.esPayback ? 'payback-row' : ''}">
+      <td>Año ${p.anio}</td>
+      <td>${fmt(p.divPorAccion, 2)}</td>
+      <td>${fmt(p.ingresoAnual, 0)}</td>
+      <td>${fmt(p.ingresoMensual, 0)}</td>
+      <td>${p.yocAnio.toFixed(2)}%</td>
+      <td>${fmt(p.divAcum, 0)}</td>
+    </tr>`).join('') + '</tbody>';
+
+  document.getElementById('sim-proj-table').innerHTML = thead + tbody;
+
+  // ── Veredicto
+  let vClass, vTitleClass, vEmoji, vTitulo, vTexto;
+  const yocGood  = yieldOnCost >= 5;
+  const yocGreat = yieldOnCost >= 7;
+  const payOk    = paybackAnio && paybackAnio <= 12;
+  const concOk   = concentracion === null || concentracion <= 15;
+
+  if (yocGreat && payOk && concOk) {
+    vClass = 'vb-buy'; vTitleClass = 'vt-buy'; vEmoji = '✅'; vTitulo = 'Operación atractiva';
+    vTexto = `Comprar <strong>${fmt(acciones,0)} acciones de ${nombre} a CLP ${fmt(precioCompra,2)}</strong> genera un Yield on Cost de <strong>${yieldOnCost.toFixed(2)}%</strong>, que es excelente para una estrategia dividendera. Con un crecimiento estimado del dividendo de ${crecDiv}% anual, recuperarías tu inversión en aproximadamente <strong>${paybackAnio} años</strong> solo con dividendos, y el ingreso mensual estimado el primer año sería de <strong>CLP ${fmt(ingresoMensual0 * (1 + crecDiv/100), 0)}</strong>.${concentracion ? ` La concentración de ${concentracion.toFixed(1)}% en tu portafolio es manejable.` : ''}`;
+  } else if (yocGood && (payOk || !paybackAnio) && concOk) {
+    vClass = 'vb-buy'; vTitleClass = 'vt-buy'; vEmoji = '👍'; vTitulo = 'Operación razonable';
+    vTexto = `Los números de esta compra son sólidos. Un Yield on Cost de <strong>${yieldOnCost.toFixed(2)}%</strong> sobre precio de compra es adecuado para una estrategia de renta. ${paybackAnio ? `Recuperarías tu capital en <strong>${paybackAnio} años</strong> con dividendos acumulados.` : `Con el horizonte de ${horizonte} años no se alcanza el payback completo, pero los flujos son positivos desde el primer año.`}`;
+  } else if (!yocGood && yieldOnCost >= 2) {
+    vClass = 'vb-watch'; vTitleClass = 'vt-watch'; vEmoji = '👀'; vTitulo = 'Monitorear precio de entrada';
+    vTexto = `El Yield on Cost de <strong>${yieldOnCost.toFixed(2)}%</strong> a este precio de compra es moderado para una estrategia dividendera. Si el precio bajara a un nivel donde el YoC supere el 5–6%, la operación sería más atractiva. ${paybackAnio ? `El payback estimado es de ${paybackAnio} años.` : `No se alcanza payback en ${horizonte} años con este yield.`} Considera esperar una corrección o destinar este capital a otra acción con mayor yield.`;
+  } else {
+    vClass = 'vb-wait'; vTitleClass = 'vt-wait'; vEmoji = '⏸️'; vTitulo = 'Esperar mejor entrada';
+    vTexto = `Con un Yield on Cost de solo <strong>${yieldOnCost.toFixed(2)}%</strong>, este precio de compra no es óptimo para una estrategia de ingresos por dividendos. ${concentracion && concentracion > 20 ? `Además, concentrar un ${concentracion.toFixed(1)}% del portafolio en una sola acción eleva el riesgo de concentración. ` : ''}Se recomienda esperar una mejor oportunidad de entrada o revisar si el dividendo esperado es sostenible.`;
+  }
+
+  document.getElementById('sim-verdict').innerHTML = `
+    <div class="verdict-box ${vClass}">
+      <div class="verdict-title ${vTitleClass}">${vEmoji} ${vTitulo}</div>
+      ${vTexto}
+    </div>`;
+
+  document.getElementById('sim-results').style.display = 'block';
+  document.getElementById('sim-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Enter en ticker
+document.getElementById('f-ticker').addEventListener('keydown', e => {
+  if (e.key === 'Enter') calcularYMostrar();
+});
+</script>
+</body>
+</html>
