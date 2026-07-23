@@ -67,11 +67,11 @@
   .updated{font-size:12px;color:var(--text-faint);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;}
   .icon-btn{
     width:36px;height:36px;border-radius:50%;
-    background:transparent;border:0.5px solid var(--border-strong);
-    color:var(--text-dim);display:flex;align-items:center;justify-content:center;
-    cursor:pointer;transition:border-color .15s, color .15s;
+    background:rgba(237,234,226,0.07);border:0.5px solid rgba(237,234,226,0.3);
+    color:var(--text);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:border-color .15s, color .15s, background .15s;
   }
-  .icon-btn:hover{border-color:var(--copper);color:var(--copper-light);}
+  .icon-btn:hover{border-color:var(--copper);color:var(--copper-light);background:var(--copper-bg);}
 
   /* ---------- Ticker tape (signature element) ---------- */
   .ticker-shell{
@@ -133,7 +133,7 @@
   }
   .section-head h2 i{font-size:16px;color:var(--copper-light);}
   .ghost-btn{
-    background:var(--panel-raised);border:0.5px solid rgba(237,234,226,0.22);color:var(--text);
+    background:rgba(237,234,226,0.06);border:0.5px solid rgba(237,234,226,0.3);color:var(--text);
     font-size:13px;padding:6px 12px;border-radius:var(--radius);cursor:pointer;
     display:flex;align-items:center;gap:6px;transition:border-color .15s,color .15s,background .15s;
   }
@@ -148,7 +148,7 @@
 
   /* watchlist rows */
   .wl-head,.wl-row{
-    display:grid;grid-template-columns:1.6fr 0.9fr 0.9fr 1.1fr 52px;gap:10px;align-items:center;
+    display:grid;grid-template-columns:1.6fr 0.9fr 0.9fr 1.1fr 66px;gap:10px;align-items:center;
   }
   .wl-head{padding-bottom:8px;border-bottom:0.5px solid var(--border);margin-bottom:2px;}
   .wl-head span{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;}
@@ -175,10 +175,15 @@
   .badge.cara .dot{background:var(--red);}
   .badge.flat{background:rgba(237,234,226,0.07);color:var(--text-faint);}
   .badge.flat .dot{background:var(--text-faint);}
-  .row-actions{display:flex;gap:10px;justify-self:end;}
-  .row-actions i{cursor:pointer;color:var(--text-dim);font-size:15px;}
-  .row-actions i:hover{color:var(--copper-light);}
-  .row-actions i.danger:hover{color:var(--red);}
+  .row-actions{display:flex;gap:6px;justify-self:end;}
+  .row-actions i{
+    cursor:pointer;color:var(--text);font-size:14px;
+    width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+    border-radius:7px;background:rgba(237,234,226,0.07);border:0.5px solid rgba(237,234,226,0.25);
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .row-actions i:hover{color:var(--copper-light);border-color:var(--copper);background:var(--copper-bg);}
+  .row-actions i.danger:hover{color:var(--red);border-color:var(--red);background:var(--red-bg);}
   .empty{color:var(--text-faint);font-size:13px;padding:20px 0;text-align:center;}
   .mini-input{
     background:var(--bg-alt);border:0.5px solid rgba(237,234,226,0.22);color:var(--text);
@@ -705,7 +710,9 @@ function renderNotes(){
     <div class="note-item">
       <div class="note-meta">
         <span class="src-tag">${n.fuente}</span><span class="note-date">${n.fecha}</span>
-        <i class="ti ti-trash danger" style="margin-left:auto;cursor:pointer;color:var(--text-dim);font-size:13px;" onclick="eliminarNota('${n.id}')" title="Eliminar"></i>
+        <div class="row-actions" style="margin-left:auto;">
+          <i class="ti ti-trash danger" onclick="eliminarNota('${n.id}')" title="Eliminar"></i>
+        </div>
       </div>
       <p class="note-text">${n.link ? `<a href="${n.link}" target="_blank" rel="noopener">${n.texto}</a>` : n.texto}</p>
     </div>
@@ -1072,23 +1079,20 @@ async function sincronizarConRobot(){
 }
 
 /* ========== universo IPSA (carga masiva) ========== */
-const IPSA_UNIVERSE = {
-  'AGUAS-A':'Aguas Andinas', 'CHILE':'Banco de Chile', 'BCI':'Banco de Crédito e Inversiones',
-  'ITAUCL':'Banco Itaú Chile', 'BSANTANDER':'Banco Santander Chile', 'CAP':'CAP',
-  'CENCOSUD':'Cencosud', 'CENCOMALLS':'Cencosud Shopping', 'COLBUN':'Colbún',
-  'CCU':'Compañía Cervecerías Unidas', 'VAPORES':'Cía. Sud Americana de Vapores',
-  'ANDINA-B':'Embotelladora Andina', 'ENTEL':'Entel', 'CMPC':'Empresas CMPC',
-  'COPEC':'Empresas Copec', 'ENELAM':'Enel Américas', 'ENELCHILE':'Enel Chile',
-  'ECL':'Engie Energía Chile', 'FALABELLA':'Falabella', 'IAM':'Inversiones Aguas Metropolitanas',
-  'ILC':'Inversiones La Construcción', 'LTM':'Latam Airlines Group', 'PARAUCO':'Parque Arauco',
-  'MALLPLAZA':'Plaza', 'QUINENCO':'Quiñenco', 'RIPLEY':'Ripley Corp', 'SALFACORP':'Salfacorp',
-  'SMU':'SMU', 'SQM-B':'SQM', 'CONCHATORO':'Viña Concha y Toro'
-};
-document.getElementById('btn-load-ipsa').addEventListener('click', ()=>{
+document.getElementById('btn-load-ipsa').addEventListener('click', async ()=>{
+  let universo;
+  try{
+    const res = await fetch('./data/ipsa_universo.json', {cache:'no-store'});
+    if(!res.ok) throw new Error('no disponible');
+    universo = await res.json();
+  }catch(e){
+    toast('No se pudo leer data/ipsa_universo.json');
+    return;
+  }
   let wl = load(KEYS.watchlist, []);
   const existentes = new Set(wl.map(s=>s.ticker));
   let agregadas = 0;
-  Object.entries(IPSA_UNIVERSE).forEach(([ticker, empresa])=>{
+  Object.entries(universo).forEach(([ticker, empresa])=>{
     if(!existentes.has(ticker)){
       wl.push({id:uid(), ticker, empresa, precio:0, anterior:0, objetivo:0, enCartera:false, cantidad:0});
       agregadas++;
@@ -1096,7 +1100,7 @@ document.getElementById('btn-load-ipsa').addEventListener('click', ()=>{
   });
   save(KEYS.watchlist, wl);
   renderAll();
-  toast(agregadas > 0 ? `${agregadas} acciones agregadas. Corre el robot para traer sus precios.` : 'Ya tenías cargadas todas las del IPSA');
+  toast(agregadas > 0 ? `${agregadas} acciones agregadas. Corre el robot para traer sus precios.` : 'Ya tenías cargadas todas las de la lista actual');
 });
 
 /* ========== gráfico de historial ========== */
