@@ -1,0 +1,39 @@
+name: Actualizar datos de mercado
+
+on:
+  schedule:
+    # Horarios en UTC. Chile está en UTC-4 (invierno) o UTC-3 (verano),
+    # así que la hora local real se mueve ±1h según la época del año.
+    - cron: '0 13 * * 1-5'   # ~09:00/10:00 hora Chile - antes de apertura
+    - cron: '0 17 * * 1-5'   # ~13:00/14:00 hora Chile - mediodía de mercado
+    - cron: '30 20 * * 1-5'  # ~16:30/17:30 hora Chile - después del cierre
+  workflow_dispatch: {}       # permite ejecutarlo manualmente desde la pestaña Actions
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install requests
+
+      - name: Ejecutar el robot de datos
+        run: python scripts/actualizar_datos.py
+
+      - name: Guardar cambios en el repositorio
+        run: |
+          git config user.name "robot-cobre"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/mercado.json
+          git diff --staged --quiet || git commit -m "Actualización automática de datos de mercado"
+          git push
