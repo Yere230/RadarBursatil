@@ -1,37 +1,207 @@
 {
-  "actualizado": "2026-07-23T03:59:38.685616+00:00",
+  "actualizado": "2026-07-23T04:56:50.922609+00:00",
   "macro": {
-    "dolar": 932.8,
+    "dolar": 936.4,
     "uf": 40844.79,
     "utm": 71649,
-    "cobre": 6.18,
+    "cobre": 6.3,
     "ipsa": 10887.72,
     "ipsaChg": -0.55
   },
   "acciones": {
-    "COPEC": {
-      "precio": 6550.0,
-      "anterior": 6210.0
+    "AGUAS-A": {
+      "precio": 339.0,
+      "anterior": 337.5
     },
-    "SQM-B": {
-      "precio": 65055.0,
-      "anterior": 67900.0
+    "CHILE": {
+      "precio": 193.5,
+      "anterior": 189.5
     },
-    "FALABELLA": {
-      "precio": 6042.0,
-      "anterior": 5875.0
+    "BCI": {
+      "precio": 64500.0,
+      "anterior": 64477.0
+    },
+    "ITAUCL": {
+      "precio": 21500.0,
+      "anterior": 20480.0
     },
     "BSANTANDER": {
       "precio": 79.85,
       "anterior": 78.64
     },
-    "CCU": {
-      "precio": 5420.7,
-      "anterior": 5239.0
+    "CAP": {
+      "precio": 6300.0,
+      "anterior": 6363.8
     },
     "CENCOSUD": {
       "precio": 2009.8,
       "anterior": 2040.0
+    },
+    "CENCOMALLS": {
+      "precio": 2278.4,
+      "anterior": 2260.0
+    },
+    "COLBUN": {
+      "precio": 140.3,
+      "anterior": 133.77
+    },
+    "CCU": {
+      "precio": 5420.7,
+      "anterior": 5239.0
+    },
+    "VAPORES": {
+      "precio": 48.3,
+      "anterior": 47.4
+    },
+    "ANDINA-B": {
+      "precio": 4700.0,
+      "anterior": 4747.0
+    },
+    "ENTEL": {
+      "precio": 3610.0,
+      "anterior": 3786.5
+    },
+    "CMPC": {
+      "precio": 1070.0,
+      "anterior": 1103.0
+    },
+    "COPEC": {
+      "precio": 6550.0,
+      "anterior": 6210.0
+    },
+    "ENELAM": {
+      "precio": 84.53,
+      "anterior": 85.75
+    },
+    "ENELCHILE": {
+      "precio": 81.25,
+      "anterior": 82.0
+    },
+    "ECL": {
+      "precio": 1865.0,
+      "anterior": 1765.0
+    },
+    "FALABELLA": {
+      "precio": 6042.0,
+      "anterior": 5875.0
+    },
+    "IAM": {
+      "precio": 920.0,
+      "anterior": 917.94
+    },
+    "ILC": {
+      "precio": 21583.0,
+      "anterior": 21450.0
+    },
+    "LTM": {
+      "precio": 24.09,
+      "anterior": 24.9
+    },
+    "PARAUCO": {
+      "precio": 3993.1,
+      "anterior": 4000.0
+    },
+    "MALLPLAZA": {
+      "precio": 3820.2,
+      "anterior": 3922.0
+    },
+    "QUINENCO": {
+      "precio": 4300.0,
+      "anterior": 4210.0
+    },
+    "RIPLEY": {
+      "precio": 383.98,
+      "anterior": 381.4
+    },
+    "SALFACORP": {
+      "precio": 1245.0,
+      "anterior": 1258.7
+    },
+    "SMU": {
+      "precio": 131.0,
+      "anterior": 130.67
+    },
+    "SQM-B": {
+      "precio": 65055.0,
+      "anterior": 67900.0
+    },
+    "CONCHATORO": {
+      "precio": 848.98,
+      "anterior": 853.33
     }
-  }
+  },
+  "noticias": [
+    {
+      "fuente": "Cooperativa · Bolsas",
+      "texto": "Elon Musk se convirtió en el primer billonario del mundo tras salida a bolsa de SpaceX",
+      "link": "https://www.cooperativa.cl/noticias/economia/bolsas/elon-musk-se-convirtio-en-el-primer-billonario-del-mundo-tras-salida-a/2026-06-12/172053.html",
+      "fecha": "Fri, 12 Jun 2026"
+    },
+    {
+      "fuente": "Cooperativa · Bolsas",
+      "texto": "SpaceX protagonizará la mayor salida a bolsa de la historia en medio de protestas contra su IA",
+      "link": "https://www.cooperativa.cl/noticias/economia/bolsas/spacex-protagonizara-la-mayor-salida-a-bolsa-de-la-historia-en-medio-de/2026-06-11/171625.html",
+      "fecha": "Thu, 11 Jun 2026"
+    },
+    {
+      "fuente": "Cooperativa · Bolsas",
+      "texto": "Anthropic, OpenAI y SpaceX preparan su salto a bolsa en plena fiebre del mercado por la IA",
+      "link": "https://www.cooperativa.cl/noticias/tecnologia/industria/ia/anthropic-openai-y-spacex-preparan-su-salto-a-bolsa-en-plena-fiebre-del/2026-06-06/164758.html",
+      "fecha": "Sat, 06 Jun 2026"
+    },
+    {
+      "fuente": "Cooperativa · Bolsas",
+      "texto": "Las bolsas de Asia caen tras el discurso de Trump y en medio de subidas del petróleo",
+      "link": "https://www.cooperativa.cl/noticias/mundo/iran/las-bolsas-de-asia-caen-tras-el-discurso-de-trump-y-en-medio-de-subidas/2026-04-02/074018.html",
+      "fecha": "Thu, 02 Apr 2026"
+    },
+    {
+      "fuente": "Cooperativa · Empresas",
+      "texto": "Cámara Nacional de Comercio solicitó plan de apoyo extraordinario a empresas afectadas por el temporal",
+      "link": "https://www.cooperativa.cl/noticias/economia/empresas/camara-nacional-de-comercio-solicito-plan-de-apoyo-extraordinario-a/2026-07-20/162742.html",
+      "fecha": "Mon, 20 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Empresas",
+      "texto": "Gobierno defendió adaptabilidad laboral con tope de 45 horas y compensación posterior",
+      "link": "https://www.cooperativa.cl/noticias/pais/trabajo/proyectos/gobierno-defendio-adaptabilidad-laboral-con-tope-de-45-horas-y/2026-07-14/114519.html",
+      "fecha": "Tue, 14 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Empresas",
+      "texto": "Economista: grandes mineras y energéticas no miran mucho la megarreforma; invertirán sí o sí",
+      "link": "https://www.cooperativa.cl/noticias/economia/impuestos/economista-grandes-mineras-y-energeticas-no-miran-mucho-la/2026-07-09/194048.html",
+      "fecha": "Thu, 09 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Empresas",
+      "texto": "Microsoft recorta 4.800 empleos en reorganización vinculada al avance de la IA",
+      "link": "https://www.cooperativa.cl/noticias/economia/empresas/tecnologia/microsoft-recorta-4-800-empleos-en-reorganizacion-vinculada-al-avance-de/2026-07-06/104338.html",
+      "fecha": "Mon, 06 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Bochorno en el Senado: Gobierno abortó, a última hora, el voto final de la megarreforma",
+      "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/bochorno-en-el-senado-gobierno-aborto-a-ultima-hora-el-voto-final-de/2026-07-22/212426.html",
+      "fecha": "Wed, 22 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Megarreforma: comisión mixta aprobó compensación a municipios por exención de contribuciones",
+      "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/megarreforma-comision-mixta-aprobo-compensacion-a-municipios-por/2026-07-22/171256.html",
+      "fecha": "Wed, 22 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Premio InspiraTEC: la iniciativa que busca reducir la brecha de género en ciencia y tecnología",
+      "link": "https://www.cooperativa.cl/noticias/economia/pymes/premio-inspiratec-la-iniciativa-que-busca-reducir-la-brecha-de-genero/2026-07-21/170607.html",
+      "fecha": "Tue, 21 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Megarreforma quedó a un paso de ser ley: sólo compensación a municipios pasó a mixta",
+      "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/megarreforma-quedo-a-un-paso-de-ser-ley-solo-compensacion-a-municipios/2026-07-21/161017.html",
+      "fecha": "Tue, 21 Jul 2026"
+    }
+  ]
 }
