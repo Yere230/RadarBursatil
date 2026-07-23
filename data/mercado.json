@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-23T05:00:41.988959+00:00",
+  "actualizado": "2026-07-23T05:41:27.778750+00:00",
   "macro": {
     "dolar": 936.4,
     "uf": 40844.79,
@@ -11,123 +11,183 @@
   "acciones": {
     "AGUAS-A": {
       "precio": 339.0,
-      "anterior": 337.5
+      "anterior": 337.5,
+      "alto52": 400.0,
+      "bajo52": 310.11
     },
     "CHILE": {
       "precio": 193.5,
-      "anterior": 189.5
+      "anterior": 189.5,
+      "alto52": 200.68,
+      "bajo52": 132.31
     },
     "BCI": {
       "precio": 64500.0,
-      "anterior": 64477.0
+      "anterior": 64477.0,
+      "alto52": 66985.0,
+      "bajo52": 37027.0
     },
     "ITAUCL": {
       "precio": 21500.0,
-      "anterior": 20480.0
+      "anterior": 20480.0,
+      "alto52": 25887.0,
+      "bajo52": 12562.0
     },
     "BSANTANDER": {
       "precio": 79.85,
-      "anterior": 78.64
+      "anterior": 78.64,
+      "alto52": 80.68,
+      "bajo52": 52.0
     },
     "CAP": {
       "precio": 6300.0,
-      "anterior": 6363.8
+      "anterior": 6363.8,
+      "alto52": 8680.0,
+      "bajo52": 4502.0
     },
     "CENCOSUD": {
       "precio": 2009.8,
-      "anterior": 2040.0
+      "anterior": 2040.0,
+      "alto52": 3238.0,
+      "bajo52": 1987.6
     },
     "CENCOMALLS": {
       "precio": 2278.4,
-      "anterior": 2260.0
+      "anterior": 2260.0,
+      "alto52": 2799.9,
+      "bajo52": 1808.0
     },
     "COLBUN": {
       "precio": 140.3,
-      "anterior": 133.77
+      "anterior": 133.77,
+      "alto52": 156.51,
+      "bajo52": 123.55
     },
     "CCU": {
       "precio": 5420.7,
-      "anterior": 5239.0
+      "anterior": 5239.0,
+      "alto52": 6598.3,
+      "bajo52": 4947.0
     },
     "VAPORES": {
       "precio": 48.3,
-      "anterior": 47.4
+      "anterior": 47.4,
+      "alto52": 55.0,
+      "bajo52": 42.0
     },
     "ANDINA-B": {
       "precio": 4700.0,
-      "anterior": 4747.0
+      "anterior": 4747.0,
+      "alto52": 4800.0,
+      "bajo52": 3500.1
     },
     "ENTEL": {
       "precio": 3610.0,
-      "anterior": 3786.5
+      "anterior": 3786.5,
+      "alto52": 5250.0,
+      "bajo52": 3025.0
     },
     "CMPC": {
       "precio": 1070.0,
-      "anterior": 1103.0
+      "anterior": 1103.0,
+      "alto52": 1599.0,
+      "bajo52": 1015.0
     },
     "COPEC": {
       "precio": 6550.0,
-      "anterior": 6210.0
+      "anterior": 6210.0,
+      "alto52": 7949.0,
+      "bajo52": 5702.1
     },
     "ENELAM": {
       "precio": 84.53,
-      "anterior": 85.75
+      "anterior": 85.75,
+      "alto52": 105.23,
+      "bajo52": 73.95
     },
     "ENELCHILE": {
       "precio": 81.25,
-      "anterior": 82.0
+      "anterior": 82.0,
+      "alto52": 84.0,
+      "bajo52": 61.51
     },
     "ECL": {
       "precio": 1865.0,
-      "anterior": 1765.0
+      "anterior": 1765.0,
+      "alto52": 1879.9,
+      "bajo52": 1158.5
     },
     "FALABELLA": {
       "precio": 6042.0,
-      "anterior": 5875.0
+      "anterior": 5875.0,
+      "alto52": 6948.5,
+      "bajo52": 4601.5
     },
     "IAM": {
       "precio": 920.0,
-      "anterior": 917.94
+      "anterior": 917.94,
+      "alto52": 1150.0,
+      "bajo52": 806.98
     },
     "ILC": {
       "precio": 21583.0,
-      "anterior": 21450.0
+      "anterior": 21450.0,
+      "alto52": 23725.0,
+      "bajo52": 10025.0
     },
     "LTM": {
       "precio": 24.09,
-      "anterior": 24.9
+      "anterior": 24.9,
+      "alto52": 30.0,
+      "bajo52": 19.7
     },
     "PARAUCO": {
       "precio": 3993.1,
-      "anterior": 4000.0
+      "anterior": 4000.0,
+      "alto52": 4596.3,
+      "bajo52": 1932.0
     },
     "MALLPLAZA": {
       "precio": 3820.2,
-      "anterior": 3922.0
+      "anterior": 3922.0,
+      "alto52": 4700.0,
+      "bajo52": 2001.9
     },
     "QUINENCO": {
       "precio": 4300.0,
-      "anterior": 4210.0
+      "anterior": 4210.0,
+      "alto52": 4750.0,
+      "bajo52": 3501.0
     },
     "RIPLEY": {
       "precio": 383.98,
-      "anterior": 381.4
+      "anterior": 381.4,
+      "alto52": 490.0,
+      "bajo52": 350.0
     },
     "SALFACORP": {
       "precio": 1245.0,
-      "anterior": 1258.7
+      "anterior": 1258.7,
+      "alto52": 1499.9,
+      "bajo52": 691.25
     },
     "SMU": {
       "precio": 131.0,
-      "anterior": 130.67
+      "anterior": 130.67,
+      "alto52": 169.5,
+      "bajo52": 125.13
     },
     "SQM-B": {
       "precio": 65055.0,
-      "anterior": 67900.0
+      "anterior": 67900.0,
+      "alto52": 86900.0,
+      "bajo52": 34560.0
     },
     "CONCHATORO": {
       "precio": 848.98,
-      "anterior": 853.33
+      "anterior": 853.33,
+      "alto52": 1152.4,
+      "bajo52": 815.0
     }
   },
   "noticias": [
