@@ -395,6 +395,7 @@
       <select id="stock-sector">
         <option value="">Sin definir</option>
         <option>Banca</option>
+        <option>Financiero</option>
         <option>Retail</option>
         <option>Utilities</option>
         <option>Consumo</option>
@@ -408,6 +409,7 @@
         <option>Holding</option>
         <option>Construcción</option>
         <option>Salud</option>
+        <option>Fondos</option>
         <option>Otro</option>
       </select>
     </div>
@@ -1152,17 +1154,23 @@ async function cargarUniverso(archivo, etiqueta){
     return;
   }
   let wl = load(KEYS.watchlist, []);
-  const existentes = new Set(wl.map(s=>s.ticker));
-  let agregadas = 0;
+  const porTicker = new Map(wl.map(s=>[s.ticker, s]));
+  let agregadas = 0, completadas = 0;
   Object.entries(universo).forEach(([ticker, info])=>{
-    if(!existentes.has(ticker)){
+    if(porTicker.has(ticker)){
+      const s = porTicker.get(ticker);
+      if(!s.sector && info.sector){ s.sector = info.sector; completadas++; }
+    } else {
       wl.push({id:uid(), ticker, empresa:info.empresa, sector:info.sector || '', precio:0, anterior:0, objetivo:0, enCartera:false, cantidad:0});
       agregadas++;
     }
   });
   save(KEYS.watchlist, wl);
   renderAll();
-  toast(agregadas > 0 ? `${agregadas} acciones agregadas (${etiqueta}). Corre el robot para traer sus precios.` : `Ya tenías cargadas todas las de ${etiqueta}`);
+  const partes = [];
+  if(agregadas) partes.push(`${agregadas} agregadas`);
+  if(completadas) partes.push(`${completadas} con sector completado`);
+  toast(partes.length ? `${partes.join(' · ')} (${etiqueta})` : `Ya estaba todo al día en ${etiqueta}`);
 }
 document.getElementById('btn-load-ipsa').addEventListener('click', ()=> cargarUniverso('./data/ipsa_universo.json', 'IPSA'));
 document.getElementById('btn-load-ampliado').addEventListener('click', ()=> cargarUniverso('./data/universo_ampliado.json', 'universo ampliado'));

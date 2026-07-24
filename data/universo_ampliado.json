@@ -1,27 +1,102 @@
 {
-  "ANTARCHILE": {"empresa": "Antarchile", "sector": "Holding"},
-  "ALMENDRAL": {"empresa": "Almendral", "sector": "Telecomunicaciones"},
-  "CAMANCHACA": {"empresa": "Pesquera Camanchaca", "sector": "Consumo"},
-  "ENDESA": {"empresa": "Enel Generación Chile", "sector": "Utilities"},
-  "ENAEX": {"empresa": "Enaex", "sector": "Minería"},
-  "FORUS": {"empresa": "Forus", "sector": "Retail"},
-  "HITES": {"empresa": "Hites", "sector": "Retail"},
-  "INGEVEC": {"empresa": "Ingevec", "sector": "Construcción"},
-  "LAPOLAR": {"empresa": "La Polar", "sector": "Retail"},
-  "MASISA": {"empresa": "Masisa", "sector": "Forestal"},
-  "MULTIEXPORT": {"empresa": "Multiexport Foods", "sector": "Consumo"},
-  "NORTEGRANDE": {"empresa": "Norte Grande", "sector": "Holding"},
-  "OROBLANCO": {"empresa": "Oro Blanco", "sector": "Holding"},
-  "PAZ": {"empresa": "Paz Corp", "sector": "Inmobiliario"},
-  "SAAM": {"empresa": "SAAM", "sector": "Transporte"},
-  "SOCOVESA": {"empresa": "Socovesa", "sector": "Construcción"},
-  "SK": {"empresa": "Sigdo Koppers", "sector": "Holding"},
-  "SONDA": {"empresa": "Sonda", "sector": "Tecnología"},
-  "EMBONOR-B": {"empresa": "Coca-Cola Embonor", "sector": "Consumo"},
-  "CRISTALES": {"empresa": "Cristalerías de Chile", "sector": "Otro"},
-  "WATTS": {"empresa": "Watts", "sector": "Consumo"},
-  "TRICOT": {"empresa": "Empresas Tricot", "sector": "Retail"},
-  "MANQUEHUE": {"empresa": "Inmobiliaria Manquehue", "sector": "Inmobiliario"},
-  "BLUMAR": {"empresa": "Blumar", "sector": "Consumo"},
-  "INVERCAP": {"empresa": "Invercap", "sector": "Holding"}
+  "ANTARCHILE": {
+    "empresa": "Antarchile",
+    "sector": "Holding"
+  },
+  "ALMENDRAL": {
+    "empresa": "Almendral",
+    "sector": "Telecomunicaciones"
+  },
+  "CAMANCHACA": {
+    "empresa": "Pesquera Camanchaca",
+    "sector": "Consumo"
+  },
+  "ENAEX": {
+    "empresa": "Enaex",
+    "sector": "Minería"
+  },
+  "FORUS": {
+    "empresa": "Forus",
+    "sector": "Retail"
+  },
+  "HITES": {
+    "empresa": "Hites",
+    "sector": "Retail"
+  },
+  "INGEVEC": {
+    "empresa": "Ingevec",
+    "sector": "Construcción"
+  },
+  "MASISA": {
+    "empresa": "Masisa",
+    "sector": "Forestal"
+  },
+  "PAZ": {
+    "empresa": "Paz Corp",
+    "sector": "Inmobiliario"
+  },
+  "SOCOVESA": {
+    "empresa": "Socovesa",
+    "sector": "Construcción"
+  },
+  "SK": {
+    "empresa": "Sigdo Koppers",
+    "sector": "Holding"
+  },
+  "SONDA": {
+    "empresa": "Sonda",
+    "sector": "Tecnología"
+  },
+  "EMBONOR-B": {
+    "empresa": "Coca-Cola Embonor",
+    "sector": "Consumo"
+  },
+  "CRISTALES": {
+    "empresa": "Cristalerías de Chile",
+    "sector": "Otro"
+  },
+  "WATTS": {
+    "empresa": "Watts",
+    "sector": "Consumo"
+  },
+  "TRICOT": {
+    "empresa": "Empresas Tricot",
+    "sector": "Retail"
+  },
+  "MANQUEHUE": {
+    "empresa": "Inmobiliaria Manquehue",
+    "sector": "Inmobiliario"
+  },
+  "BLUMAR": {
+    "empresa": "Blumar",
+    "sector": "Consumo"
+  },
+  "INVERCAP": {
+    "empresa": "Invercap",
+    "sector": "Holding"
+  },
+  "BICE": {
+    "empresa": "Banco BICE",
+    "sector": "Banca"
+  },
+  "HABITAT": {
+    "empresa": "AFP Habitat",
+    "sector": "Financiero"
+  },
+  "CFMITNIPSA": {
+    "empresa": "CFMITNIPSA",
+    "sector": "Fondos"
+  },
+  "CFINRENTAS": {
+    "empresa": "CFINRENTAS",
+    "sector": "Fondos"
+  },
+  "CFIBTGRCA": {
+    "empresa": "CFIBTGRCA",
+    "sector": "Fondos"
+  },
+  "CFIBTGRRA": {
+    "empresa": "CFIBTGRRA",
+    "sector": "Fondos"
+  }
 }
