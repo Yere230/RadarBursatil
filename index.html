@@ -247,11 +247,11 @@
   .modal h3{font-family:var(--font-display);font-weight:500;font-size:19px;margin:0 0 18px;}
   .field{margin-bottom:14px;}
   .field label{display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;}
-  .field input,.field textarea{
+  .field input,.field textarea,.field select{
     width:100%;background:var(--bg-alt);border:0.5px solid var(--border-strong);
     color:var(--text);border-radius:8px;padding:9px 11px;font-size:13.5px;
   }
-  .field input:focus,.field textarea:focus{border-color:var(--copper);}
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--copper);}
   .field small{display:block;color:var(--text-faint);font-size:11px;margin-top:5px;}
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;}
@@ -314,6 +314,7 @@
         <h2><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M4 20v-4M4 12V4"/><rect x="2" y="12" width="4" height="4" rx="1"/><path d="M12 20v-3M12 13V4"/><rect x="10" y="13" width="4" height="4" rx="1"/><path d="M20 20v-5M20 11V4"/><rect x="18" y="11" width="4" height="4" rx="1"/></svg>Watchlist</h2>
         <div style="display:flex;gap:8px;">
           <button class="ghost-btn" id="btn-load-ipsa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><polyline points="7 11 12 16 17 11"/><line x1="12" y1="4" x2="12" y2="16"/></svg>Cargar IPSA</button>
+          <button class="ghost-btn" id="btn-load-ampliado"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><polyline points="7 11 12 16 17 11"/><line x1="12" y1="4" x2="12" y2="16"/></svg>Cargar más</button>
           <button class="ghost-btn" id="btn-add-stock"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar</button>
         </div>
       </div>
@@ -327,6 +328,9 @@
           <option value="cara">Caras</option>
           <option value="flat">Sin objetivo</option>
         </select>
+        <select id="wl-sector" class="mini-input">
+          <option value="todos">Todos los sectores</option>
+        </select>
         <select id="wl-sort" class="mini-input">
           <option value="semaforo">Orden: semáforo</option>
           <option value="descuento">Orden: % vs objetivo</option>
@@ -337,6 +341,7 @@
         <span>acción</span><span>precio</span><span>var</span><span>valorización</span><span></span>
       </div>
       <div id="wl-body"></div>
+      <div id="wl-pages" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:16px;justify-content:center;"></div>
     </section>
 
     <aside class="side-stack">
@@ -384,6 +389,27 @@
         <label for="stock-empresa">Empresa</label>
         <input id="stock-empresa" placeholder="Empresas Copec">
       </div>
+    </div>
+    <div class="field">
+      <label for="stock-sector">Sector</label>
+      <select id="stock-sector">
+        <option value="">Sin definir</option>
+        <option>Banca</option>
+        <option>Retail</option>
+        <option>Utilities</option>
+        <option>Consumo</option>
+        <option>Minería</option>
+        <option>Forestal</option>
+        <option>Energía</option>
+        <option>Telecomunicaciones</option>
+        <option>Tecnología</option>
+        <option>Transporte</option>
+        <option>Inmobiliario</option>
+        <option>Holding</option>
+        <option>Construcción</option>
+        <option>Salud</option>
+        <option>Otro</option>
+      </select>
     </div>
     <div class="field-row">
       <div class="field">
@@ -654,17 +680,33 @@ function renderKpis(){
   });
 }
 
+let wlPage = 1;
+const WL_PAGE_SIZE = 30;
+
+function poblarSectores(wl){
+  const sel = document.getElementById('wl-sector');
+  const actual = sel.value;
+  const sectores = [...new Set(wl.map(s=>s.sector).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="todos">Todos los sectores</option>' + sectores.map(s=>`<option value="${s}">${s}</option>`).join('');
+  if(sectores.includes(actual)) sel.value = actual;
+}
+
 function renderWatchlist(){
   const wlAll = load(KEYS.watchlist, []);
   const body = document.getElementById('wl-body');
-  if(wlAll.length === 0){ body.innerHTML = '<div class="empty">Sin acciones todavía. Agrega la primera con el botón de arriba.</div>'; return; }
+  const pagesEl = document.getElementById('wl-pages');
+  if(wlAll.length === 0){ body.innerHTML = '<div class="empty">Sin acciones todavía. Agrega la primera con el botón de arriba.</div>'; pagesEl.innerHTML=''; return; }
+
+  poblarSectores(wlAll);
 
   const busqueda = (document.getElementById('wl-search').value || '').trim().toLowerCase();
   const filtro = document.getElementById('wl-filter').value;
+  const sector = document.getElementById('wl-sector').value;
   const orden = document.getElementById('wl-sort').value;
 
   let wl = wlAll.filter(s=>{
     if(busqueda && !(s.ticker.toLowerCase().includes(busqueda) || (s.empresa||'').toLowerCase().includes(busqueda))) return false;
+    if(sector !== 'todos' && s.sector !== sector) return false;
     if(filtro === 'cartera') return !!s.enCartera;
     if(filtro !== 'todas') return semaforo(s).cls === filtro;
     return true;
@@ -681,16 +723,21 @@ function renderWatchlist(){
     return ordenSemaforo[semaforo(a).cls] - ordenSemaforo[semaforo(b).cls];
   });
 
-  if(wl.length === 0){ body.innerHTML = '<div class="empty">Sin resultados para ese filtro.</div>'; return; }
+  if(wl.length === 0){ body.innerHTML = '<div class="empty">Sin resultados para ese filtro.</div>'; pagesEl.innerHTML=''; return; }
 
-  body.innerHTML = wl.map(s=>{
+  const totalPaginas = Math.max(1, Math.ceil(wl.length / WL_PAGE_SIZE));
+  if(wlPage > totalPaginas) wlPage = totalPaginas;
+  const inicio = (wlPage - 1) * WL_PAGE_SIZE;
+  const pagina = wl.slice(inicio, inicio + WL_PAGE_SIZE);
+
+  body.innerHTML = pagina.map(s=>{
     const sem = semaforo(s);
     const chg = pctChange(s.precio, s.anterior);
     const chgCls = chg === null ? 'flat' : (chg > 0 ? 'up' : chg < 0 ? 'down' : 'flat');
     const chgTxt = chg === null ? '—' : fmtPct(chg);
     return `
     <div class="wl-row">
-      <div class="wl-tk"><b onclick="abrirGrafico('${s.ticker}')" title="Ver gráfico">${s.ticker}</b><small>${s.empresa || ''}</small></div>
+      <div class="wl-tk"><b onclick="abrirGrafico('${s.ticker}')" title="Ver gráfico">${s.ticker}</b><small>${s.empresa || ''}${s.sector ? ' · '+s.sector : ''}</small></div>
       <div class="wl-px">${fmtCLP(s.precio)}</div>
       <div class="wl-chg ${chgCls}">${chgTxt}</div>
       <div class="badge ${sem.cls}"><span class="dot"></span>${sem.label}</div>
@@ -700,9 +747,19 @@ function renderWatchlist(){
       </div>
     </div>`;
   }).join('');
+
+  if(totalPaginas <= 1){
+    pagesEl.innerHTML = `<span style="font-size:11.5px;color:var(--text-faint);">${wl.length} acción${wl.length===1?'':'es'}</span>`;
+  } else {
+    const botones = Array.from({length:totalPaginas}, (_,i)=>i+1).map(n=>
+      `<button class="ghost-btn" style="padding:5px 12px;min-width:36px;justify-content:center;${n===wlPage?'border-color:var(--copper);color:var(--copper-light);background:var(--copper-bg);':''}" onclick="irAPaginaWl(${n})">${n}</button>`
+    ).join('');
+    pagesEl.innerHTML = botones + `<span style="font-size:11.5px;color:var(--text-faint);align-self:center;margin-left:6px;">${wl.length} acciones en ${totalPaginas} pestañas</span>`;
+  }
 }
-['wl-search'].forEach(id=> document.getElementById(id).addEventListener('input', renderWatchlist));
-['wl-filter','wl-sort'].forEach(id=> document.getElementById(id).addEventListener('change', renderWatchlist));
+function irAPaginaWl(n){ wlPage = n; renderWatchlist(); }
+['wl-search'].forEach(id=> document.getElementById(id).addEventListener('input', ()=>{ wlPage = 1; renderWatchlist(); }));
+['wl-filter','wl-sort','wl-sector'].forEach(id=> document.getElementById(id).addEventListener('change', ()=>{ wlPage = 1; renderWatchlist(); }));
 
 function renderNotes(){
   const notes = load(KEYS.notes, []);
@@ -761,6 +818,7 @@ function openAddStock(){
   document.getElementById('stock-modal-title').textContent = 'Agregar acción';
   document.getElementById('stock-id').value = '';
   ['stock-ticker','stock-empresa','stock-precio','stock-anterior','stock-objetivo','stock-cantidad'].forEach(id=> document.getElementById(id).value='');
+  document.getElementById('stock-sector').value = '';
   document.getElementById('stock-cartera').checked = false;
   document.getElementById('stock-cantidad-wrap').style.display = 'none';
   document.getElementById('stock-rango52-box').style.display = 'none';
@@ -774,6 +832,7 @@ function editStock(id){
   document.getElementById('stock-id').value = s.id;
   document.getElementById('stock-ticker').value = s.ticker;
   document.getElementById('stock-empresa').value = s.empresa || '';
+  document.getElementById('stock-sector').value = s.sector || '';
   document.getElementById('stock-precio').value = s.precio;
   document.getElementById('stock-anterior').value = s.anterior || '';
   document.getElementById('stock-objetivo').value = s.objetivo || '';
@@ -803,6 +862,7 @@ document.getElementById('btn-save-stock').addEventListener('click', ()=>{
     id,
     ticker,
     empresa: document.getElementById('stock-empresa').value.trim(),
+    sector: document.getElementById('stock-sector').value,
     precio: Number(document.getElementById('stock-precio').value) || 0,
     anterior: Number(document.getElementById('stock-anterior').value) || 0,
     objetivo: Number(document.getElementById('stock-objetivo').value) || 0,
@@ -1080,30 +1140,32 @@ async function sincronizarConRobot(){
   }
 }
 
-/* ========== universo IPSA (carga masiva) ========== */
-document.getElementById('btn-load-ipsa').addEventListener('click', async ()=>{
+/* ========== universo IPSA / ampliado (carga masiva) ========== */
+async function cargarUniverso(archivo, etiqueta){
   let universo;
   try{
-    const res = await fetch('./data/ipsa_universo.json', {cache:'no-store'});
+    const res = await fetch(archivo, {cache:'no-store'});
     if(!res.ok) throw new Error('no disponible');
     universo = await res.json();
   }catch(e){
-    toast('No se pudo leer data/ipsa_universo.json');
+    toast(`No se pudo leer ${archivo}`);
     return;
   }
   let wl = load(KEYS.watchlist, []);
   const existentes = new Set(wl.map(s=>s.ticker));
   let agregadas = 0;
-  Object.entries(universo).forEach(([ticker, empresa])=>{
+  Object.entries(universo).forEach(([ticker, info])=>{
     if(!existentes.has(ticker)){
-      wl.push({id:uid(), ticker, empresa, precio:0, anterior:0, objetivo:0, enCartera:false, cantidad:0});
+      wl.push({id:uid(), ticker, empresa:info.empresa, sector:info.sector || '', precio:0, anterior:0, objetivo:0, enCartera:false, cantidad:0});
       agregadas++;
     }
   });
   save(KEYS.watchlist, wl);
   renderAll();
-  toast(agregadas > 0 ? `${agregadas} acciones agregadas. Corre el robot para traer sus precios.` : 'Ya tenías cargadas todas las de la lista actual');
-});
+  toast(agregadas > 0 ? `${agregadas} acciones agregadas (${etiqueta}). Corre el robot para traer sus precios.` : `Ya tenías cargadas todas las de ${etiqueta}`);
+}
+document.getElementById('btn-load-ipsa').addEventListener('click', ()=> cargarUniverso('./data/ipsa_universo.json', 'IPSA'));
+document.getElementById('btn-load-ampliado').addEventListener('click', ()=> cargarUniverso('./data/universo_ampliado.json', 'universo ampliado'));
 
 /* ========== gráfico de historial ========== */
 let historialCache = null;
