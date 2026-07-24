@@ -50,11 +50,15 @@ def obtener_noticias():
                     categoria = (entrada.get("category") or "").strip().lower()
                     if not any(palabra in categoria for palabra in palabras_clave):
                         continue  # nos saltamos política, deportes, internacional, etc.
+                fecha_iso = None
+                if entrada.get("published_parsed"):
+                    fecha_iso = datetime(*entrada.published_parsed[:6], tzinfo=timezone.utc).isoformat()
                 noticias.append({
                     "fuente": nombre,
                     "texto": titulo,
                     "link": entrada.get("link", ""),
                     "fecha": entrada.get("published", "")[:16] if entrada.get("published") else "",
+                    "fechaISO": fecha_iso,
                 })
                 encontradas += 1
         except Exception as e:
