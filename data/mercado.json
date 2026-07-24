@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-24T20:11:07.952626+00:00",
+  "actualizado": "2026-07-24T21:33:49.030794+00:00",
   "macro": {
     "dolar": 946.2,
     "uf": 40844.79,
@@ -10,61 +10,61 @@
   },
   "acciones": {
     "AGUAS-A": {
-      "precio": 337.78,
+      "precio": 338.0,
       "anterior": 332.4,
       "alto52": 400.0,
       "bajo52": 310.11
     },
     "CHILE": {
-      "precio": 192.78,
+      "precio": 193.1,
       "anterior": 188.5,
       "alto52": 200.68,
       "bajo52": 132.31
     },
     "BCI": {
-      "precio": 64500.0,
+      "precio": 65000.0,
       "anterior": 62502.0,
       "alto52": 66985.0,
       "bajo52": 37167.0
     },
     "ITAUCL": {
-      "precio": 21301.0,
+      "precio": 21490.0,
       "anterior": 20678.0,
       "alto52": 25887.0,
       "bajo52": 12562.0
     },
     "BSANTANDER": {
-      "precio": 79.83,
+      "precio": 79.32,
       "anterior": 77.0,
       "alto52": 80.68,
       "bajo52": 52.0
     },
     "CAP": {
-      "precio": 6030.0,
+      "precio": 6060.0,
       "anterior": 6313.3,
       "alto52": 8680.0,
       "bajo52": 4502.0
     },
     "CENCOSUD": {
-      "precio": 1969.8,
+      "precio": 1958.0,
       "anterior": 1995.0,
       "alto52": 3238.0,
       "bajo52": 1951.0
     },
     "CENCOMALLS": {
-      "precio": 2300.0,
+      "precio": 2323.9,
       "anterior": 2210.0,
       "alto52": 2799.9,
       "bajo52": 1808.0
     },
     "COLBUN": {
-      "precio": 137.5,
+      "precio": 138.99,
       "anterior": 135.29,
       "alto52": 156.51,
       "bajo52": 123.55
     },
     "CCU": {
-      "precio": 5450.0,
+      "precio": 5489.0,
       "anterior": 5218.0,
       "alto52": 6598.3,
       "bajo52": 4947.0
@@ -76,91 +76,91 @@
       "bajo52": 42.0
     },
     "ANDINA-B": {
-      "precio": 4690.0,
+      "precio": 4699.9,
       "anterior": 4699.9,
       "alto52": 4800.0,
       "bajo52": 3500.1
     },
     "ENTEL": {
-      "precio": 3659.9,
+      "precio": 3659.1,
       "anterior": 3643.0,
       "alto52": 5250.0,
       "bajo52": 3030.0
     },
     "CMPC": {
-      "precio": 1042.6,
+      "precio": 1025.0,
       "anterior": 1070.0,
       "alto52": 1599.0,
       "bajo52": 1015.0
     },
     "COPEC": {
-      "precio": 6322.2,
+      "precio": 6330.0,
       "anterior": 6249.6,
       "alto52": 7949.0,
       "bajo52": 5702.1
     },
     "ENELAM": {
-      "precio": 85.35,
+      "precio": 85.49,
       "anterior": 84.04,
       "alto52": 105.23,
       "bajo52": 73.95
     },
     "ENELCHILE": {
-      "precio": 81.12,
+      "precio": 81.01,
       "anterior": 81.01,
       "alto52": 84.0,
       "bajo52": 61.51
     },
     "ECL": {
-      "precio": 1866.9,
+      "precio": 1879.9,
       "anterior": 1807.0,
       "alto52": 1879.9,
       "bajo52": 1158.5
     },
     "FALABELLA": {
-      "precio": 6089.1,
+      "precio": 5990.0,
       "anterior": 5835.0,
       "alto52": 6948.5,
       "bajo52": 4601.5
     },
     "IAM": {
-      "precio": 919.81,
+      "precio": 916.05,
       "anterior": 921.89,
       "alto52": 1150.0,
       "bajo52": 806.98
     },
     "ILC": {
-      "precio": 21499.0,
+      "precio": 21508.0,
       "anterior": 21450.0,
       "alto52": 23725.0,
       "bajo52": 10025.0
     },
     "LTM": {
-      "precio": 23.87,
+      "precio": 23.88,
       "anterior": 24.69,
       "alto52": 30.0,
       "bajo52": 19.95
     },
     "PARAUCO": {
-      "precio": 3959.2,
+      "precio": 3940.0,
       "anterior": 4039.9,
       "alto52": 4596.3,
       "bajo52": 1932.0
     },
     "MALLPLAZA": {
-      "precio": 3718.5,
+      "precio": 3725.0,
       "anterior": 3950.0,
       "alto52": 4700.0,
       "bajo52": 2001.9
     },
     "QUINENCO": {
-      "precio": 4312.4,
+      "precio": 4309.2,
       "anterior": 4279.0,
       "alto52": 4750.0,
       "bajo52": 3501.0
     },
     "RIPLEY": {
-      "precio": 381.99,
+      "precio": 381.09,
       "anterior": 382.96,
       "alto52": 490.0,
       "bajo52": 350.0
@@ -172,25 +172,25 @@
       "bajo52": 691.25
     },
     "SMU": {
-      "precio": 126.92,
+      "precio": 126.9,
       "anterior": 127.9,
       "alto52": 169.5,
       "bajo52": 125.13
     },
     "SQM-B": {
-      "precio": 65856.0,
+      "precio": 65350.0,
       "anterior": 65450.0,
       "alto52": 86900.0,
       "bajo52": 34560.0
     },
     "CONCHATORO": {
-      "precio": 835.0,
+      "precio": 834.99,
       "anterior": 852.33,
       "alto52": 1152.4,
       "bajo52": 815.0
     },
     "ANTARCHILE": {
-      "precio": 7524.4,
+      "precio": 7534.5,
       "anterior": 7450.3,
       "alto52": 9000.0,
       "bajo52": 7000.0
@@ -214,7 +214,7 @@
       "bajo52": 18370.0
     },
     "FORUS": {
-      "precio": 1900.0,
+      "precio": 1933.4,
       "anterior": 1983.4,
       "alto52": 2510.0,
       "bajo52": 1900.0
@@ -226,7 +226,7 @@
       "bajo52": 93.0
     },
     "INGEVEC": {
-      "precio": 195.06,
+      "precio": 195.81,
       "anterior": 200.99,
       "alto52": 227.0,
       "bajo52": 92.57
@@ -244,7 +244,7 @@
       "bajo52": 529.98
     },
     "SOCOVESA": {
-      "precio": 136.0,
+      "precio": 138.0,
       "anterior": 141.0,
       "alto52": 185.29,
       "bajo52": 67.02
@@ -262,7 +262,7 @@
       "bajo52": 272.0
     },
     "EMBONOR-B": {
-      "precio": 1530.0,
+      "precio": 1550.1,
       "anterior": 1570.0,
       "alto52": 1745.0,
       "bajo52": 1150.0
@@ -280,7 +280,7 @@
       "bajo52": 650.4
     },
     "TRICOT": {
-      "precio": 582.0,
+      "precio": 581.78,
       "anterior": 581.84,
       "alto52": 688.8,
       "bajo52": 513.1
@@ -304,25 +304,25 @@
       "bajo52": 1289.3
     },
     "BICE": {
-      "precio": 407.8,
+      "precio": 406.98,
       "anterior": 375.23,
       "alto52": 450.0,
       "bajo52": 265.0
     },
     "HABITAT": {
-      "precio": 1185.0,
+      "precio": 1178.0,
       "anterior": 1267.0,
       "alto52": 1600.0,
       "bajo52": 1060.0
     },
     "CFMITNIPSA": {
-      "precio": 5084.7,
+      "precio": 5091.0,
       "anterior": 5035.4,
       "alto52": 5588.4,
       "bajo52": 3876.4
     },
     "CFINRENTAS": {
-      "precio": 2188.0,
+      "precio": 2169.64,
       "anterior": 2183.56,
       "alto52": 2340.0,
       "bajo52": 1563.14
@@ -334,7 +334,7 @@
       "bajo52": 19800.0
     },
     "CFIBTGRRA": {
-      "precio": 8890.0,
+      "precio": 8889.95,
       "anterior": 8889.95,
       "alto52": 12472.8,
       "bajo52": 7300.0
@@ -345,97 +345,113 @@
       "fuente": "Cooperativa · Bolsas",
       "texto": "Elon Musk se convirtió en el primer billonario del mundo tras salida a bolsa de SpaceX",
       "link": "https://www.cooperativa.cl/noticias/economia/bolsas/elon-musk-se-convirtio-en-el-primer-billonario-del-mundo-tras-salida-a/2026-06-12/172053.html",
-      "fecha": "Fri, 12 Jun 2026"
+      "fecha": "Fri, 12 Jun 2026",
+      "fechaISO": "2026-06-12T21:20:53+00:00"
     },
     {
       "fuente": "Cooperativa · Bolsas",
       "texto": "SpaceX protagonizará la mayor salida a bolsa de la historia en medio de protestas contra su IA",
       "link": "https://www.cooperativa.cl/noticias/economia/bolsas/spacex-protagonizara-la-mayor-salida-a-bolsa-de-la-historia-en-medio-de/2026-06-11/171625.html",
-      "fecha": "Thu, 11 Jun 2026"
+      "fecha": "Thu, 11 Jun 2026",
+      "fechaISO": "2026-06-11T21:16:25+00:00"
     },
     {
       "fuente": "Cooperativa · Bolsas",
       "texto": "Anthropic, OpenAI y SpaceX preparan su salto a bolsa en plena fiebre del mercado por la IA",
       "link": "https://www.cooperativa.cl/noticias/tecnologia/industria/ia/anthropic-openai-y-spacex-preparan-su-salto-a-bolsa-en-plena-fiebre-del/2026-06-06/164758.html",
-      "fecha": "Sat, 06 Jun 2026"
+      "fecha": "Sat, 06 Jun 2026",
+      "fechaISO": "2026-06-06T20:47:58+00:00"
     },
     {
       "fuente": "Cooperativa · Bolsas",
       "texto": "Las bolsas de Asia caen tras el discurso de Trump y en medio de subidas del petróleo",
       "link": "https://www.cooperativa.cl/noticias/mundo/iran/las-bolsas-de-asia-caen-tras-el-discurso-de-trump-y-en-medio-de-subidas/2026-04-02/074018.html",
-      "fecha": "Thu, 02 Apr 2026"
+      "fecha": "Thu, 02 Apr 2026",
+      "fechaISO": "2026-04-02T10:40:18+00:00"
     },
     {
       "fuente": "Cooperativa · Empresas",
       "texto": "Acreedores aprueban reorganización de metalúrgica de Talcahuano y mantienen 350 empleos",
       "link": "https://www.cooperativa.cl/noticias/pais/region-del-biobio/acreedores-aprueban-reorganizacion-de-metalurgica-de-talcahuano-y/2026-07-24/154831.html",
-      "fecha": "Fri, 24 Jul 2026"
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T19:48:31+00:00"
     },
     {
       "fuente": "Cooperativa · Empresas",
       "texto": "Cámara Nacional de Comercio solicitó plan de apoyo extraordinario a empresas afectadas por el temporal",
       "link": "https://www.cooperativa.cl/noticias/economia/empresas/camara-nacional-de-comercio-solicito-plan-de-apoyo-extraordinario-a/2026-07-20/162742.html",
-      "fecha": "Mon, 20 Jul 2026"
+      "fecha": "Mon, 20 Jul 2026",
+      "fechaISO": "2026-07-20T20:27:42+00:00"
     },
     {
       "fuente": "Cooperativa · Empresas",
       "texto": "Gobierno defendió adaptabilidad laboral con tope de 45 horas y compensación posterior",
       "link": "https://www.cooperativa.cl/noticias/pais/trabajo/proyectos/gobierno-defendio-adaptabilidad-laboral-con-tope-de-45-horas-y/2026-07-14/114519.html",
-      "fecha": "Tue, 14 Jul 2026"
+      "fecha": "Tue, 14 Jul 2026",
+      "fechaISO": "2026-07-14T15:45:19+00:00"
     },
     {
       "fuente": "Cooperativa · Empresas",
       "texto": "Economista: grandes mineras y energéticas no miran mucho la megarreforma; invertirán sí o sí",
       "link": "https://www.cooperativa.cl/noticias/economia/impuestos/economista-grandes-mineras-y-energeticas-no-miran-mucho-la/2026-07-09/194048.html",
-      "fecha": "Thu, 09 Jul 2026"
+      "fecha": "Thu, 09 Jul 2026",
+      "fechaISO": "2026-07-09T23:40:48+00:00"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Festival Ladera Sur 2026 abre convocatoria para emprendedores verdes",
+      "link": "https://www.cooperativa.cl/noticias/economia/pymes/festival-ladera-sur-2026-abre-convocatoria-para-emprendedores-verdes/2026-07-24/164941.html",
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T20:49:41+00:00"
     },
     {
       "fuente": "Cooperativa · Economía",
       "texto": "Acreedores aprueban reorganización de metalúrgica de Talcahuano y mantienen 350 empleos",
       "link": "https://www.cooperativa.cl/noticias/pais/region-del-biobio/acreedores-aprueban-reorganizacion-de-metalurgica-de-talcahuano-y/2026-07-24/154831.html",
-      "fecha": "Fri, 24 Jul 2026"
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T19:48:31+00:00"
     },
     {
       "fuente": "Cooperativa · Economía",
       "texto": "Aranceles de EE.UU: Quiroz reconoce que rumbo económico de Trump es \"distinto\" al de Chile",
       "link": "https://www.cooperativa.cl/noticias/pais/gobierno/aranceles-de-ee-uu-quiroz-reconoce-que-rumbo-economico-de-trump-es/2026-07-24/145359.html",
-      "fecha": "Fri, 24 Jul 2026"
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T18:53:59+00:00"
     },
     {
       "fuente": "Cooperativa · Economía",
       "texto": "Megarreforma: Gobierno confirmó veto para mantener el cobro de intereses sobre intereses",
       "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/megarreforma-gobierno-confirmo-veto-para-mantener-el-cobro-de-intereses/2026-07-23/193946.html",
-      "fecha": "Thu, 23 Jul 2026"
+      "fecha": "Thu, 23 Jul 2026",
+      "fechaISO": "2026-07-23T23:39:46+00:00"
     },
     {
-      "fuente": "Cooperativa · Economía",
-      "texto": "Trump impuso arancel de 12,5% a Chile por \"no combatir el trabajo forzoso\"",
-      "link": "https://www.cooperativa.cl/noticias/mundo/ee-uu/donald-trump/trump-impuso-arancel-de-12-5-a-chile-por-no-combatir-el-trabajo-forzoso/2026-07-23/175756.html",
-      "fecha": "Thu, 23 Jul 2026"
+      "fuente": "Diario Financiero",
+      "texto": "IPSA cierra al alza la semana en una jornada marcada por la baja del petróleo y las tensiones entre EEUU e Irán",
+      "link": "http://www.df.cl/mercados/bolsa-monedas/bolsas-hoy-vyodx",
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T20:51:52+00:00"
+    },
+    {
+      "fuente": "Diario Financiero",
+      "texto": "Concesiones ya tiene líder: Presidente Kast designa a Lorena Herrera como directora general",
+      "link": "http://www.df.cl/empresas/construccion/concesiones-ya-tiene-lider-kast-designa-a-lorena-herrera-como-directora",
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T20:29:17+00:00"
+    },
+    {
+      "fuente": "Diario Financiero",
+      "texto": "Dólar cierra al alza con un nuevo máximo en nueve meses en medio de la caída del precio del petróleo",
+      "link": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-v6e9k",
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T20:24:20+00:00"
     },
     {
       "fuente": "Diario Financiero",
       "texto": "Caso Sartor: Fiscalía pide ampliar delitos para formalización y añade lavado de activos y fraude por omisión de OPA",
       "link": "http://www.df.cl/mercados/fondos-de-inversion/caso-sartor-fiscalia-pide-ampliar-delitos-para-formalizacion-y-anade",
-      "fecha": "Fri, 24 Jul 2026"
-    },
-    {
-      "fuente": "Diario Financiero",
-      "texto": "Cómo la ley miscelánea podría elevar el precio de las compañías en proceso de M&A",
-      "link": "http://www.df.cl/mercados/bolsa-monedas/como-la-ley-miscelanea-podria-elevar-el-precio-de-las-companias-en-proceso",
-      "fecha": "Fri, 24 Jul 2026"
-    },
-    {
-      "fuente": "Diario Financiero",
-      "texto": "Caso del exsubsecretario pone a prueba el nuevo sistema de test de drogas: instructivo de Contraloría redefine su aplicación",
-      "link": "http://www.df.cl/economia-y-politica/laboral-personas/caso-del-exsubsecretario-pone-a-prueba-el-nuevo-sistema-de-test-de-drogas",
-      "fecha": "Fri, 24 Jul 2026"
-    },
-    {
-      "fuente": "Diario Financiero",
-      "texto": "El dólar se estabiliza y retiene máximos en nueve meses al inicio de la tarde, mientras el petróleo pierde terreno",
-      "link": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-v6e9k",
-      "fecha": "Fri, 24 Jul 2026"
+      "fecha": "Fri, 24 Jul 2026",
+      "fechaISO": "2026-07-24T19:32:49+00:00"
     }
   ]
 }
