@@ -634,7 +634,7 @@ function renderUpdated(){
 function renderTicker(){
   const wl = load(KEYS.watchlist, []);
   const track = document.getElementById('ticker-track');
-  if(wl.length === 0){ track.innerHTML = '<div class="ticker-item"><span class="tk">agrega acciones a tu watchlist</span></div>'; return; }
+  if(wl.length === 0){ track.innerHTML = '<div class="ticker-item"><span class="tk">agrega acciones a tu watchlist</span></div>'; track.style.animationDuration=''; return; }
   const build = () => wl.map(s => {
     const chg = pctChange(s.precio, s.anterior);
     const chgCls = chg === null ? 'flat' : (chg > 0 ? 'up' : chg < 0 ? 'down' : 'flat');
@@ -642,6 +642,11 @@ function renderTicker(){
     return `<div class="ticker-item"><span class="tk">${s.ticker}</span><span class="px">${fmtCLP(s.precio)}</span><span class="chg ${chgCls}">${chgTxt}</span></div>`;
   }).join('');
   track.innerHTML = build() + build(); // duplicado para el loop continuo
+  // velocidad de lectura constante en px/segundo, sin importar cuántas acciones haya
+  const PX_POR_SEGUNDO = 40;
+  const anchoUnaCopia = track.scrollWidth / 2;
+  const duracion = Math.max(20, anchoUnaCopia / PX_POR_SEGUNDO);
+  track.style.animationDuration = duracion + 's';
 }
 
 function renderKpis(){

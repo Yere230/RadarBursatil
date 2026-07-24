@@ -24,9 +24,11 @@ RUTA_SALIDA = os.path.join(os.path.dirname(__file__), "..", "data", "mercado.jso
 HEADERS_YAHOO = {"User-Agent": "Mozilla/5.0 (compatible; CobreBot/1.0; +personal use)"}
 
 FEEDS_NOTICIAS = [
-    ("Cooperativa · Bolsas", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6_84__1.xml"),
-    ("Cooperativa · Empresas", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6_71__1.xml"),
-    ("Cooperativa · Economía", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6___1.xml"),
+    ("Cooperativa · Bolsas", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6_84__1.xml", None),
+    ("Cooperativa · Empresas", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6_71__1.xml", None),
+    ("Cooperativa · Economía", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6___1.xml", None),
+    ("Diario Financiero", "https://www.df.cl/noticias/site/list/port/rss.xml",
+     {"mercado", "empresa", "economía", "econom", "negocio", "financ", "bolsa", "invers", "startup"}),
 ]
 MAX_POR_FEED = 4
 
@@ -34,19 +36,27 @@ MAX_POR_FEED = 4
 def obtener_noticias():
     """Lee titulares desde RSS públicos y devuelve título + link + fuente (nunca el artículo completo)."""
     noticias = []
-    for nombre, url in FEEDS_NOTICIAS:
+    for nombre, url, palabras_clave in FEEDS_NOTICIAS:
         try:
             feed = feedparser.parse(url)
-            for entrada in feed.entries[:MAX_POR_FEED]:
+            encontradas = 0
+            for entrada in feed.entries:
+                if encontradas >= MAX_POR_FEED:
+                    break
                 titulo = entrada.get("title", "").strip()
                 if not titulo:
                     continue
+                if palabras_clave is not None:
+                    categoria = (entrada.get("category") or "").strip().lower()
+                    if not any(palabra in categoria for palabra in palabras_clave):
+                        continue  # nos saltamos política, deportes, internacional, etc.
                 noticias.append({
                     "fuente": nombre,
                     "texto": titulo,
                     "link": entrada.get("link", ""),
                     "fecha": entrada.get("published", "")[:16] if entrada.get("published") else "",
                 })
+                encontradas += 1
         except Exception as e:
             print(f"Aviso: no se pudo leer el feed {nombre} -> {e}")
     return noticias
