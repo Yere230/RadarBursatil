@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-24T18:22:44.900500+00:00",
+  "actualizado": "2026-07-24T20:11:07.952626+00:00",
   "macro": {
     "dolar": 946.2,
     "uf": 40844.79,
@@ -10,91 +10,91 @@
   },
   "acciones": {
     "AGUAS-A": {
-      "precio": 338.44,
+      "precio": 337.78,
       "anterior": 332.4,
       "alto52": 400.0,
       "bajo52": 310.11
     },
     "CHILE": {
-      "precio": 194.42,
+      "precio": 192.78,
       "anterior": 188.5,
       "alto52": 200.68,
       "bajo52": 132.31
     },
     "BCI": {
-      "precio": 65365.0,
+      "precio": 64500.0,
       "anterior": 62502.0,
       "alto52": 66985.0,
       "bajo52": 37167.0
     },
     "ITAUCL": {
-      "precio": 21280.0,
+      "precio": 21301.0,
       "anterior": 20678.0,
       "alto52": 25887.0,
       "bajo52": 12562.0
     },
     "BSANTANDER": {
-      "precio": 80.31,
+      "precio": 79.83,
       "anterior": 77.0,
       "alto52": 80.68,
       "bajo52": 52.0
     },
     "CAP": {
-      "precio": 6014.8,
+      "precio": 6030.0,
       "anterior": 6313.3,
       "alto52": 8680.0,
       "bajo52": 4502.0
     },
     "CENCOSUD": {
-      "precio": 1973.3,
+      "precio": 1969.8,
       "anterior": 1995.0,
       "alto52": 3238.0,
       "bajo52": 1951.0
     },
     "CENCOMALLS": {
-      "precio": 2311.8,
+      "precio": 2300.0,
       "anterior": 2210.0,
       "alto52": 2799.9,
       "bajo52": 1808.0
     },
     "COLBUN": {
-      "precio": 137.7,
+      "precio": 137.5,
       "anterior": 135.29,
       "alto52": 156.51,
       "bajo52": 123.55
     },
     "CCU": {
-      "precio": 5400.1,
+      "precio": 5450.0,
       "anterior": 5218.0,
       "alto52": 6598.3,
       "bajo52": 4947.0
     },
     "VAPORES": {
-      "precio": 48.33,
+      "precio": 48.88,
       "anterior": 46.51,
       "alto52": 55.0,
       "bajo52": 42.0
     },
     "ANDINA-B": {
-      "precio": 4661.1,
+      "precio": 4690.0,
       "anterior": 4699.9,
       "alto52": 4800.0,
       "bajo52": 3500.1
     },
     "ENTEL": {
-      "precio": 3640.2,
+      "precio": 3659.9,
       "anterior": 3643.0,
       "alto52": 5250.0,
       "bajo52": 3030.0
     },
     "CMPC": {
-      "precio": 1035.0,
+      "precio": 1042.6,
       "anterior": 1070.0,
       "alto52": 1599.0,
       "bajo52": 1015.0
     },
     "COPEC": {
-      "precio": 6308.9,
+      "precio": 6322.2,
       "anterior": 6249.6,
       "alto52": 7949.0,
       "bajo52": 5702.1
@@ -106,85 +106,85 @@
       "bajo52": 73.95
     },
     "ENELCHILE": {
-      "precio": 80.97,
+      "precio": 81.12,
       "anterior": 81.01,
       "alto52": 84.0,
       "bajo52": 61.51
     },
     "ECL": {
-      "precio": 1850.0,
+      "precio": 1866.9,
       "anterior": 1807.0,
       "alto52": 1879.9,
       "bajo52": 1158.5
     },
     "FALABELLA": {
-      "precio": 6088.5,
+      "precio": 6089.1,
       "anterior": 5835.0,
       "alto52": 6948.5,
       "bajo52": 4601.5
     },
     "IAM": {
-      "precio": 912.0,
+      "precio": 919.81,
       "anterior": 921.89,
       "alto52": 1150.0,
       "bajo52": 806.98
     },
     "ILC": {
-      "precio": 21100.0,
+      "precio": 21499.0,
       "anterior": 21450.0,
       "alto52": 23725.0,
       "bajo52": 10025.0
     },
     "LTM": {
-      "precio": 24.11,
+      "precio": 23.87,
       "anterior": 24.69,
       "alto52": 30.0,
       "bajo52": 19.95
     },
     "PARAUCO": {
-      "precio": 3945.1,
+      "precio": 3959.2,
       "anterior": 4039.9,
       "alto52": 4596.3,
       "bajo52": 1932.0
     },
     "MALLPLAZA": {
-      "precio": 3731.2,
+      "precio": 3718.5,
       "anterior": 3950.0,
       "alto52": 4700.0,
       "bajo52": 2001.9
     },
     "QUINENCO": {
-      "precio": 4343.0,
+      "precio": 4312.4,
       "anterior": 4279.0,
       "alto52": 4750.0,
       "bajo52": 3501.0
     },
     "RIPLEY": {
-      "precio": 380.58,
+      "precio": 381.99,
       "anterior": 382.96,
       "alto52": 490.0,
       "bajo52": 350.0
     },
     "SALFACORP": {
-      "precio": 1240.0,
+      "precio": 1235.0,
       "anterior": 1249.0,
       "alto52": 1499.9,
       "bajo52": 691.25
     },
     "SMU": {
-      "precio": 127.17,
+      "precio": 126.92,
       "anterior": 127.9,
       "alto52": 169.5,
       "bajo52": 125.13
     },
     "SQM-B": {
-      "precio": 66500.0,
+      "precio": 65856.0,
       "anterior": 65450.0,
       "alto52": 86900.0,
       "bajo52": 34560.0
     },
     "CONCHATORO": {
-      "precio": 832.01,
+      "precio": 835.0,
       "anterior": 852.33,
       "alto52": 1152.4,
       "bajo52": 815.0
@@ -220,7 +220,7 @@
       "bajo52": 1900.0
     },
     "HITES": {
-      "precio": 129.04,
+      "precio": 131.0,
       "anterior": 132.09,
       "alto52": 146.09,
       "bajo52": 93.0
@@ -256,7 +256,7 @@
       "bajo52": 1239.0
     },
     "SONDA": {
-      "precio": 320.0,
+      "precio": 325.0,
       "anterior": 309.99,
       "alto52": 383.7,
       "bajo52": 272.0
@@ -304,7 +304,7 @@
       "bajo52": 1289.3
     },
     "BICE": {
-      "precio": 403.51,
+      "precio": 407.8,
       "anterior": 375.23,
       "alto52": 450.0,
       "bajo52": 265.0
@@ -328,7 +328,7 @@
       "bajo52": 1563.14
     },
     "CFIBTGRCA": {
-      "precio": 24880.0,
+      "precio": 24566.0,
       "anterior": 25331.39,
       "alto52": 28000.0,
       "bajo52": 19800.0
@@ -367,6 +367,12 @@
     },
     {
       "fuente": "Cooperativa · Empresas",
+      "texto": "Acreedores aprueban reorganización de metalúrgica de Talcahuano y mantienen 350 empleos",
+      "link": "https://www.cooperativa.cl/noticias/pais/region-del-biobio/acreedores-aprueban-reorganizacion-de-metalurgica-de-talcahuano-y/2026-07-24/154831.html",
+      "fecha": "Fri, 24 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Empresas",
       "texto": "Cámara Nacional de Comercio solicitó plan de apoyo extraordinario a empresas afectadas por el temporal",
       "link": "https://www.cooperativa.cl/noticias/economia/empresas/camara-nacional-de-comercio-solicito-plan-de-apoyo-extraordinario-a/2026-07-20/162742.html",
       "fecha": "Mon, 20 Jul 2026"
@@ -384,10 +390,16 @@
       "fecha": "Thu, 09 Jul 2026"
     },
     {
-      "fuente": "Cooperativa · Empresas",
-      "texto": "Microsoft recorta 4.800 empleos en reorganización vinculada al avance de la IA",
-      "link": "https://www.cooperativa.cl/noticias/economia/empresas/tecnologia/microsoft-recorta-4-800-empleos-en-reorganizacion-vinculada-al-avance-de/2026-07-06/104338.html",
-      "fecha": "Mon, 06 Jul 2026"
+      "fuente": "Cooperativa · Economía",
+      "texto": "Acreedores aprueban reorganización de metalúrgica de Talcahuano y mantienen 350 empleos",
+      "link": "https://www.cooperativa.cl/noticias/pais/region-del-biobio/acreedores-aprueban-reorganizacion-de-metalurgica-de-talcahuano-y/2026-07-24/154831.html",
+      "fecha": "Fri, 24 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Aranceles de EE.UU: Quiroz reconoce que rumbo económico de Trump es \"distinto\" al de Chile",
+      "link": "https://www.cooperativa.cl/noticias/pais/gobierno/aranceles-de-ee-uu-quiroz-reconoce-que-rumbo-economico-de-trump-es/2026-07-24/145359.html",
+      "fecha": "Fri, 24 Jul 2026"
     },
     {
       "fuente": "Cooperativa · Economía",
@@ -402,16 +414,28 @@
       "fecha": "Thu, 23 Jul 2026"
     },
     {
-      "fuente": "Cooperativa · Economía",
-      "texto": "\"Manos a la obra\": Curso gratuito de la U. de Chile premia a emprendedores con un millón de pesos",
-      "link": "https://www.cooperativa.cl/noticias/economia/pymes/manos-a-la-obra-curso-gratuito-de-la-u-de-chile-premia-a/2026-07-23/164205.html",
-      "fecha": "Thu, 23 Jul 2026"
+      "fuente": "Diario Financiero",
+      "texto": "Caso Sartor: Fiscalía pide ampliar delitos para formalización y añade lavado de activos y fraude por omisión de OPA",
+      "link": "http://www.df.cl/mercados/fondos-de-inversion/caso-sartor-fiscalia-pide-ampliar-delitos-para-formalizacion-y-anade",
+      "fecha": "Fri, 24 Jul 2026"
     },
     {
-      "fuente": "Cooperativa · Economía",
-      "texto": "\"Nefasto\" y \"lamentable\": Economistas critican cómo se debatió compensación al Fondo Común Municipal",
-      "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/nefasto-y-lamentable-economistas-critican-como-se-debatio/2026-07-23/113939.html",
-      "fecha": "Thu, 23 Jul 2026"
+      "fuente": "Diario Financiero",
+      "texto": "Cómo la ley miscelánea podría elevar el precio de las compañías en proceso de M&A",
+      "link": "http://www.df.cl/mercados/bolsa-monedas/como-la-ley-miscelanea-podria-elevar-el-precio-de-las-companias-en-proceso",
+      "fecha": "Fri, 24 Jul 2026"
+    },
+    {
+      "fuente": "Diario Financiero",
+      "texto": "Caso del exsubsecretario pone a prueba el nuevo sistema de test de drogas: instructivo de Contraloría redefine su aplicación",
+      "link": "http://www.df.cl/economia-y-politica/laboral-personas/caso-del-exsubsecretario-pone-a-prueba-el-nuevo-sistema-de-test-de-drogas",
+      "fecha": "Fri, 24 Jul 2026"
+    },
+    {
+      "fuente": "Diario Financiero",
+      "texto": "El dólar se estabiliza y retiene máximos en nueve meses al inicio de la tarde, mientras el petróleo pierde terreno",
+      "link": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-v6e9k",
+      "fecha": "Fri, 24 Jul 2026"
     }
   ]
 }
