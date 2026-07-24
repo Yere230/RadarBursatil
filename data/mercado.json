@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-23T21:31:56.269960+00:00",
+  "actualizado": "2026-07-24T04:22:44.679167+00:00",
   "macro": {
     "dolar": 936.4,
     "uf": 40844.79,
@@ -188,6 +188,120 @@
       "anterior": 856.1,
       "alto52": 1152.4,
       "bajo52": 815.0
+    },
+    "ANTARCHILE": {
+      "precio": 7546.7,
+      "anterior": 7439.0,
+      "alto52": 9000.0,
+      "bajo52": 7000.0
+    },
+    "ALMENDRAL": {
+      "precio": 26.04,
+      "anterior": 26.29,
+      "alto52": 34.0,
+      "bajo52": 18.4
+    },
+    "CAMANCHACA": {
+      "precio": 72.0,
+      "anterior": 76.49,
+      "alto52": 96.88,
+      "bajo52": 51.02
+    },
+    "ENAEX": {
+      "precio": 24957.0,
+      "anterior": 24909.0,
+      "alto52": 25465.0,
+      "bajo52": 18370.0
+    },
+    "FORUS": {
+      "precio": 1934.4,
+      "anterior": 1984.0,
+      "alto52": 2510.0,
+      "bajo52": 1935.0
+    },
+    "HITES": {
+      "precio": 129.96,
+      "anterior": 132.09,
+      "alto52": 146.09,
+      "bajo52": 93.0
+    },
+    "INGEVEC": {
+      "precio": 195.81,
+      "anterior": 200.99,
+      "alto52": 227.0,
+      "bajo52": 92.57
+    },
+    "MASISA": {
+      "precio": 8.85,
+      "anterior": 8.77,
+      "alto52": 20.04,
+      "bajo52": 8.51
+    },
+    "PAZ": {
+      "precio": 857.21,
+      "anterior": 870.18,
+      "alto52": 903.0,
+      "bajo52": 529.98
+    },
+    "SOCOVESA": {
+      "precio": 138.0,
+      "anterior": 141.0,
+      "alto52": 185.29,
+      "bajo52": 67.02
+    },
+    "SK": {
+      "precio": 1614.2,
+      "anterior": 1632.3,
+      "alto52": 1875.0,
+      "bajo52": 1239.0
+    },
+    "SONDA": {
+      "precio": 308.0,
+      "anterior": 309.95,
+      "alto52": 383.7,
+      "bajo52": 272.0
+    },
+    "EMBONOR-B": {
+      "precio": 1545.0,
+      "anterior": 1586.0,
+      "alto52": 1745.0,
+      "bajo52": 1150.0
+    },
+    "CRISTALES": {
+      "precio": 2050.0,
+      "anterior": 2100.0,
+      "alto52": 2800.0,
+      "bajo52": 2050.0
+    },
+    "WATTS": {
+      "precio": 705.0,
+      "anterior": 730.0,
+      "alto52": 820.0,
+      "bajo52": 650.4
+    },
+    "TRICOT": {
+      "precio": 581.78,
+      "anterior": 581.84,
+      "alto52": 688.8,
+      "bajo52": 513.1
+    },
+    "MANQUEHUE": {
+      "precio": 88.38,
+      "anterior": 91.34,
+      "alto52": 155.0,
+      "bajo52": 83.46
+    },
+    "BLUMAR": {
+      "precio": 275.05,
+      "anterior": 275.05,
+      "alto52": 369.0,
+      "bajo52": 197.09
+    },
+    "INVERCAP": {
+      "precio": 1890.0,
+      "anterior": 1926.1,
+      "alto52": 2278.8,
+      "bajo52": 1289.3
     }
   },
   "noticias": [
@@ -241,6 +355,18 @@
     },
     {
       "fuente": "Cooperativa · Economía",
+      "texto": "Megarreforma: Gobierno confirmó veto para mantener el cobro de intereses sobre intereses",
+      "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/megarreforma-gobierno-confirmo-veto-para-mantener-el-cobro-de-intereses/2026-07-23/193946.html",
+      "fecha": "Thu, 23 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
+      "texto": "Trump impuso arancel de 12,5% a Chile por \"no combatir el trabajo forzoso\"",
+      "link": "https://www.cooperativa.cl/noticias/mundo/ee-uu/donald-trump/trump-impuso-arancel-de-12-5-a-chile-por-no-combatir-el-trabajo-forzoso/2026-07-23/175756.html",
+      "fecha": "Thu, 23 Jul 2026"
+    },
+    {
+      "fuente": "Cooperativa · Economía",
       "texto": "\"Manos a la obra\": Curso gratuito de la U. de Chile premia a emprendedores con un millón de pesos",
       "link": "https://www.cooperativa.cl/noticias/economia/pymes/manos-a-la-obra-curso-gratuito-de-la-u-de-chile-premia-a/2026-07-23/164205.html",
       "fecha": "Thu, 23 Jul 2026"
@@ -250,18 +376,6 @@
       "texto": "\"Nefasto\" y \"lamentable\": Economistas critican cómo se debatió compensación al Fondo Común Municipal",
       "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/nefasto-y-lamentable-economistas-critican-como-se-debatio/2026-07-23/113939.html",
       "fecha": "Thu, 23 Jul 2026"
-    },
-    {
-      "fuente": "Cooperativa · Economía",
-      "texto": "Petróleo de Texas, referencia para Chile, volvió a sobrepasar los 90 dólares",
-      "link": "https://www.cooperativa.cl/noticias/economia/materias-primas/petroleo/petroleo-de-texas-referencia-para-chile-volvio-a-sobrepasar-los-90/2026-07-23/101623.html",
-      "fecha": "Thu, 23 Jul 2026"
-    },
-    {
-      "fuente": "Cooperativa · Economía",
-      "texto": "Bochorno en el Senado: Gobierno abortó, a última hora, el voto final de la megarreforma",
-      "link": "https://www.cooperativa.cl/noticias/pais/politica/agenda-legislativa/bochorno-en-el-senado-gobierno-aborto-a-ultima-hora-el-voto-final-de/2026-07-22/212426.html",
-      "fecha": "Wed, 22 Jul 2026"
     }
   ]
 }
